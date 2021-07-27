@@ -4,6 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  userAccountDeleteReducer,
  userAccountListReducer,
+ userAccountUpdateReducer,
+ userCreateActionReducer,
  userLoginReducer,
  userRegisterReducer,
 } from './reducer/authReducer';
@@ -14,6 +16,8 @@ const reducer = combineReducers({
  userRegister: userRegisterReducer,
  userAccountList: userAccountListReducer,
  userAccountDelete: userAccountDeleteReducer,
+ userAccountUpdate: userAccountUpdateReducer,
+ userCreateAction: userCreateActionReducer,
 });
 
 const userInformationFromStorage = localStorage.getItem('userInformation')

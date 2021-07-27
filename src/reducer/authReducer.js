@@ -12,6 +12,14 @@ import {
  USER_DELETE_REQUEST,
  USER_DELETE_SUCCESS,
  USER_DELETE_FAIL,
+ USER_UPDATE_REQUEST,
+ USER_UPDATE_SUCCESS,
+ USER_UPDATE_FAIL,
+ USER_UPDATE_RESET,
+ USER_CREATE_ACT_REQ,
+ USER_CREATE_ACT_SUC,
+ USER_CREATE_ACT_FAIL,
+ USER_CREATE_ACT_RES,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -70,7 +78,37 @@ export const userAccountDeleteReducer = (
   case USER_DELETE_SUCCESS:
    return { loading: false };
   case USER_DELETE_FAIL:
-   return { error: action.payload };
+   return { loading: false, error: action.payload };
+  default:
+   return state;
+ }
+};
+
+export const userAccountUpdateReducer = (state = {}, action) => {
+ switch (action.type) {
+  case USER_UPDATE_REQUEST:
+   return { loading: true };
+  case USER_UPDATE_SUCCESS:
+   return { loading: false, success: true };
+  case USER_UPDATE_FAIL:
+   return { loading: false, error: action.payload };
+  case USER_UPDATE_RESET:
+   return {};
+  default:
+   return state;
+ }
+};
+
+export const userCreateActionReducer = (state = {}, action) => {
+ switch (action.type) {
+  case USER_CREATE_ACT_REQ:
+   return { loading: true };
+  case USER_CREATE_ACT_SUC:
+   return { loading: false, success: true };
+  case USER_CREATE_ACT_FAIL:
+   return { loading: false, error: action.payload };
+  case USER_CREATE_ACT_RES:
+   return {};
   default:
    return state;
  }

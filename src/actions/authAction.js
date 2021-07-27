@@ -13,6 +13,12 @@ import {
  USER_DELETE_REQUEST,
  USER_DELETE_SUCCESS,
  USER_DELETE_FAIL,
+ USER_UPDATE_REQUEST,
+ USER_UPDATE_SUCCESS,
+ USER_UPDATE_FAIL,
+ USER_CREATE_ACT_SUC,
+ USER_CREATE_ACT_FAIL,
+ CREATE_NEW_USER,
 } from '../constants/auth';
 export const login = (email, password) => async (dispatch) => {
  try {
@@ -64,8 +70,10 @@ export const signUp = (data) => async (dispatch, getState) => {
     uid: res.user.uid,
     admin: data.isAdmin,
     createdBy: userInformation.uid,
-    role: data.role,
+    email: res.user.email,
+    phone: '123456789',
    });
+   dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
    dispatch({ type: USER_REGISTER_SUCCESS });
   })
   .catch((error) => {
@@ -87,12 +95,53 @@ export const getUserAccount = () => async (dispatch) => {
  }
 };
 
-export const deleteUserAccount = (id, uid) => async (dispatch) => {
+export const deleteUserAccount = (uid) => async (dispatch) => {
  try {
   dispatch({ type: USER_DELETE_REQUEST });
-  await db.collection('account').doc(id).delete();
+  await db.collection('account').doc(uid).delete();
   dispatch({ type: USER_DELETE_SUCCESS });
  } catch (error) {
   dispatch({ type: USER_DELETE_FAIL, payload: error.message });
+ }
+};
+
+export const updateUserAccount = (user) => async (dispatch, getState) => {
+ const {
+  userLogin: { userInformation },
+ } = getState();
+ try {
+  dispatch({ type: USER_UPDATE_REQUEST });
+  await db
+   .collection('account')
+   .doc(user.uid)
+   .update({
+    admin: JSON.parse(user.isAdmin) || false,
+    createdBy: userInformation.uid,
+    phone: user.phone || '',
+    name: user.name,
+    imgUrl: user.imgUrl || '',
+   });
+  dispatch({ type: USER_UPDATE_SUCCESS });
+ } catch (error) {
+  dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
+ }
+};
+
+export const userCreateAction = (action, id) => async (dispatch, getState) => {
+ const {
+  userLogin: { userInformation },
+ } = getState();
+
+ try {
+  await db.collection('userActions').add({
+   uid: userInformation.uid,
+   createAt: new Date(),
+   action: action,
+   contextId: id,
+  });
+
+  dispatch({ type: USER_CREATE_ACT_SUC });
+ } catch (error) {
+  dispatch({ type: USER_CREATE_ACT_FAIL, payload: error.message });
  }
 };

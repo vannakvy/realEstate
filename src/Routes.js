@@ -18,13 +18,13 @@ import MapScreen from './page/mapScreen';
 import Report from './page/report';
 import TestCreateUser from './page/TestCreateUser';
 import TestLogin from './page/TestLogin';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
-    const {userInformation: login} = useSelector((state) => state.userLogin)
+ const { userInformation: login } = useSelector((state) => state.userLogin);
  return (
-  <Router >
+  <Router>
    <div className="App">
     <Layout style={{ minHeight: '100vh' }}>
      {login ? (
@@ -46,7 +46,9 @@ const Routes = () => {
           <Route path="/signup">
            <TestCreateUser />
           </Route>
-         
+          <Route path="/test">
+           <TestLogin />
+          </Route>
          </Switch>
         </Content>
         <Footer style={{ textAlign: 'center', color: 'red', fontSize: 17 }}>

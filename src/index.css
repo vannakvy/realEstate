@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy&display=swap');
+body {
+ margin: 0;
+ font-family: myriad-pro, Lucida Grande, Arial, 'Kantumruy', 'Siemreap',
+  sans-serif;
+ font-size: 100%;
+}
+
+code {
+ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.cols .col {
+ display: inline;
+}
+
+.kh {
+ font-family: myriad-pro, Lucida Grande, Arial, 'Kantumruy', 'Siemreap',
+  sans-serif;
+}
+
+.test {
+ color: transparent;
+}

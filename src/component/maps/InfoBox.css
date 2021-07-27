@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy&display=swap');
+.infoBox {
+ flex: 1;
+padding-bottom: 5px;
+margin-top: 10px;
+/* background-color: red !important; */
+min-width: 200px !important;
+}
+
+.infoBox:not(:last-child) {
+ margin-right: 10px;
+}
+
+.infoBox--selected {
+ border-top: 10px solid greenyellow;
+}
+
+.infoBox--red {
+ border-color: #a70b99;
+}
+
+.infoBox__cases--green {
+ color: lightgreen !important;
+}
+
+.infoBox__cases {
+ color: #cc1034;
+ font-weight: 600;
+ font-size: 1rem;
+ margin-bottom: 5px;
+
+}
+
+.infoBox__total {
+ color: #6c757d;
+ font-weight: 700 !important;
+ font-size: 0.8rem !important;
+ margin-top: 5px !important;
+}
+
+.infoBox_font {
+ font-family: 'Kantumruy', sans-serif;
+ font-size: 1rem;
+ font-weight: 700;
+}

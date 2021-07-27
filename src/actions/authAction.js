@@ -115,7 +115,7 @@ export const updateUserAccount = (user) => async (dispatch, getState) => {
    .collection('account')
    .doc(user.uid)
    .update({
-    admin: JSON.parse(user.isAdmin) || false,
+    admin: user.isAdmin || false,
     createdBy: userInformation.uid,
     phone: user.phone || '',
     name: user.name,

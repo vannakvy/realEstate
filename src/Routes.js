@@ -19,6 +19,9 @@ import Report from './page/report';
 import TestCreateUser from './page/TestCreateUser';
 import TestLogin from './page/TestLogin';
 import { useSelector } from 'react-redux';
+import Land from './page/land';
+import ShareLand from './page/shareland';
+import Action from './page/action';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
@@ -40,9 +43,19 @@ const Routes = () => {
           <Route path="/user">
            <User />
           </Route>
+          <Route path="/land">
+           <Land />
+          </Route>
           <Route path="/reportdaily">
            <Report />
           </Route>
+          <Route path="/shareland">
+           <ShareLand />
+          </Route>
+          <Route path="/action">
+           <Action />
+          </Route>
+
           <Route path="/signup">
            <TestCreateUser />
           </Route>

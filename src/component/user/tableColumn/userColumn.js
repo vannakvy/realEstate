@@ -14,55 +14,31 @@ export const userCol = ({
 }) => {
  let l = limit >= 20 ? limit / page : limit;
  let no = (page - 1) * l;
+
+ //  admin: false
+ // createAt: t {seconds: 1627365944, nanoseconds: 205000000}
+ // createdBy: "y8V7R5nwsecxL1l4ZcluK4EMOxx1"
+ // email: "test@gmail.com"
+ // imgUrl: ""
+ // name: "test servertttt"
+ // phone: "0123dsfsdfdsf"
+ // uid: "2EdB2x6wvPZUGLcwfuyiecZtQME3"
+
  var array = [
   {
-   title: 'ល.រ',
-   dataIndex: 'id',
-   key: 'id',
-   width: 50,
-   render: (text, record) => <Space size="middle">{(no += 1)}</Space>,
-  },
-  {
-   title: 'ឈ្មោះសម្គាល់អ្នកប្រើប្រាស់',
-   dataIndex: 'username',
-   key: 'username',
-   width: 100,
-  },
-  {
-   title: 'គោត្តនាម',
-   dataIndex: 'firstName',
-   key: 'firstName',
-   width: 100,
-  },
-  {
-   title: 'នាម',
-   dataIndex: 'lastName',
-   key: 'lastName',
-   width: 100,
-  },
-  {
    title: 'តួនាទី',
-   dataIndex: 'roles',
-   key: 'roles',
+   dataIndex: 'admin',
+   key: 'admin',
    width: 50,
    render: (text, record) => (
-    <span
-     onClick={() => {
-      handleUserRole(record.roles);
-      setRoleUserID(record.id);
-     }}
-     className="link"
-     size="middle"
-    >
-     {getRoles(record.roles)}
-    </span>
+    <Space size="middle">{record?.admin ? 'ADMIN' : 'USER'}</Space>
    ),
   },
   {
-   title: 'លេខទូរស័ព្ទ',
-   dataIndex: 'tel',
-   key: 'tel',
-   width: 80,
+   title: 'ឈ្មោះ',
+   dataIndex: 'name',
+   key: 'name',
+   width: 100,
   },
   {
    title: 'អ៊ីម៉ែល',
@@ -70,6 +46,30 @@ export const userCol = ({
    key: 'email',
    width: 100,
   },
+  {
+   title: 'ទូរស័ព្ទ',
+   dataIndex: 'phone',
+   key: 'phone',
+   width: 100,
+  },
+  //   {
+  //    title: 'តួនាទី',
+  //    dataIndex: 'roles',
+  //    key: 'roles',
+  //    width: 50,
+  //    render: (text, record) => (
+  //     <span
+  //      onClick={() => {
+  //       handleUserRole(record.roles);
+  //       setRoleUserID(record.id);
+  //      }}
+  //      className="link"
+  //      size="middle"
+  //     >
+  //      {getRoles(record.roles)}
+  //     </span>
+  //    ),
+  //   },
 
   {
    key: 'action',
@@ -79,16 +79,16 @@ export const userCol = ({
    align: 'center',
    render: (text, record) => (
     <Space size="middle">
-     <span className="link" onClick={() => handleAccountEdit(record)}>
+     {/* <span className="link" onClick={() => handleAccountEdit(record)}>
       <KeyOutlined />
-     </span>
+     </span> */}
      <span className="link" onClick={() => handleUserEdit(record)}>
       <EditOutlined />
      </span>
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {
-       handleDelete(record.id);
+       handleDelete(record.uid);
       }}
       okText="ចង់"
       cancelText="មិនចង់"

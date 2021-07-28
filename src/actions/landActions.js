@@ -23,7 +23,7 @@ export const createLand = (land) => async (dispatch, getState) => {
     img: [],
     phone: land.phone,
     size: land.size,
-    detail: land.detail,
+    detail: land.detail || '',
    },
 
    add: {
@@ -121,6 +121,7 @@ export const getLandById = (id) => async (dispatch) => {
    //  queryS.forEach((doc) => {
    //   items.push({ ...doc.data(), id: doc.id });
    //  });
+   console.log(queryS.d);
   });
  } catch (error) {
   console.log(error.message);

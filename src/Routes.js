@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import Land from './page/land';
 import ShareLand from './page/shareland';
 import Action from './page/action';
+import LandDetail from './page/landdetail';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
@@ -45,6 +46,9 @@ const Routes = () => {
           </Route>
           <Route path="/land">
            <Land />
+          </Route>
+          <Route path="/landdetail/:id">
+           <LandDetail />
           </Route>
           <Route path="/reportdaily">
            <Report />

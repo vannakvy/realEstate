@@ -1,4 +1,5 @@
 import db, { auth } from '../firebase/db';
+import {message} from 'antd'
 import {
  USER_LOGIN_REQUEST,
  USER_LOGIN_SUCCESS,
@@ -106,6 +107,7 @@ export const deleteUserAccount = (uid) => async (dispatch) => {
  try {
   dispatch({ type: USER_DELETE_REQUEST });
   await db.collection('account').doc(uid).delete();
+  message.success("លុបទិន្នន័យជោគជ័យ")
   dispatch({ type: USER_DELETE_SUCCESS });
  } catch (error) {
   dispatch({ type: USER_DELETE_FAIL, payload: error.message });

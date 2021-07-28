@@ -36,11 +36,19 @@ export default function SimpleModal({ open, setOpen, latLong }) {
 
  const dispatch = useDispatch();
 
- //  console.log(latLong[0].latlngs);
-
  const onFinish = (values) => {
-  //   console.log('Success:', latLong);
-  //   dispatch(createLand(values, latLong));
+  const items = [];
+  latLong[0].latlngs.forEach((la) => {
+   items.push({ lat: la.lat, lng: la.lng });
+  });
+
+  console.log(items);
+
+  console.log('Success:', {
+   ...values,
+   coordinates: items,
+  });
+  dispatch(createLand({ ...values, coordinates: items }));
 
   setOpen(false);
   form.resetFields();

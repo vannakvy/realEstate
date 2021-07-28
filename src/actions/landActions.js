@@ -9,7 +9,7 @@ import {
 } from '../constants/land';
 import db, { auth } from '../firebase/db';
 
-export const createLand = (land, coor) => async (dispatch, getState) => {
+export const createLand = (land) => async (dispatch, getState) => {
  const {
   userLogin: { userInformation },
  } = getState();
@@ -33,7 +33,7 @@ export const createLand = (land, coor) => async (dispatch, getState) => {
     com: land.com,
     vil: land.vil,
    },
-   coordinates: coor,
+   coordinates: land.coordinates,
    createBy: userInformation.uid,
    createAt: new Date(),
   });

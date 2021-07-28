@@ -115,11 +115,9 @@ export const MapDraw = (props) => {
  }, [zo]);
 
  const _onCreated = (e) => {
-  console.log(e);
   const { layerType, layer } = e;
   if (layerType === 'polygon') {
    const { _leaflet_id } = layer;
-   console.log(layer);
    setMapLayers((layers) => [
     ...layers,
     { id: _leaflet_id, latlngs: layer.getLatLngs()[0] },
@@ -377,7 +375,7 @@ export const MapDraw = (props) => {
       ))}
     </div> */}
    {/* </div> */}
-   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLong={mapLayers}/>
+   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLong={mapLayers} />
    <pre>{JSON.stringify(mapLayers, 0, 2)}</pre>
   </div>
  );

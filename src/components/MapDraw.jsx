@@ -249,7 +249,7 @@ export const MapDraw = (props) => {
  return (
   <div>
    {/* <div className="row w-100"> */}
-   <div className="position-relative px-3 my-1 w-100">
+   <div className="position-relative my-1 w-100">
     <Map
      center={posi.posi}
      zoom={posi.zoom}

@@ -8,7 +8,7 @@ import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
 // import EditAccount from '../component/user/modal/editAccount';
 import { fetctUser } from '../function/fetchData';
-import { deleteUserAccount } from '../actions/authAction';
+import { deleteUserAccount, getUserAccount } from '../actions/authAction';
 
 export default function User() {
  const [userData, setUserData] = useState([]);
@@ -25,12 +25,14 @@ export default function User() {
  const [openEditAccount, setOpenEditAccount] = useState(false);
 
  const dispatch = useDispatch();
- const { userAccounts } = useSelector((state) => state.userAccountList);
+ const { userAccounts, loading: userListLoading } = useSelector(
+  (state) => state.userAccountList
+ );
 
  useEffect(() => {
   // dispatch({ type: USER_UPDATE_RESET });
   // dispatch(getUserAccount());
-  dispatch(fetctUser());
+  dispatch(getUserAccount());
  }, [dispatch]);
 
  console.log(userAccounts);
@@ -91,6 +93,7 @@ export default function User() {
        limit,
        page,
       })}
+      loading={userListLoading}
       dataSource={userAccounts}
       rowKey={(record) => record.uid}
       pagination={{

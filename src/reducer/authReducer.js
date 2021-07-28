@@ -20,6 +20,10 @@ import {
  USER_CREATE_ACT_SUC,
  USER_CREATE_ACT_FAIL,
  USER_CREATE_ACT_RES,
+ GET_ACTION_REQ,
+ GET_ACTION_SUC,
+ GET_ACTION_FAI,
+ GET_ACTION_RES,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -108,6 +112,21 @@ export const userCreateActionReducer = (state = {}, action) => {
   case USER_CREATE_ACT_FAIL:
    return { loading: false, error: action.payload };
   case USER_CREATE_ACT_RES:
+   return {};
+  default:
+   return state;
+ }
+};
+
+export const allActionListReducer = (state = {}, action) => {
+ switch (action.type) {
+  case GET_ACTION_REQ:
+   return { loading: true };
+  case GET_ACTION_SUC:
+   return { loading: false, ActionList: action.payload, success: true };
+  case GET_ACTION_FAI:
+   return { loading: false, error: action.payload };
+  case GET_ACTION_RES:
    return {};
   default:
    return state;

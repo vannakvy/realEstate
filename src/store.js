@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
+ allActionListReducer,
  userAccountDeleteReducer,
  userAccountListReducer,
  userAccountUpdateReducer,
@@ -9,6 +10,7 @@ import {
  userLoginReducer,
  userRegisterReducer,
 } from './reducer/authReducer';
+import { landListReducer } from './reducer/landReducer';
 
 const reducer = combineReducers({
  // user
@@ -18,6 +20,9 @@ const reducer = combineReducers({
  userAccountDelete: userAccountDeleteReducer,
  userAccountUpdate: userAccountUpdateReducer,
  userCreateAction: userCreateActionReducer,
+ allActionList: allActionListReducer,
+ //  land
+ landList: landListReducer,
 });
 
 const userInformationFromStorage = localStorage.getItem('userInformation')

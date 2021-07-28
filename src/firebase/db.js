@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import 'firebase/storage';
 import * as admin from 'firebase-admin';
 
 const Config = {
@@ -12,5 +13,7 @@ const Config = {
 // Initialize Firebase
 const initailApp = firebase.initializeApp(Config);
 const db = initailApp.firestore(initailApp);
+export const storageRef = firebase.storage().ref();
+
 export const auth = firebase.auth();
 export default db;

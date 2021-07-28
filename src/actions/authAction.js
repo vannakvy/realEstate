@@ -19,6 +19,9 @@ import {
  USER_CREATE_ACT_SUC,
  USER_CREATE_ACT_FAIL,
  CREATE_NEW_USER,
+ GET_ACTION_REQ,
+ GET_ACTION_SUC,
+ GET_ACTION_FAI,
 } from '../constants/auth';
 export const login = (email, password) => async (dispatch) => {
  try {
@@ -85,10 +88,14 @@ export const signUp = (data) => async (dispatch, getState) => {
 export const getUserAccount = () => async (dispatch) => {
  try {
   dispatch({ type: USER_LIST_REQUEST });
-  const data = await db.collection('account').get();
-  dispatch({
-   type: USER_LIST_SUCCESS,
-   payload: data.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+  const ref = db.collection('account');
+
+  ref.onSnapshot((queryS) => {
+   const items = [];
+   queryS.forEach((doc) => {
+    items.push({ ...doc.data(), id: doc.id });
+   });
+   dispatch({ type: USER_LIST_SUCCESS, payload: items });
   });
  } catch (error) {
   dispatch({ type: USER_LIST_FAIL, payload: error.message });
@@ -143,5 +150,30 @@ export const userCreateAction = (action, id) => async (dispatch, getState) => {
   dispatch({ type: USER_CREATE_ACT_SUC });
  } catch (error) {
   dispatch({ type: USER_CREATE_ACT_FAIL, payload: error.message });
+ }
+};
+
+export const getAllActions = () => async (dispatch) => {
+ try {
+  dispatch({ type: GET_ACTION_REQ });
+  const ref = db.collection('userActions');
+
+  ref.onSnapshot((queryS) => {
+   const items = [];
+   queryS.forEach((doc) => {
+    items.push({ ...doc.data(), id: doc.id });
+   });
+   dispatch({ type: GET_ACTION_SUC, payload: items });
+  });
+ } catch (error) {
+  dispatch({ type: GET_ACTION_FAI, payload: error.message });
+ }
+};
+
+export const deleteAction = (id) => async () => {
+ try {
+  await db.collection('userActions').doc(id).delete();
+ } catch (error) {
+  alert(error.message);
  }
 };

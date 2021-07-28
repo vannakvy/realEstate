@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+ getAllActions,
  getUserAccount,
  login,
  signout,
  updateUserAccount,
 } from '../actions/authAction';
-import { USER_UPDATE_RESET } from '../constants/auth';
-import db from '../firebase/db';
-import { fetctUser } from '../function/fetchData';
+import LandTable from '../components/test/landTable.jsx';
+import UploadImg from '../components/test/UploadImg';
 
 const TestLogin = () => {
- //  const [userAccounts, setAccount] = useState([]);
  const [loading, setLoading] = useState(false);
  const dispatch = useDispatch();
  const [user, setUser] = useState({
@@ -27,16 +26,11 @@ const TestLogin = () => {
 
  const { userInformation } = useSelector((state) => state.userLogin);
  const { userAccounts } = useSelector((state) => state.userAccountList);
- //  const { success: updateSuccess } = useSelector(
- //   (state) => state.userAccountUpdate
- //  );
-
- console.log(userAccounts);
+ const { ActionList } = useSelector((state) => state.allActionList);
 
  useEffect(() => {
-  // dispatch({ type: USER_UPDATE_RESET });
-  // dispatch(getUserAccount());
-  dispatch(fetctUser());
+  dispatch(getAllActions());
+  dispatch(getUserAccount());
  }, [dispatch]);
 
  const onChange = (e) => {
@@ -109,25 +103,25 @@ const TestLogin = () => {
       ))}
     </tbody>
    </table>
+
    <h4>updateUser</h4>
    <form onSubmit={updateHandler}>
     <label>uid</label>
     <input type="text" value={user.uid} name="uid" onChange={onChange} />
-
     <label>isAdmin</label>
     <select value={user.isAdmin} name="isAdmin" onChange={onChange} id="">
      <option value="false">false</option>
      <option value="true">true</option>
     </select>
-
     <label>name</label>
     <input type="text" value={user.name} name="name" onChange={onChange} />
-
     <label>phone</label>
     <input type="text" value={user.phone} name="phone" onChange={onChange} />
-
     <button type="submit">UpdateUSer</button>
    </form>
+   <br />
+   <LandTable />
+   <UploadImg />
   </div>
  );
 };

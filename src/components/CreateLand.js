@@ -2,6 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import Modal from '@material-ui/core/Modal';
 import { Modal, Form, Col, Row, Button, Select, message, Input } from 'antd'
+import { useDispatch } from 'react-redux';
+import { createLand } from '../actions/landActions';
+
 const { Option } = Select;
 function getModalStyle() {
     const top = 30;
@@ -24,29 +27,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SimpleModal({ open, setOpen }) {
+export default function SimpleModal({ open, setOpen , latLong}) {
     //  const { onCreateL, setOnCreateL } = props;
     const classes = useStyles();
     // getModalStyle is not a pure function, we roll the style only on the first render
     const [modalStyle] = React.useState(getModalStyle);
     let [form] = Form.useForm()
-    //  const handleOpen = () => {
-    //   setOnCreateL(true);
-    //  };
 
-    //  const handleClose = () => {
-    //   setOnCreateL(false);
-    //  };
+    console.log(latLong)
+    
+    const dispatch = useDispatch()
 
     const onFinish = (values) => {
-        // console.log('Success:', values);
-
-        // addRole({
-        //     variables: {
-        //         userId:userID,
-        //         role:values.role
-        //     }
-        // })
+        console.log('Success:', {...values,coordinates:latLong[0].latlngs});
+        dispatch(createLand( {...values,coordinates:latLong[0].latlngs}))
 
         setOpen(false)
         form.resetFields()
@@ -151,7 +145,7 @@ export default function SimpleModal({ open, setOpen }) {
 
                         <Col xs={24} md={{ span: 11}}>
                             <Form.Item
-                                name="number"
+                                name="phone"
                                 rules={[{ required: true, message: 'Field is required!' }]}
                             >
                                 <Input placeholder="លេខទូរស័ព្ទ" style={{ width: '100%' }} />
@@ -196,20 +190,20 @@ export default function SimpleModal({ open, setOpen }) {
 
 
 
-                        <Col xs={24} md={{ span: 11, offset:2 }}>
+                        {/* <Col xs={24} md={{ span: 11, offset:2 }}>
                             <Form.Item
                                 name="name"
                                 rules={[{ required: true, message: 'Field is required!' }]}
                             >
                                 <Input placeholder="ទីតាំងដី" />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
 
 
                         <Col xs={24} md={{ span: 24 }}>
                             <Form.Item
                                 name="detail"
-                                rules={[{ required: true, message: 'Field is required!' }]}
+                                // rules={[{ required: true, message: 'Field is required!' }]}
                             >
                                 <Input placeholder="ផ្សេងៗ" style={{ width: '100%' }} />
                             </Form.Item>

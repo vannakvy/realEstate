@@ -377,7 +377,7 @@ export const MapDraw = (props) => {
       ))}
     </div> */}
    {/* </div> */}
-   <SimpleModal onCreateL={onCreateL} setOnCreateL={setOnCreateL} />
+   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLong={mapLayers}/>
    <pre>{JSON.stringify(mapLayers, 0, 2)}</pre>
   </div>
  );

@@ -1,7 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+// import Modal from '@material-ui/core/Modal';
+import { Modal, Form, Col, Row, Button, Select, message, Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { createLand } from '../actions/landActions';
 
+const { Option } = Select;
 function getModalStyle() {
  const top = 30;
  const left = 40;
@@ -23,18 +27,27 @@ const useStyles = makeStyles((theme) => ({
  },
 }));
 
-export default function SimpleModal(props) {
- const { onCreateL, setOnCreateL } = props;
+export default function SimpleModal({ open, setOpen, latLong }) {
+ //  const { onCreateL, setOnCreateL } = props;
  const classes = useStyles();
  // getModalStyle is not a pure function, we roll the style only on the first render
  const [modalStyle] = React.useState(getModalStyle);
+ let [form] = Form.useForm();
 
- const handleOpen = () => {
-  setOnCreateL(true);
+ const dispatch = useDispatch();
+
+ //  console.log(latLong[0].latlngs);
+
+ const onFinish = (values) => {
+  //   console.log('Success:', latLong);
+  //   dispatch(createLand(values, latLong));
+
+  setOpen(false);
+  form.resetFields();
  };
 
- const handleClose = () => {
-  setOnCreateL(false);
+ const onFinishFailed = (errorInfo) => {
+  console.log('Failed:', errorInfo);
  };
 
  const body = (
@@ -71,16 +84,137 @@ export default function SimpleModal(props) {
 
  return (
   <div>
-   <button type="button" onClick={handleOpen}>
+   {/* <button type="button" onClick={handleOpen}>
     Open Modal
-   </button>
+   </button> */}
    <Modal
-    open={onCreateL}
-    onClose={handleClose}
-    aria-labelledby="simple-modal-title"
-    aria-describedby="simple-modal-description"
+    title="បញ្ចូលដី"
+    visible={open}
+    onOk={() => setOpen(false)}
+    onCancel={() => setOpen(false)}
+    footer={null}
    >
-    {body}
+    <Form
+     form={form}
+     name="addLand"
+     onFinish={onFinish}
+     onFinishFailed={onFinishFailed}
+    >
+     <Row>
+      <Col xs={24} md={{ span: 11 }}>
+       <Form.Item
+        name="idLand"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ក្បាលដី" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11, offset: 2 }}>
+       <Form.Item
+        name="landType"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Select placeholder="ស្ថានភាព" style={{ width: '100%' }}>
+         <Option value="ដាក់លក់">ដាក់លក់</Option>
+         <Option value="មិនដាក់លក់">មិនដាក់លក់</Option>
+        </Select>
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11 }}>
+       <Form.Item
+        name="size"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ទំហំដី" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11, offset: 2 }}>
+       <Form.Item
+        name="name"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ឈ្មោះម្ចាស់ដី" />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11 }}>
+       <Form.Item
+        name="phone"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="លេខទូរស័ព្ទ" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11, offset: 2 }}>
+       <Form.Item
+        name="vil"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ភូមិ" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11 }}>
+       <Form.Item
+        name="com"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ឃុំ" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11, offset: 2 }}>
+       <Form.Item
+        name="dis"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ស្រុក" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24} md={{ span: 11 }}>
+       <Form.Item
+        name="pro"
+        rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ខេត្ត" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      {/* <Col xs={24} md={{ span: 11, offset:2 }}>
+                            <Form.Item
+                                name="name"
+                                rules={[{ required: true, message: 'Field is required!' }]}
+                            >
+                                <Input placeholder="ទីតាំងដី" />
+                            </Form.Item>
+                        </Col> */}
+
+      <Col xs={24} md={{ span: 24 }}>
+       <Form.Item
+        name="detail"
+        // rules={[{ required: true, message: 'Field is required!' }]}
+       >
+        <Input placeholder="ផ្សេងៗ" style={{ width: '100%' }} />
+       </Form.Item>
+      </Col>
+
+      <Col xs={24}>
+       <Button
+        htmlType="submit"
+        type="primary"
+        style={{ width: '100%' }}
+        // onClick={()=> }
+       >
+        បញ្ចូលទិន្នន័យ
+       </Button>
+      </Col>
+     </Row>
+    </Form>
    </Modal>
   </div>
  );

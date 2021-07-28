@@ -17,8 +17,8 @@ export const landCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handleU
     var array = [
         {
             title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
+            dataIndex: 'idLand',
+            key: 'idLand',
             width: 50,
             // render: (text, record) => (
             //     <Space size="middle">
@@ -28,15 +28,20 @@ export const landCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handleU
         },
         {
             title: 'ក្បាល់ដី',
-            dataIndex: 'landID',
-            key: 'landID',
-            width: 100,
+            dataIndex: 'idLand',
+            key: 'idLand',
+            width: 50,
         },
         {
             title: 'អាសយដ្ឋាន',
             dataIndex: 'address',
             key: 'address',
-            width: 100,
+            width: 120,
+            render: (text, record) => (
+                <Space size="middle">
+                    {"ភូមិ"+record?.add?.vil+",ឃុំ"+record?.add?.com+",ស្រុក"+record?.add?.dis+",ខេត្ត"+record?.add?.pro}
+                </Space>
+            ),
         },
         
         {
@@ -44,18 +49,16 @@ export const landCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handleU
             dataIndex: 'owner',
             key: 'owner',
             width: 50,
-            // render: (text, record) => (
-            //     <span onClick={()=> {handleUserRole(record.roles);setRoleUserID(record.id)}} className="link" size="middle">
-            //         {
-            //             getRoles(record.roles)
-            //         }
-            //     </span>
-            // ),
+            render: (text, record) => (
+                <Space size="middle">
+                    {record?.owner?.name}
+                </Space>
+            ),
         },
         {
             title: 'ស្ថានភាព',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'landType',
+            key: 'landType',
             width: 80,
         },
     
@@ -69,7 +72,7 @@ export const landCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handleU
                 <Space size="middle">
                     
                     {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-                    <Link className="link"><EyeOutlined /></Link>
+                    <Link to={"/landdetail/"+ record.id} className="link"><EyeOutlined /></Link>
 
                     <Popconfirm
                         title="តើអ្នកពិតចង់លុបមែនឬទេ?"

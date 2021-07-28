@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import {
  LAND_CREATE_FAI,
  LAND_CREATE_REQ,
@@ -8,7 +9,7 @@ import {
 } from '../constants/land';
 import db, { auth } from '../firebase/db';
 
-export const createLand = (land) => async (dispatch, getState) => {
+export const createLand = (land, coor) => async (dispatch, getState) => {
  const {
   userLogin: { userInformation },
  } = getState();
@@ -32,13 +33,14 @@ export const createLand = (land) => async (dispatch, getState) => {
     com: land.com,
     vil: land.vil,
    },
-   coordinates: land.coordinates,
+   coordinates: coor,
    createBy: userInformation.uid,
    createAt: new Date(),
   });
 
   dispatch({ type: LAND_CREATE_SUC });
  } catch (error) {
+  message.error(error.message);
   dispatch({ type: LAND_CREATE_FAI, payload: error.message });
  }
 };
@@ -98,7 +100,6 @@ export const updateLand = (land) => async (dispatch, getState) => {
      size: land.owner.size,
      detail: land.owner.detail,
     },
-
     add: {
      pro: land.add.pro,
      dis: land.add.dis,
@@ -121,7 +122,7 @@ export const getLandById = (id) => async (dispatch) => {
    //  queryS.forEach((doc) => {
    //   items.push({ ...doc.data(), id: doc.id });
    //  });
-   console.log(queryS.d);
+   console.log(queryS);
   });
  } catch (error) {
   console.log(error.message);

@@ -19,18 +19,18 @@ export const createLand = (land) => async (dispatch, getState) => {
    idLand: land.idLand,
    landType: land.landType,
    owner: {
-    name: land.owner.name,
+    name: land.name,
     img: [],
-    phone: land.owner.phone,
-    size: land.owner.size,
-    detail: land.owner.detail,
+    phone: land.phone,
+    size: land.size,
+    detail: land.detail,
    },
 
    add: {
-    pro: land.add.pro,
-    dis: land.add.dis,
-    com: land.add.com,
-    vil: land.add.vil,
+    pro: land.pro,
+    dis: land.dis,
+    com: land.com,
+    vil: land.vil,
    },
    coordinates: land.coordinates,
    createBy: userInformation.uid,
@@ -109,5 +109,20 @@ export const updateLand = (land) => async (dispatch, getState) => {
    });
  } catch (error) {
   alert(error.message);
+ }
+};
+
+export const getLandById = (id) => async (dispatch) => {
+ try {
+  let ref = db.collection('landList').doc(id);
+
+  ref.onSnapshot((queryS) => {
+   //  const items = [];
+   //  queryS.forEach((doc) => {
+   //   items.push({ ...doc.data(), id: doc.id });
+   //  });
+  });
+ } catch (error) {
+  console.log(error.message);
  }
 };

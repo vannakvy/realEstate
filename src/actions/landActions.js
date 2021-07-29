@@ -1,5 +1,8 @@
 import { message } from 'antd';
 import {
+ LAND_BY_ID_FAI,
+ LAND_BY_ID_REQ,
+ LAND_BY_ID_SUC,
  LAND_CREATE_FAI,
  LAND_CREATE_REQ,
  LAND_CREATE_SUC,
@@ -84,9 +87,6 @@ export const deleteLand = (id) => async (dispatch) => {
 };
 
 export const updateLand = (land) => async (dispatch, getState) => {
- const {
-  userLogin: { userInformation },
- } = getState();
  try {
   await db
    .collection('landList')
@@ -96,6 +96,7 @@ export const updateLand = (land) => async (dispatch, getState) => {
     landType: land.landType,
     owner: {
      name: land.owner.name,
+     img: land.owner.img,
      phone: land.owner.phone,
      size: land.owner.size,
      detail: land.owner.detail,
@@ -106,7 +107,7 @@ export const updateLand = (land) => async (dispatch, getState) => {
      com: land.add.com,
      vil: land.add.vil,
     },
-    createBy: userInformation.uid,
+    coordinates: land.coordinates,
    });
  } catch (error) {
   alert(error.message);
@@ -115,16 +116,12 @@ export const updateLand = (land) => async (dispatch, getState) => {
 
 export const getLandById = (id) => async (dispatch) => {
  try {
+  dispatch({ type: LAND_BY_ID_REQ });
   let ref = db.collection('landList').doc(id);
-
   ref.onSnapshot((queryS) => {
-   //  const items = [];
-   //  queryS.forEach((doc) => {
-   //   items.push({ ...doc.data(), id: doc.id });
-   //  });
-   console.log(queryS);
+   dispatch({ type: LAND_BY_ID_SUC, payload: queryS.data() });
   });
  } catch (error) {
-  console.log(error.message);
+  dispatch({ type: LAND_BY_ID_FAI, payload: error.message });
  }
 };

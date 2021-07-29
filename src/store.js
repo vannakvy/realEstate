@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  allActionListReducer,
+ userAccountByIdReducer,
  userAccountDeleteReducer,
  userAccountListReducer,
  userAccountUpdateReducer,
@@ -10,19 +11,21 @@ import {
  userLoginReducer,
  userRegisterReducer,
 } from './reducer/authReducer';
-import { landListReducer } from './reducer/landReducer';
+import { landByIdReducer, landListReducer } from './reducer/landReducer';
 
 const reducer = combineReducers({
  // user
  userLogin: userLoginReducer,
  userRegister: userRegisterReducer,
  userAccountList: userAccountListReducer,
+ userAccountById: userAccountByIdReducer,
  userAccountDelete: userAccountDeleteReducer,
  userAccountUpdate: userAccountUpdateReducer,
  userCreateAction: userCreateActionReducer,
  allActionList: allActionListReducer,
  //  land
  landList: landListReducer,
+ landById: landByIdReducer,
 });
 
 const userInformationFromStorage = localStorage.getItem('userInformation')

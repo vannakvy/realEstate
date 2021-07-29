@@ -1,5 +1,5 @@
 import db, { auth } from '../firebase/db';
-import {message} from 'antd'
+import { message } from 'antd';
 import {
  USER_LOGIN_REQUEST,
  USER_LOGIN_SUCCESS,
@@ -23,6 +23,9 @@ import {
  GET_ACTION_REQ,
  GET_ACTION_SUC,
  GET_ACTION_FAI,
+ USER_BY_ID_REQ,
+ USER_BY_ID_SUC,
+ USER_BY_ID_FAI,
 } from '../constants/auth';
 export const login = (email, password) => async (dispatch) => {
  try {
@@ -103,11 +106,23 @@ export const getUserAccount = () => async (dispatch) => {
  }
 };
 
+export const getUserById = (id) => async (dispatch) => {
+ try {
+  dispatch({ type: USER_BY_ID_REQ });
+  let ref = db.collection('account').doc(id);
+  ref.onSnapshot((queryS) => {
+   dispatch({ type: USER_BY_ID_SUC, payload: queryS.data() });
+  });
+ } catch (error) {
+  dispatch({ type: USER_BY_ID_FAI, payload: error.message });
+ }
+};
+
 export const deleteUserAccount = (uid) => async (dispatch) => {
  try {
   dispatch({ type: USER_DELETE_REQUEST });
   await db.collection('account').doc(uid).delete();
-  message.success("លុបទិន្នន័យជោគជ័យ")
+  message.success('លុបទិន្នន័យជោគជ័យ');
   dispatch({ type: USER_DELETE_SUCCESS });
  } catch (error) {
   dispatch({ type: USER_DELETE_FAIL, payload: error.message });

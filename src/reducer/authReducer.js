@@ -24,6 +24,9 @@ import {
  GET_ACTION_SUC,
  GET_ACTION_FAI,
  GET_ACTION_RES,
+ USER_BY_ID_FAI,
+ USER_BY_ID_SUC,
+ USER_BY_ID_REQ,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -64,6 +67,19 @@ export const userAccountListReducer = (
   case USER_LIST_SUCCESS:
    return { loading: false, userAccounts: action.payload };
   case USER_LIST_FAIL:
+   return { loading: false, error: action.payload };
+  default:
+   return state;
+ }
+};
+
+export const userAccountByIdReducer = (state = { userAccount: {} }, action) => {
+ switch (action.type) {
+  case USER_BY_ID_REQ:
+   return { loading: true };
+  case USER_BY_ID_SUC:
+   return { loading: false, userAccount: action.payload };
+  case USER_BY_ID_FAI:
    return { loading: false, error: action.payload };
   default:
    return state;

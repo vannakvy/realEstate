@@ -8,6 +8,7 @@ import {
  signout,
  updateUserAccount,
 } from '../actions/authAction';
+import { getLandById } from '../actions/landActions';
 import LandTable from '../components/test/landTable.jsx';
 import UploadImg from '../components/test/UploadImg';
 

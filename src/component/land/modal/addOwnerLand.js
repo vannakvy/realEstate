@@ -74,7 +74,7 @@ export default function AddOwnerLand({ open, setOpen, setOwnerId, setOwnerData }
 
      <Col xs={24} md={{ span: 11 }}>
       <Form.Item
-       name="isAdmin"
+       name="role"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
        {/* <Input placeholder="តួនាទី" /> */}

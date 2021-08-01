@@ -97,18 +97,19 @@ export default function SimpleModal({ open, setOpen, latLng }) {
     form.setFieldsValue({
       name: e,
     });
+    // setOwnerId(e)
   };
 
   const callbackOwner = (e) => {
     if (e === "") {
         setOwnerId(e)
         form.setFieldsValue({
-            name: null
+            ownerId: null
         })
     } else {
         setOwnerData(e)
         form.setFieldsValue({
-            name: e.name
+            ownerId: e.name
         })
     }
 }
@@ -167,10 +168,10 @@ export default function SimpleModal({ open, setOpen, latLng }) {
                 <Input placeholder="ទំហំដី" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
-
+            {ownerId !== "new"  ?
             <Col xs={24} md={{ span: 11, offset: 2 }}>
               <Form.Item
-                name="name"
+                name="ownerId"
                 rules={[{ required: true, message: "Field is required!" }]}
               >
                 <ListSelect
@@ -182,16 +183,16 @@ export default function SimpleModal({ open, setOpen, latLng }) {
               </Form.Item>
             </Col>
 
-            {ownerId !== "new"  ? (
+            : (
               <Col xs={24} md={{ span: 11, offset: 2 }}>
-                <Form.Item name="name">
+                <Form.Item name="ownerId">
                   <Input
                     disabled={true}
                     style={{ backgroundColor: "white", color: "black" }}
                   />
                 </Form.Item>
               </Col>
-            ) : null}
+            ) }
 
             <Col xs={24} md={{ span: 11 }}>
               <Form.Item

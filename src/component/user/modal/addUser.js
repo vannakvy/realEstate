@@ -74,7 +74,7 @@ export default function AddUser({ open, setOpen }) {
 
      <Col xs={24} md={{ span: 11 }}>
       <Form.Item
-       name="isAdmin"
+       name="role"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
        {/* <Input placeholder="តួនាទី" /> */}

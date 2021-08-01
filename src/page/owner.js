@@ -11,7 +11,7 @@ import AddOwner from '../component/owner/modal/addOwner';
 // import EditAccount from '../component/user/modal/editAccount';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllLandOwner, deleteLandOwner } from '../actions/authAction';
+import { getAllLandOwner, deleteLandOwner,getUserAccount } from '../actions/authAction';
 import EditOwner from '../component/owner/modal/editOwner';
 
 const { Option } = Select
@@ -42,8 +42,8 @@ export default function Owner() {
         }
     ]
 
-    const dispatch = useDispatch()
-    const {landOwnerList} = useSelector(state => state.landOwnerList)
+    // const dispatch = useDispatch()
+    // const {landOwnerList} = useSelector(state => state.landOwnerList)
 
     const [landData, setLandData] = useState([])
     const [page, setPage] = useState(1)
@@ -58,11 +58,16 @@ export default function Owner() {
     const [roleUserID, setRoleUserID] = useState("")
     const [openEditAccount, setOpenEditAccount] = useState(false)
 
+    const dispatch = useDispatch();
+    const { userAccounts, loading: userListLoading } = useSelector(
+     (state) => state.userAccountList
+    );
+   
     useEffect(() => {
-        dispatch(getAllLandOwner())
-    }, [dispatch])
-
-    console.log(landOwnerList)
+     // dispatch({ type: USER_UPDATE_RESET });
+     // dispatch(getUserAccount());
+     dispatch(getUserAccount());
+    }, [dispatch]);
 
     const handleUserRole = (e) => {
         setOpenRole(true)
@@ -106,7 +111,7 @@ export default function Owner() {
                         className="table-go-list"
                         // caseCol({handleDelete})
                         columns={ownerCol({ handleDelete, handleOwnerEdit, handleUserRole, setRoleUserID, limit, page })}
-                        dataSource={landOwnerList}
+                        dataSource={userAccounts}
                         rowKey={record => record.id}
                         pagination={true}
                         // pagination={{

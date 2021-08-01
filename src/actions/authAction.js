@@ -33,6 +33,7 @@ import {
  LANDOWNER_BY_ID_SUC,
  LANDOWNER_BY_ID_FAI,
 } from '../constants/auth';
+import { CodeSharp } from '@material-ui/icons';
 export const login = (email, password) => async (dispatch) => {
  try {
   dispatch({ type: USER_LOGIN_REQUEST });
@@ -77,7 +78,7 @@ export const signUp = (data) => async (dispatch, getState) => {
  auth
   .createUserWithEmailAndPassword(data.email, data.password)
   .then(async (res) => {
-   const newUser = await db
+   await db
     .collection('account')
     .doc(res.user.uid)
     .set({
@@ -91,9 +92,14 @@ export const signUp = (data) => async (dispatch, getState) => {
      phone: '123456789',
     });
 
-   console.log(newUser);
+   console.log(res.user.uid);
+
+   dispatch({
+    type: USER_REGISTER_SUCCESS,
+    payload: { id: res.user.uid, name: data.name },
+   });
+
    //  dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
-   dispatch({ type: USER_REGISTER_SUCCESS, payload: newUser });
   })
   .catch((error) => {
    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });

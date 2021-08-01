@@ -89,8 +89,8 @@ export const signUp = (data) => async (dispatch, getState) => {
      email: res.user.email,
      phone: '123456789',
     });
-   dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
-   dispatch({ type: USER_REGISTER_SUCCESS });
+   //  dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
+   dispatch({ type: USER_REGISTER_SUCCESS, payload: res.user.uid });
   })
   .catch((error) => {
    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });

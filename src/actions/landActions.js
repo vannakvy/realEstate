@@ -3,6 +3,9 @@ import {
  LAND_BY_ID_FAI,
  LAND_BY_ID_REQ,
  LAND_BY_ID_SUC,
+ LAND_BY_USER_FAI,
+ LAND_BY_USER_REQ,
+ LAND_BY_USER_SUC,
  LAND_CREATE_FAI,
  LAND_CREATE_REQ,
  LAND_CREATE_SUC,
@@ -81,6 +84,7 @@ export const getLandList =
 export const deleteLand = (id) => async (dispatch) => {
  try {
   await db.collection('landList').doc(id).delete();
+  message.success('លុបទិន្នន័យជោគជ័យ');
  } catch (error) {
   console.log(error.message);
  }
@@ -123,5 +127,22 @@ export const getLandById = (id) => async (dispatch) => {
   });
  } catch (error) {
   dispatch({ type: LAND_BY_ID_FAI, payload: error.message });
+ }
+};
+
+export const getLandByUser = (uid) => async (dispatch) => {
+ try {
+  dispatch({ type: LAND_BY_USER_REQ });
+  let ref = db.collection('landList').where('uid', '==', uid);
+
+  ref.onSnapshot((queryS) => {
+   const items = [];
+   queryS.forEach((doc) => {
+    items.push({ ...doc.data(), id: doc.id });
+   });
+   dispatch({ type: LAND_BY_USER_SUC, payload: items });
+  });
+ } catch (error) {
+  dispatch({ type: LAND_BY_USER_FAI, payload: error.message });
  }
 };

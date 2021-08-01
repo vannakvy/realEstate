@@ -117,16 +117,24 @@ export const MapDraw = (props) => {
  const _onCreated = (e) => {
   const { layerType, layer } = e;
   if (layerType === 'polygon') {
-   const { _leaflet_id } = layer;
-   setMapLayers((layers) => [
-    ...layers,
-    { id: _leaflet_id, latlngs: layer.getLatLngs()[0] },
-   ]);
+   const items = [];
+   layer.getLatLngs()[0].forEach((la) => {
+    items.push({ lat: la.lat, lng: la.lng });
+   });
+
+   setMapLayers(items);
   }
 
   setOnCreateL(true);
  };
  const _onEdited = (e) => {
+  const { layers } = e;
+
+  setMapLayers((layer) => [
+   ...layer,
+   { id: 1, latlngs: layers.getLatLngs()[0] },
+  ]);
+
   console.log(e);
  };
  const _onDeleted = (e) => {
@@ -316,16 +324,14 @@ export const MapDraw = (props) => {
         </div>
        ))}
      </FeatureGroup>
-     {/* {satellite ? ( */}
 
      <ReactLeafletGoogleLayer
-      googleMapsLoaderConf={{
-       KEY: 'AIzaSyCLpho9FZOn3PUIt7Pm8R6GPTIQQrJ1_1M',
-      }}
+      // googleMapsLoaderConf={{
+      //  KEY: 'AIzaSyCLpho9FZOn3PUIt7Pm8R6GPTIQQrJ1_1M',
+      // }}
       type={'hybrid'}
       h
      />
-     {/* ) : null} */}
 
      <GeoJSON data={mapJson} onEachFeature={onEachFeature} style={style} />
     </Map>
@@ -375,7 +381,7 @@ export const MapDraw = (props) => {
       ))}
     </div> */}
    {/* </div> */}
-   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLong={mapLayers} />
+   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLng={mapLayers} />
    <pre>{JSON.stringify(mapLayers, 0, 2)}</pre>
   </div>
  );

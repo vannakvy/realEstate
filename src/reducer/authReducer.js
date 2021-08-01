@@ -27,6 +27,14 @@ import {
  USER_BY_ID_FAI,
  USER_BY_ID_SUC,
  USER_BY_ID_REQ,
+ LANDOWNER_LIST_REQ,
+ LANDOWNER_LIST_SUC,
+ LANDOWNER_LIST_FAI,
+ LANDOWNER_LIST_RES,
+ LANDOWNER_BY_ID_RES,
+ LANDOWNER_BY_ID_FAI,
+ LANDOWNER_BY_ID_SUC,
+ LANDOWNER_BY_ID_REQ,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -143,6 +151,37 @@ export const allActionListReducer = (state = {}, action) => {
   case GET_ACTION_FAI:
    return { loading: false, error: action.payload };
   case GET_ACTION_RES:
+   return {};
+  default:
+   return state;
+ }
+};
+
+// land Owner
+export const landOwerListReducer = (state = { landOwerList: [] }, action) => {
+ switch (action.type) {
+  case LANDOWNER_LIST_REQ:
+   return { loading: true };
+  case LANDOWNER_LIST_SUC:
+   return { loading: false, landOwerList: action.payload };
+  case LANDOWNER_LIST_FAI:
+   return { loading: false, error: action.payload };
+  case LANDOWNER_LIST_RES:
+   return {};
+  default:
+   return state;
+ }
+};
+
+export const landOwerByIdReducer = (state = { landOwerById: {} }, action) => {
+ switch (action.type) {
+  case LANDOWNER_BY_ID_REQ:
+   return { loading: true };
+  case LANDOWNER_BY_ID_SUC:
+   return { loading: false, landOwerById: action.payload };
+  case LANDOWNER_BY_ID_FAI:
+   return { loading: false, error: action.payload };
+  case LANDOWNER_BY_ID_RES:
    return {};
   default:
    return state;

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
  },
 }));
 
-export default function SimpleModal({ open, setOpen, latLong }) {
+export default function SimpleModal({ open, setOpen, latLng }) {
  //  const { onCreateL, setOnCreateL } = props;
  const classes = useStyles();
  // getModalStyle is not a pure function, we roll the style only on the first render
@@ -37,19 +37,7 @@ export default function SimpleModal({ open, setOpen, latLong }) {
  const dispatch = useDispatch();
 
  const onFinish = (values) => {
-  const items = [];
-  latLong[0].latlngs.forEach((la) => {
-   items.push({ lat: la.lat, lng: la.lng });
-  });
-
-  console.log(items);
-
-  console.log('Success:', {
-   ...values,
-   coordinates: items,
-  });
-  dispatch(createLand({ ...values, coordinates: items }));
-
+  dispatch(createLand({ ...values, coordinates: latLng }));
   setOpen(false);
   form.resetFields();
  };

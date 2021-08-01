@@ -26,6 +26,12 @@ import {
  USER_BY_ID_REQ,
  USER_BY_ID_SUC,
  USER_BY_ID_FAI,
+ LANDOWNER_LIST_REQ,
+ LANDOWNER_LIST_SUC,
+ LANDOWNER_LIST_FAI,
+ LANDOWNER_BY_ID_REQ,
+ LANDOWNER_BY_ID_SUC,
+ LANDOWNER_BY_ID_FAI,
 } from '../constants/auth';
 export const login = (email, password) => async (dispatch) => {
  try {
@@ -192,5 +198,76 @@ export const deleteAction = (id) => async () => {
   await db.collection('userActions').doc(id).delete();
  } catch (error) {
   alert(error.message);
+ }
+};
+
+// Land Owner
+export const createLandOwner = (data) => async (dispatch, getState) => {
+ const {
+  userLogin: { userInformation },
+ } = getState();
+
+ try {
+  db.collection('landOwner').add({
+   name: data.name,
+   imgUrl: '',
+   phone: data.phone,
+   createdBy: userInformation.uid,
+   createAt: new Date().getTime(),
+  });
+ } catch (error) {
+  message.error(error.message);
+ }
+};
+
+export const updateLandOwner = (data) => async (dispatch, getState) => {
+ try {
+  await db
+   .collection('landOwner')
+   .doc(data.uid)
+   .update({
+    name: data.name,
+    phone: data.phone,
+    imgUrl: data.imgUrl || '',
+   });
+ } catch (error) {
+  message.error(error.message);
+ }
+};
+
+export const deleteLandOwner = (data) => async (dispatch, getState) => {
+ try {
+  await db.collection('landOwner').doc(data.uid).delete();
+ } catch (error) {
+  message.error(error.message);
+ }
+};
+
+export const getAllLandOwner = () => async (dispatch, getState) => {
+ try {
+  dispatch({ type: LANDOWNER_LIST_REQ });
+  const ref = db.collection('landOwner');
+
+  ref.onSnapshot((queryS) => {
+   const items = [];
+   queryS.forEach((doc) => {
+    items.push({ ...doc.data(), id: doc.id });
+   });
+   dispatch({ type: LANDOWNER_LIST_SUC, payload: items });
+  });
+ } catch (error) {
+  dispatch({ type: LANDOWNER_LIST_FAI, payload: error.message });
+ }
+};
+
+export const getLandOwnerById = (id) => async (dispatch, getState) => {
+ try {
+  dispatch({ type: LANDOWNER_BY_ID_REQ });
+  let ref = db.collection('landOwner').doc(id);
+  ref.onSnapshot((queryS) => {
+   dispatch({ type: LANDOWNER_BY_ID_SUC, payload: queryS.data() });
+  });
+ } catch (error) {
+  dispatch({ type: LANDOWNER_BY_ID_FAI, payload: error.message });
  }
 };

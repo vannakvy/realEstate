@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Input, Table, message, Select } from 'antd';
 import { PlusOutlined, RotateRightOutlined } from '@ant-design/icons';
-import { landCol } from '../component/land/tableColumn/landColumn';
+import { landCol } from './tableColumn/landColumn';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLand, deleteLand, getLandList } from '../actions/landActions';
+import { createLand, deleteLand, getLandList } from '../../actions/landActions';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import LandTable from '../component/land/LandTable';
 
-import AddUser from '../component/user/modal/addUser';
 // import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
 // import EditAccount from '../component/user/modal/editAccount';
@@ -17,7 +15,7 @@ import AddUser from '../component/user/modal/addUser';
 
 const { Option } = Select;
 
-export default function Land() {
+export default function LandTable({landOwner}) {
  const fake = [
   {
    id: 320,
@@ -88,60 +86,33 @@ export default function Land() {
 
  return (
   <>
-   <h2>តារាងដីនីមួយៗ</h2>
-   <Row>
-    <AddUser open={openAdd} setOpen={setOpenAdd} />
-    {/* <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
-            <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
-            <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}
-    <Col xs={6} md={12}>
-     <NavLink
-      // type="primary"
+     <Table
+      className="table-go-list"
+      // caseCol({handleDelete})
+      columns={landCol({
+       handleDelete,
+       handleUserEdit,
+       handleAccountEdit,
+       handleUserRole,
+       setRoleUserID,
+       limit,
+       page,
+       landOwner
+      })}
+      dataSource={landList}
+      rowKey={(record) => record.id}
+      pagination={true}
+      // pagination={{
+      //     total: 30,
+      //     //pageSizeOptions:["10", "20"],
+      //     // showSizeChanger: true,
+      //     current:1,
+      //     onChange:((page, pageSize) => {setPage(page);setLimit(pageSize)} )
+      // }}
+      scroll={{ x: 400 }}
+      sticky
+     />
 
-      to="/"
-      //       onClick={() => setOpenAdd(true)}
-     >
-      <Button style={{ backgroundColor: '#FF5A87', color: '#FFF' }}>
-       បញ្ចូលដីថ្មី
-       <PlusOutlined />
-      </Button>
-     </NavLink>
-    </Col>
-    <Col xs={20} md={12}>
-     <Row>
-      <Col xs={8}>
-       <Input.Search
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="ស្វែងរក..."
-        style={{ width: '100%' }}
-       />
-      </Col>
-      <Col xs={8}>
-       <Select
-        placeholder="ស្ថានភាព"
-        style={{ width: '100%' }}
-        onChange={(e) => console.log(e.target.value)}
-       >
-        <Option value={true}>ដាក់លក់</Option>
-        <Option value={false}>មិនដាក់លក់</Option>
-       </Select>
-      </Col>
-      <Col xs={8}>
-       <Select
-        placeholder="តាមខេត្ត"
-        style={{ width: '100%' }}
-        onChange={(e) => console.log(e.target.value)}
-       >
-        <Option value="សៀមរាប">សៀមរាប</Option>
-        <Option value="ភ្នំពេញ">ភ្នំពេញ</Option>
-       </Select>
-      </Col>
-     </Row>
-    </Col>
-    <Col xs={24} style={{ marginTop: 20 }}>
-     <LandTable />
-    </Col>
-   </Row>
   </>
  );
 }

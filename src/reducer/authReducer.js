@@ -158,12 +158,12 @@ export const allActionListReducer = (state = {}, action) => {
 };
 
 // land Owner
-export const landOwerListReducer = (state = { landOwerList: [] }, action) => {
+export const landOwnerListReducer = (state = { landOwnerList: [] }, action) => {
  switch (action.type) {
   case LANDOWNER_LIST_REQ:
    return { loading: true };
   case LANDOWNER_LIST_SUC:
-   return { loading: false, landOwerList: action.payload };
+   return { loading: false, landOwnerList: action.payload };
   case LANDOWNER_LIST_FAI:
    return { loading: false, error: action.payload };
   case LANDOWNER_LIST_RES:
@@ -173,12 +173,12 @@ export const landOwerListReducer = (state = { landOwerList: [] }, action) => {
  }
 };
 
-export const landOwerByIdReducer = (state = { landOwerById: {} }, action) => {
+export const landOwnerByIdReducer = (state = { landOwnerById: {} }, action) => {
  switch (action.type) {
   case LANDOWNER_BY_ID_REQ:
    return { loading: true };
   case LANDOWNER_BY_ID_SUC:
-   return { loading: false, landOwerById: action.payload };
+   return { loading: false, landOwnerById: action.payload };
   case LANDOWNER_BY_ID_FAI:
    return { loading: false, error: action.payload };
   case LANDOWNER_BY_ID_RES:

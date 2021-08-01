@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  allActionListReducer,
- landOwerByIdReducer,
- landOwerListReducer,
+ landOwnerByIdReducer,
+ landOwnerListReducer,
  userAccountByIdReducer,
  userAccountDeleteReducer,
  userAccountListReducer,
@@ -30,8 +30,8 @@ const reducer = combineReducers({
  userCreateAction: userCreateActionReducer,
  allActionList: allActionListReducer,
  //  landOwner
- landOwerList: landOwerListReducer,
- landOwerById: landOwerByIdReducer,
+ landOwnerList: landOwnerListReducer,
+ landOwnerById: landOwnerByIdReducer,
  //  land
  landList: landListReducer,
  landById: landByIdReducer,

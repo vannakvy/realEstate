@@ -297,3 +297,18 @@ title {
 .table-personal tr th {
  font-size: 12px !important;
 }
+.box-detail{
+  padding: 15px;
+  
+}
+
+.detail-table tr td{
+  padding: 10px;
+}
+
+.box-card{
+  margin:10px;  
+  box-shadow: 2px 8px 20px #CCC;
+}
+
+

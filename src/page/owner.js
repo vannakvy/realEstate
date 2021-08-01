@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Row, Col, Button, Input, Table, message, Select } from 'antd'
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Button, Input, Table, message, Select } from 'antd';
 import { PlusOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { ownerCol } from '../component/owner/tableColumn/ownerColumn';
 import moment from 'moment';
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllLandOwner, deleteLandOwner,getUserAccount } from '../actions/authAction';
 import EditOwner from '../component/owner/modal/editOwner';
 
-const { Option } = Select
+const { Option } = Select;
 
 export default function Owner() {
 

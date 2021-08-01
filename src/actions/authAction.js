@@ -69,6 +69,7 @@ export const signout = () => async (dispatch) => {
 };
 
 export const signUp = (data) => async (dispatch, getState) => {
+ console.log(data);
  const {
   userLogin: { userInformation },
  } = getState();

@@ -75,8 +75,8 @@ export const signUp = (data) => async (dispatch, getState) => {
  dispatch({ type: USER_REGISTER_REQUEST });
  auth
   .createUserWithEmailAndPassword(data.email, data.password)
-  .then((res) => {
-   db
+  .then(async (res) => {
+   const newUser = await db
     .collection('account')
     .doc(res.user.uid)
     .set({
@@ -89,8 +89,10 @@ export const signUp = (data) => async (dispatch, getState) => {
      email: res.user.email,
      phone: '123456789',
     });
+
+   console.log(newUser);
    //  dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
-   dispatch({ type: USER_REGISTER_SUCCESS, payload: res.user.uid });
+   dispatch({ type: USER_REGISTER_SUCCESS, payload: newUser });
   })
   .catch((error) => {
    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });

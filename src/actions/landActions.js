@@ -130,7 +130,7 @@ export const getLandById = (id) => async (dispatch) => {
 export const getLandByUser = (uid) => async (dispatch) => {
  try {
   dispatch({ type: LAND_BY_USER_REQ });
-  let ref = db.collection('landList').where('uid', '==', uid);
+  let ref = db.collection('landList').where('owner.ownerId', '==', uid);
 
   ref.onSnapshot((queryS) => {
    const items = [];

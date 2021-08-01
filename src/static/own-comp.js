@@ -43,8 +43,9 @@ export function ListSelect({ type, data, title, value, setValue, id, disabled })
                         optionA.children.localeCompare(optionB.children)
                     }
                 >
+                    <Option value="new" key="new">បញ្ចូលថ្មី</Option>
                     {data.map(load => {
-                        return <Option value={load.title} key={load.title}>{load.title}</Option>
+                        return <Option value={load.id} key={load.name}>{load.name}</Option>
                     })}
                 </Select>
             ) : (

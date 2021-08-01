@@ -26,9 +26,10 @@ export const createLand = (land) => async (dispatch, getState) => {
    idLand: land.idLand,
    landType: land.landType,
    owner: {
-    name: land.name,
+    name: land.name || '',
+    ownerId: land.ownerId || '',
     img: [],
-    phone: land.phone,
+    phone: land.phone || '',
     size: land.size,
     detail: land.detail || '',
    },

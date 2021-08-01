@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const MapDraw = (props) => {
+ const { landList, edit } = props;
  const classes = useStyles(props);
  const editRef = useRef();
  const [mapLayers, setMapLayers] = useState([]);
@@ -67,51 +68,11 @@ export const MapDraw = (props) => {
  const [onCreateL, setOnCreateL] = useState(false);
 
  useEffect(() => {
-  if (searchId) {
-   const searched = sellLand.filter((s) => {
-    return s.idLand == searchId;
-   });
-   setLand(searched);
-   if (searched.length) {
-    setPosi({
-     ...posi,
-     posi: [searched[0].coordinates[0].lat, searched[0].coordinates[0].lng],
-     zoom: 16,
-    });
-    setSatellite(true);
-   }
-  } else {
-   if (addr.pro && addr.dis && addr.com) {
-    setLand(
-     sellLand.filter((s) => {
-      return s.addr.com === addr.com;
-     })
-    );
-   } else if (addr.pro && addr.dis) {
-    setLand(
-     sellLand.filter((s) => {
-      return s.addr.dis === addr.dis;
-     })
-    );
-   } else if (addr.pro) {
-    setLand(
-     sellLand.filter((s) => {
-      return s.addr.pro === addr.pro;
-     })
-    );
-   } else {
-    setLand(sellLand);
-   }
-  }
- }, [addr, searchId]);
+  setLand(landList);
+ }, [landList]);
 
  useEffect(() => {
-  if (zo === 8) {
-   setMapJson(geoJson);
-  } else {
-   setMapJson(geoDisJson);
-  }
-  console.log(zo);
+  setMapJson(geoJson);
  }, [zo]);
 
  const _onCreated = (e) => {
@@ -121,21 +82,19 @@ export const MapDraw = (props) => {
    layer.getLatLngs()[0].forEach((la) => {
     items.push({ lat: la.lat, lng: la.lng });
    });
-
    setMapLayers(items);
   }
-
   setOnCreateL(true);
  };
  const _onEdited = (e) => {
   const { layers } = e;
+  const items = [];
 
-  setMapLayers((layer) => [
-   ...layer,
-   { id: 1, latlngs: layers.getLatLngs()[0] },
-  ]);
+  layers.getLayers()[0]._latlngs[0].forEach((la) => {
+   items.push({ lat: la.lat, lng: la.lng });
+  });
 
-  console.log(e);
+  console.log(items);
  };
  const _onDeleted = (e) => {
   console.log(e);
@@ -292,14 +251,14 @@ export const MapDraw = (props) => {
       />
       {land &&
        land.map((l) => (
-        <div key={l.idLand}>
-         {zo >= 15 ? (
+        <div key={l.id}>
+         {zo >= 14 ? (
           <Polygon
            onClick={() =>
             setPosi({
              ...posi,
              posi: [l.coordinates[0].lat, l.coordinates[0].lng],
-             zoom: 16,
+             zoom: 18,
             })
            }
            className="bg-light"
@@ -315,7 +274,7 @@ export const MapDraw = (props) => {
             setPosi({
              ...posi,
              posi: [l.coordinates[0].lat, l.coordinates[0].lng],
-             zoom: 16,
+             zoom: 18,
             })
            }
            position={[l.coordinates[0].lat, l.coordinates[0].lng]}

@@ -76,16 +76,19 @@ export const signUp = (data) => async (dispatch, getState) => {
  auth
   .createUserWithEmailAndPassword(data.email, data.password)
   .then((res) => {
-   db.collection('account').doc(res.user.uid).set({
-    name: data.name,
-    createAt: new Date(),
-    imgUrl: '',
-    uid: res.user.uid,
-    admin: data.isAdmin,
-    createdBy: userInformation.uid,
-    email: res.user.email,
-    phone: '123456789',
-   });
+   db
+    .collection('account')
+    .doc(res.user.uid)
+    .set({
+     name: data.name,
+     createAt: new Date().getTime(),
+     imgUrl: '',
+     uid: res.user.uid,
+     role: data.role,
+     createdBy: userInformation.uid || '',
+     email: res.user.email,
+     phone: '123456789',
+    });
    dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
    dispatch({ type: USER_REGISTER_SUCCESS });
   })
@@ -141,16 +144,12 @@ export const updateUserAccount = (user) => async (dispatch, getState) => {
  } = getState();
  try {
   dispatch({ type: USER_UPDATE_REQUEST });
-  await db
-   .collection('account')
-   .doc(user.uid)
-   .update({
-    admin: user.isAdmin || false,
-    createdBy: userInformation.uid,
-    phone: user.phone || '',
-    name: user.name,
-    imgUrl: user.imgUrl || '',
-   });
+  await db.collection('account').doc(user.uid).update({
+   role: user.role,
+   phone: user.phone,
+   name: user.name,
+   imgUrl: user.imgUrl,
+  });
   dispatch({ type: USER_UPDATE_SUCCESS });
  } catch (error) {
   dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
@@ -224,7 +223,7 @@ export const updateLandOwner = (data) => async (dispatch, getState) => {
  try {
   await db
    .collection('landOwner')
-   .doc(data.uid)
+   .doc(data.id)
    .update({
     name: data.name,
     phone: data.phone,
@@ -235,9 +234,9 @@ export const updateLandOwner = (data) => async (dispatch, getState) => {
  }
 };
 
-export const deleteLandOwner = (data) => async (dispatch, getState) => {
+export const deleteLandOwner = (id) => async (dispatch, getState) => {
  try {
-  await db.collection('landOwner').doc(data.uid).delete();
+  await db.collection('landOwner').doc(id).delete();
  } catch (error) {
   message.error(error.message);
  }

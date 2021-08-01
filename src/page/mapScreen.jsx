@@ -23,7 +23,9 @@ import { Form, Divider } from 'antd';
 import ImageCovid from '../asset/covid19.png';
 import ImageRecover from '../asset/recover.png';
 import ImageDeath from '../asset/death.png';
-import MapDraw from '../components';
+import MapDraw from '../components/MapDraw';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLandList } from '../actions/landActions';
 
 const MapScreen = () => {
  const [countryInfo, setCountryInfo] = useState({});
@@ -40,6 +42,14 @@ const MapScreen = () => {
  const [districtDatas, setDistrictDatas] = useState({});
  let [form] = Form.useForm();
 
+ const dispatch = useDispatch();
+ const { landList } = useSelector((state) => state.landList);
+ useEffect(() => {
+  dispatch(getLandList());
+ }, []);
+
+ console.log(landList);
+
  const setToDistrictFn = (e) => {
   form.setFieldsValue({
    district: e,
@@ -47,24 +57,7 @@ const MapScreen = () => {
    village: null,
   });
   setDistrict(e);
-  // setCommune("")
  };
-
- // function lower(obj) {
- //   for (var prop in obj) {
- //     if (typeof obj[prop] === "string") {
- //       obj[prop] = obj[prop].toLowerCase();
- //     }
- //     if (typeof obj[prop] === "object") {
- //       lower(obj[prop]);
- //     }
- //   }
- //   return obj;
- // }
-
- // countries.forEach((c) => {
- //   lower(c);
- // });
 
  return (
   <Fragment>
@@ -114,7 +107,7 @@ const MapScreen = () => {
       />
      </div>
 
-     <MapDraw />
+     <MapDraw landList={landList} edit={false} />
 
      {/* <Map
         

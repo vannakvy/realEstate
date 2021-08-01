@@ -23,6 +23,7 @@ import Land from './page/land';
 import ShareLand from './page/shareland';
 import Action from './page/action';
 import LandDetail from './page/landdetail';
+import Owner from './page/owner';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
@@ -58,6 +59,10 @@ const Routes = () => {
           </Route>
           <Route path="/action">
            <Action />
+          </Route>
+
+          <Route path="/owner">
+           <Owner />
           </Route>
 
           <Route path="/signup">

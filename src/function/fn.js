@@ -80,8 +80,8 @@ export function keyMenu(e) {
   x = '/shareland';
  } else if (myArr[1] === 'case' || myArr[1] === 'subCase') {
   x = '/case';
- } else if (myArr[1] === 'quarantine' || myArr[1] === 'subQuarantine') {
-  x = '/quarantine';
+ } else if (myArr[1] === 'owner') {
+  x = '/owner';
  } else if (myArr[1] === 'hospital' || myArr[1] === 'subHospital') {
   x = '/hospital';
  } else if (myArr[1] === 'action') {

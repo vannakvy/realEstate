@@ -10,51 +10,37 @@ import {
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
 
-export const ownerCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handleUserRole, setRoleUserID , limit, page }) => {
+export const ownerCol = ({ handleDelete, handleOwnerEdit,handleAccountEdit,handleUserRole, setRoleUserID , limit, page }) => {
     // let l = limit >= 20 ? limit/page : limit
     // let no = ((page-1) * l)
     let no=100
     var array = [
-        {
-            title: 'កាលបរិច្ឆេទ',
-            dataIndex: 'date',
-            key: 'date',
-            width: 50,
-            // render: (text, record) => (
-            //     <Space size="middle">
-            //         {no+=1}
-            //     </Space>
-            // ),
-        },
+        // {
+        //     title: 'កាលបរិច្ឆេទ',
+        //     dataIndex: 'date',
+        //     key: 'date',
+        //     width: 50,
+        //     // render: (text, record) => (
+        //     //     <Space size="middle">
+        //     //         {no+=1}
+        //     //     </Space>
+        //     // ),
+        // },
         {
             title: 'ឈ្មោះ',
-            dataIndex: 'staff',
-            key: 'staff',
+            dataIndex: 'name',
+            key: 'name',
             width: 100,
-        },
-        {
-            title: 'សកម្មភាព',
-            dataIndex: 'action',
-            key: 'action',
-            width: 100,
-        },
-
-        {
-            title: 'ស្ថានភាព',
-            dataIndex: 'status',
-            key: 'status',
-            width: 80,
         },
         
         {
-            title: 'other',
-            dataIndex: 'other',
-            key: 'other',
-            width: 50,
+            title: 'លេខទូរស័ព្ទ',
+            dataIndex: 'phone',
+            key: 'phone',
+            width: 100,
             
         },
        
-    
         {
             key: 'action',
             dataIndex: 'action',
@@ -64,8 +50,8 @@ export const ownerCol = ({ handleDelete, handleUserEdit,handleAccountEdit,handle
             render: (text, record) => (
                 <Space size="middle">
                     
-                    {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-                    {/* <Link className="link"><EyeOutlined /></Link> */}
+                    {/* <span className="link" onClick={() => handleOwnerEdit(record)}><EditOutlined /></span> */}
+                    <Link className="link" to={"/ownerdetail/"+record.id}><EyeOutlined /></Link>
 
                     <Popconfirm
                         title="តើអ្នកពិតចង់លុបមែនឬទេ?"

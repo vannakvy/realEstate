@@ -3,11 +3,16 @@ import { Row, Col, Button, Input, Table, message, Select } from 'antd'
 import { PlusOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { ownerCol } from '../component/owner/tableColumn/ownerColumn';
 import moment from 'moment';
+import { NavLink } from 'react-router-dom';
 
-// import AddUser from '../component/user/modal/addUser';
+import AddOwner from '../component/owner/modal/addOwner';
 // import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
 // import EditAccount from '../component/user/modal/editAccount';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllLandOwner, deleteLandOwner } from '../actions/authAction';
+import EditOwner from '../component/owner/modal/editOwner';
 
 const { Option } = Select
 
@@ -37,6 +42,9 @@ export default function Owner() {
         }
     ]
 
+    const dispatch = useDispatch()
+    const {landOwnerList} = useSelector(state => state.landOwnerList)
+
     const [landData, setLandData] = useState([])
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
@@ -45,46 +53,51 @@ export default function Owner() {
     const [dataRoles, setDataRoles] = useState([])
     const [openAdd, setOpenAdd] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
-    const [userEdit, setUserEdit] = useState({});
+    const [ownerEdit, setOwnerEdit] = useState({});
     const [openRole, setOpenRole] = useState(false)
     const [roleUserID, setRoleUserID] = useState("")
     const [openEditAccount, setOpenEditAccount] = useState(false)
 
     useEffect(() => {
-        if(fake) {
-            setLandData(fake)
-        }
-    },[])
+        dispatch(getAllLandOwner())
+    }, [dispatch])
+
+    console.log(landOwnerList)
 
     const handleUserRole = (e) => {
         setOpenRole(true)
         setDataRoles(e)
     }
 
-    const handleUserEdit = (e) => {
-        setUserEdit(e)
+    const handleOwnerEdit = (e) => {
+        setOwnerEdit(e)
         setOpenEdit(true)
     }
 
-    const handleAccountEdit = (e) => {
-        setUserEdit(e)
-        setOpenEditAccount(true)
-    }
-
     const handleDelete = (e) => {
-
-
+        console.log(e)
+        dispatch(deleteLandOwner(e))
     }
 
     return (
         <>
             <h2>តារាងម្ចាស់ដី</h2>
             <Row>
-                {/* <AddUser open={openAdd} setOpen={setOpenAdd} /> */}
-                {/* <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
-            <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
-            <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}
-                
+                <AddOwner open={openAdd} setOpen={setOpenAdd} />
+                <EditOwner open={openEdit} setOpen={setOpenEdit} data={ownerEdit} />
+
+                <Col xs={6} md={12}>
+
+                    <Button
+                        // type="primary"
+                        style={{ backgroundColor: '#FF5A87', color: '#FFF' }}
+                        onClick={() => setOpenAdd(true)}
+                    >
+                        បញ្ចូលម្ចាស់ដីថ្មី
+                        <PlusOutlined />
+                    </Button>
+
+                </Col>
                 <Col
                     xs={24}
                     style={{ marginTop: 20 }}
@@ -92,8 +105,8 @@ export default function Owner() {
                     <Table
                         className="table-go-list"
                         // caseCol({handleDelete})
-                        columns={ownerCol({ handleDelete, handleUserEdit, handleAccountEdit, handleUserRole, setRoleUserID, limit, page })}
-                        dataSource={landData}
+                        columns={ownerCol({ handleDelete, handleOwnerEdit, handleUserRole, setRoleUserID, limit, page })}
+                        dataSource={landOwnerList}
                         rowKey={record => record.id}
                         pagination={true}
                         // pagination={{

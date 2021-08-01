@@ -224,7 +224,7 @@ export const updateLandOwner = (data) => async (dispatch, getState) => {
  try {
   await db
    .collection('landOwner')
-   .doc(data.uid)
+   .doc(data.id)
    .update({
     name: data.name,
     phone: data.phone,
@@ -235,9 +235,9 @@ export const updateLandOwner = (data) => async (dispatch, getState) => {
  }
 };
 
-export const deleteLandOwner = (data) => async (dispatch, getState) => {
+export const deleteLandOwner = (id) => async (dispatch, getState) => {
  try {
-  await db.collection('landOwner').doc(data.uid).delete();
+  await db.collection('landOwner').doc(id).delete();
  } catch (error) {
   message.error(error.message);
  }

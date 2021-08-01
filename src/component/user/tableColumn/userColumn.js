@@ -1,7 +1,8 @@
 import React from 'react';
 import { Space, Popconfirm } from 'antd';
-import { EditOutlined, DeleteOutlined, KeyOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, KeyOutlined,EyeOutlined } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
+import { Link } from 'react-router-dom';
 
 export const userCol = ({
  handleDelete,
@@ -82,9 +83,10 @@ export const userCol = ({
      {/* <span className="link" onClick={() => handleAccountEdit(record)}>
       <KeyOutlined />
      </span> */}
-     <span className="link" onClick={() => handleUserEdit(record)}>
+     {/* <span className="link" onClick={() => handleUserEdit(record)}>
       <EditOutlined />
-     </span>
+     </span> */}
+     <Link className="link" to={"/userdetail/"+ record.id}><EyeOutlined /></Link>
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {

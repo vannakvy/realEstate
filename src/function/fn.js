@@ -80,7 +80,7 @@ export function keyMenu(e) {
   x = '/shareland';
  } else if (myArr[1] === 'case' || myArr[1] === 'subCase') {
   x = '/case';
- } else if (myArr[1] === 'owner') {
+ } else if (myArr[1] === 'owner' || myArr[1] === 'ownerdetail') {
   x = '/owner';
  } else if (myArr[1] === 'hospital' || myArr[1] === 'subHospital') {
   x = '/hospital';

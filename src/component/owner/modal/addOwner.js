@@ -2,19 +2,21 @@ import React, { useContext } from 'react';
 import { Modal, Form, Input, Row, Col, Button, Select, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../../actions/authAction';
+import { createLandOwner } from '../../../actions/authAction';
 const { Option } = Select;
 
-export default function AddUser({ open, setOpen }) {
+export default function AddOwner({ open, setOpen }) {
  const dispatch = useDispatch();
 
  let [form] = Form.useForm();
 
  const onFinish = (values) => {
-  dispatch(signUp(values));
-  message.success('បញ្ចូលទិន្នន័យជោគជ័យ');
+    console.log(values)
+    dispatch(createLandOwner(values));
+    message.success('បញ្ចូលទិន្នន័យជោគជ័យ');
 
-  form.resetFields();
-  setOpen(false);
+    form.resetFields();
+    setOpen(false);
  };
 
  const onFinishFailed = (errorInfo) => {
@@ -23,7 +25,7 @@ export default function AddUser({ open, setOpen }) {
 
  return (
   <Modal
-   title="បញ្ចូលអ្នកប្រើប្រាស់ថ្មី"
+   title="បញ្ចូលម្ចាស់ដីថ្មី"
    visible={open}
    onOk={() => setOpen(false)}
    onCancel={() => setOpen(false)}
@@ -31,29 +33,11 @@ export default function AddUser({ open, setOpen }) {
   >
    <Form
     form={form}
-    name="addUser"
+    name="addOwner"
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}
    >
     <Row>
-     <Col xs={24} md={{ span: 11 }}>
-      <Form.Item
-       name="email"
-       rules={[{ required: true, message: 'Field is required!' }]}
-      >
-       <Input placeholder="អ៊ីម៉ែល" />
-      </Form.Item>
-     </Col>
-
-     <Col xs={24} md={{ span: 11, offset: 2 }}>
-      <Form.Item
-       name="password"
-       rules={[{ required: true, message: 'Field is required!' }]}
-      >
-       <Input placeholder="លេខកូដសម្ងាត់" style={{ width: '100%' }} />
-      </Form.Item>
-     </Col>
-
      <Col xs={24} md={{ span: 11 }}>
       <Form.Item
        name="name"
@@ -69,21 +53,6 @@ export default function AddUser({ open, setOpen }) {
        rules={[{ required: true, message: 'Field is required!' }]}
       >
        <Input placeholder="លេខទូរស័ព្ទ" style={{ width: '100%' }} />
-      </Form.Item>
-     </Col>
-
-     <Col xs={24} md={{ span: 11 }}>
-      <Form.Item
-       name="isAdmin"
-       rules={[{ required: true, message: 'Field is required!' }]}
-      >
-       {/* <Input placeholder="តួនាទី" /> */}
-       <Select placeholder="តួនាទី" style={{ width: '100%' }}>
-        <Option value="STAFF">STAFF</Option>
-        <Option value="LANDOWNER">LANDOWNER</Option>
-        <Option value="CUSTOMER">CUSTOMER</Option>
-        <Option value="ADMIN">ADMIN</Option>
-       </Select>
       </Form.Item>
      </Col>
 

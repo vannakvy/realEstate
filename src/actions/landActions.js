@@ -26,13 +26,11 @@ export const createLand = (land) => async (dispatch, getState) => {
    idLand: land.idLand,
    landType: land.landType,
    owner: {
-    name: land.name,
+    ownerId: land.ownerId,
     img: [],
-    phone: land.phone,
     size: land.size,
     detail: land.detail || '',
    },
-
    add: {
     pro: land.pro,
     dis: land.dis,
@@ -41,7 +39,7 @@ export const createLand = (land) => async (dispatch, getState) => {
    },
    coordinates: land.coordinates,
    createBy: userInformation.uid,
-   createAt: new Date(),
+   createAt: new Date().getTime(),
   });
 
   dispatch({ type: LAND_CREATE_SUC });
@@ -99,9 +97,8 @@ export const updateLand = (land) => async (dispatch, getState) => {
     idLand: land.idLand,
     landType: land.landType,
     owner: {
-     name: land.owner.name,
+     ownerId: land.owner.ownerId,
      img: land.owner.img,
-     phone: land.owner.phone,
      size: land.owner.size,
      detail: land.owner.detail,
     },

@@ -24,8 +24,13 @@ import ImageCovid from '../asset/covid19.png';
 import ImageRecover from '../asset/recover.png';
 import ImageDeath from '../asset/death.png';
 import MapDraw from '../components';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLandById } from '../actions/landActions';
 
-const LandDetail = () => {
+const LandDetail = (props) => {
+ const { id } = useParams();
+ const dispatch = useDispatch();
  const [countryInfo, setCountryInfo] = useState({});
  const [countries, setCountries] = useState([]);
  const [mapCountries, setMapCountries] = useState([]);
@@ -40,6 +45,12 @@ const LandDetail = () => {
  const [districtDatas, setDistrictDatas] = useState({});
  let [form] = Form.useForm();
 
+ const { landById: land } = useSelector((state) => state.landById);
+ console.log(land);
+ useEffect(() => {
+  dispatch(getLandById(id));
+ }, [dispatch, id]);
+
  const setToDistrictFn = (e) => {
   form.setFieldsValue({
    district: e,
@@ -49,22 +60,6 @@ const LandDetail = () => {
   setDistrict(e);
   // setCommune("")
  };
-
- // function lower(obj) {
- //   for (var prop in obj) {
- //     if (typeof obj[prop] === "string") {
- //       obj[prop] = obj[prop].toLowerCase();
- //     }
- //     if (typeof obj[prop] === "object") {
- //       lower(obj[prop]);
- //     }
- //   }
- //   return obj;
- // }
-
- // countries.forEach((c) => {
- //   lower(c);
- // });
 
  return (
   <Fragment>
@@ -85,54 +80,17 @@ const LandDetail = () => {
        </Form.Item>
       </FormControl>
      </div>
-     <div className="app__stats">
-      <InfoBox
-       onClick={(e) => setCasesType('sold')}
-       title="Sold"
-       isRed
-       active={casesType === 'sold'}
-       cases={districtDatas.confirmedCaseToday}
-       total={numeral(districtDatas.confirmedCase).format('0')}
-       ImageShow={ImageCovid}
-      />
-      <InfoBox
-       onClick={(e) => setCasesType('recovered')}
-       title="អ្នកជាសះស្បើយ"
-       active={casesType === 'recovered'}
-       cases={districtDatas.recoveredToday}
-       total={numeral(districtDatas.recovered).format('0')}
-       ImageShow={ImageRecover}
-      />
-      <InfoBox
-       onClick={(e) => setCasesType('deaths')}
-       title="អ្នកស្លាប់"
-       isRed
-       active={casesType === 'deaths'}
-       cases={districtDatas.deathToday}
-       total={numeral(districtDatas.death).format('0')}
-       ImageShow={ImageDeath}
-      />
-     </div>
 
      <MapDraw />
-
-     {/* <Map
-        
-          district={districtInfo}
-          casesType={casesType}
-          center={mapCenter}
-          zoom={mapZoom}
-        /> */}
-
-     {/* <MapDraw /> */}
     </div>
     <div className="app__right">
      <Card style={{ marginTop: '70px' }}>
       <CardContent>
        <div className="app__information">
-        <h3 className="covid_table">By Province</h3>
+        <h3 className="covid_table kh">ព័ត៌មានអំពីក្បាលដី</h3>
         <Divider />
-        <Table />
+        <h5>ម្ចាស់ដី: {land && land.owner && land.owner.name}</h5>
+        <h5>LandType: {land && land.landType}</h5>
        </div>
       </CardContent>
      </Card>

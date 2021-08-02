@@ -2,16 +2,44 @@ import React, { useContext } from 'react';
 import { Modal, Form, Input, Row, Col, Button, Select, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../../actions/authAction';
+import { useSelector } from 'react-redux';
+import db, { auth } from '../../../firebase/db';
 const { Option } = Select;
 
-export default function AddOwnerLand({ open, setOpen, setOwnerId, setOwnerData }) {
+export default function AddOwnerLand({
+ open,
+ setOpen,
+ setOwnerId,
+ setOwnerData,
+}) {
  const dispatch = useDispatch();
+ const { userInformation } = useSelector((state) => state.userLogin);
+ const { userRegister } = useSelector((state) => state.userRegister);
 
  let [form] = Form.useForm();
 
  const onFinish = (values) => {
-  dispatch(signUp(values));
+  auth
+   .createUserWithEmailAndPassword(values.email, values.password)
+   .then(async (res) => {
+    await db
+     .collection('account')
+     .doc(res.user.uid)
+     .set({
+      name: values.name,
+      createAt: new Date().getTime(),
+      imgUrl: '',
+      uid: res.user.uid,
+      role: values.role,
+      createdBy: userInformation.uid || '',
+      email: res.user.email,
+      phone: values.phone,
+     });
+   });
+
   message.success('បញ្ចូលទិន្នន័យជោគជ័យ');
+
+  console.log('', userRegister);
 
   form.resetFields();
   setOpen(false);

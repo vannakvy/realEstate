@@ -93,8 +93,6 @@ export const MapDraw = (props) => {
   layers.getLayers()[0]._latlngs[0].forEach((la) => {
    items.push({ lat: la.lat, lng: la.lng });
   });
-
-  console.log(items);
  };
  const _onDeleted = (e) => {
   console.log(e);
@@ -250,6 +248,7 @@ export const MapDraw = (props) => {
        }}
       />
       {land &&
+       land !== [] &&
        land.map((l) => (
         <div key={l.id}>
          {zo >= 14 ? (
@@ -264,9 +263,9 @@ export const MapDraw = (props) => {
            className="bg-light"
            positions={l.coordinates}
           >
-           <Tooltip direction="top">
-            <PupupCom />
-           </Tooltip>
+           <Popup direction="top">
+            <PupupCom land={l} />
+           </Popup>
           </Polygon>
          ) : (
           <Marker

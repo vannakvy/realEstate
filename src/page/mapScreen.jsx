@@ -44,11 +44,10 @@ const MapScreen = () => {
 
  const dispatch = useDispatch();
  const { landList } = useSelector((state) => state.landList);
- useEffect(() => {
-  dispatch(getLandList());
- }, []);
 
- console.log(landList);
+ useEffect(() => {
+  dispatch(getLandList('dsfsd', 'dsf'));
+ }, []);
 
  const setToDistrictFn = (e) => {
   form.setFieldsValue({
@@ -108,16 +107,6 @@ const MapScreen = () => {
      </div>
 
      <MapDraw landList={landList} edit={false} />
-
-     {/* <Map
-        
-          district={districtInfo}
-          casesType={casesType}
-          center={mapCenter}
-          zoom={mapZoom}
-        /> */}
-
-     {/* <MapDraw /> */}
     </div>
     <div className="app__right">
      <Card style={{ marginTop: '70px' }}>

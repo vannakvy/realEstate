@@ -23,7 +23,7 @@ import { Form, Divider } from 'antd';
 import ImageCovid from '../asset/covid19.png';
 import ImageRecover from '../asset/recover.png';
 import ImageDeath from '../asset/death.png';
-import MapDraw from '../components';
+import MapDraw from '../components/MapDraw';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandById } from '../actions/landActions';
@@ -39,17 +39,23 @@ const LandDetail = (props) => {
  const [mapCenter, setMapCenter] = useState({ lat: 13.3633, lng: 103.8564 });
  const [mapZoom, setMapZoom] = useState(9);
  const [districtInfo, setDistrictInfo] = useState([]);
+ const [landList, setLandList] = useState([]);
 
  //update the data
  const [district, setDistrict] = useState('');
  const [districtDatas, setDistrictDatas] = useState({});
  let [form] = Form.useForm();
 
- const { landById: land } = useSelector((state) => state.landById);
- console.log(land);
+ const { landById } = useSelector((state) => state.landById);
  useEffect(() => {
   dispatch(getLandById(id));
  }, [dispatch, id]);
+
+ useEffect(() => {
+  if (landById !== undefined && landById !== {} && landById.id) {
+   setLandList([landById]);
+  }
+ }, [landById]);
 
  const setToDistrictFn = (e) => {
   form.setFieldsValue({
@@ -81,7 +87,7 @@ const LandDetail = (props) => {
       </FormControl>
      </div>
 
-     <MapDraw />
+     <MapDraw landList={landList} edit={false} />
     </div>
     <div className="app__right">
      <Card style={{ marginTop: '70px' }}>
@@ -89,8 +95,8 @@ const LandDetail = (props) => {
        <div className="app__information">
         <h3 className="covid_table kh">ព័ត៌មានអំពីក្បាលដី</h3>
         <Divider />
-        <h5>ម្ចាស់ដី: {land && land.owner && land.owner.name}</h5>
-        <h5>LandType: {land && land.landType}</h5>
+        <h5>ម្ចាស់ដី: {landById && landById.owner && landById.owner.name}</h5>
+        <h5>LandType: {landById && landById.landType}</h5>
        </div>
       </CardContent>
      </Card>

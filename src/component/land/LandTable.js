@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom';
 
 const { Option } = Select;
 
-export default function LandTable({landOwner}) {
+export default function LandTable({ landOwner }) {
  const fake = [
   {
    id: 320,
@@ -86,33 +86,32 @@ export default function LandTable({landOwner}) {
 
  return (
   <>
-     <Table
-      className="table-go-list"
-      // caseCol({handleDelete})
-      columns={landCol({
-       handleDelete,
-       handleUserEdit,
-       handleAccountEdit,
-       handleUserRole,
-       setRoleUserID,
-       limit,
-       page,
-       landOwner
-      })}
-      dataSource={landList}
-      rowKey={(record) => record.id}
-      pagination={true}
-      // pagination={{
-      //     total: 30,
-      //     //pageSizeOptions:["10", "20"],
-      //     // showSizeChanger: true,
-      //     current:1,
-      //     onChange:((page, pageSize) => {setPage(page);setLimit(pageSize)} )
-      // }}
-      scroll={{ x: 400 }}
-      sticky
-     />
-
+   <Table
+    className="table-go-list"
+    // caseCol({handleDelete})
+    columns={landCol({
+     handleDelete,
+     handleUserEdit,
+     handleAccountEdit,
+     handleUserRole,
+     setRoleUserID,
+     limit,
+     page,
+     landOwner,
+    })}
+    dataSource={landList}
+    rowKey={(record) => record.id}
+    pagination={true}
+    // pagination={{
+    //     total: 30,
+    //     //pageSizeOptions:["10", "20"],
+    //     // showSizeChanger: true,
+    //     current:1,
+    //     onChange:((page, pageSize) => {setPage(page);setLimit(pageSize)} )
+    // }}
+    scroll={{ x: 400 }}
+    sticky
+   />
   </>
  );
 }

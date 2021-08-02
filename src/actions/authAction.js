@@ -92,8 +92,6 @@ export const signUp = (data) => async (dispatch, getState) => {
      phone: '123456789',
     });
 
-   console.log(res.user.uid);
-
    dispatch({
     type: USER_REGISTER_SUCCESS,
     payload: { id: res.user.uid, name: data.name },

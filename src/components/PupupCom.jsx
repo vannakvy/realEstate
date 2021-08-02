@@ -1,22 +1,27 @@
 import React from 'react';
 
-const PupupCom = () => {
+const PupupCom = ({ land }) => {
  return (
-  <div className="kh text-center" style={{ width: '150px' }}>
-   <div className="text-center py-1">
+  <div className="kh" style={{ width: '150px' }}>
+   <div className="py-1">
+    <img
+     style={{ width: '40px' }}
+     src={require('./assets/images/images.png')}
+     alt=""
+    />
     <img
      style={{ width: '40px' }}
      src={require('./assets/images/images.png')}
      alt=""
     />
    </div>
-   <h6 className="text-center p-0 m-0">សុខ</h6>
-   <p className="text-center">
-    ទូរស័ព្ទៈ 012 345 678 <br />
-    ក្បាលដីៈ​ 50x100 ម៉ែត្រ <br />
-    ទំហំៈ​​ 5000 ម៉ែត្រការេ​ <br />
-    ទីតាំង <br />
-    ............
+   <h6 className="text-center p-0 m-0">ក្បាលដីៈ{land.idLand}</h6>
+   <p className="text-left">
+    ទំហំៈ​​ {land.owner.size} <br />
+    ភូមិ:{land.add.vil} <br />
+    ឃុំ/សង្កាត់:{land.add.com} <br />
+    ស្រុក/ខណ្ឌ:{land.add.dis} <br />
+    ខេត្ដ/ក្រុង:{land.add.pro}
    </p>
   </div>
  );

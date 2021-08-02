@@ -18,7 +18,7 @@ export const landCol = ({
  setRoleUserID,
  limit,
  page,
- landOwner
+ landOwner,
 }) => {
  // let l = limit >= 20 ? limit/page : limit
  // let no = ((page-1) * l)
@@ -26,8 +26,8 @@ export const landCol = ({
  var array = [
   {
    title: 'ID',
-   dataIndex: 'idLand',
-   key: 'idLand',
+   dataIndex: 'id',
+   key: 'id',
    width: 50,
    // render: (text, record) => (
    //     <Space size="middle">
@@ -35,7 +35,7 @@ export const landCol = ({
    //     </Space>
    // ),
   },
-  
+
   {
    title: 'ក្បាល់ដី',
    dataIndex: 'idLand',
@@ -66,7 +66,9 @@ export const landCol = ({
    dataIndex: 'owner',
    key: 'owner',
    width: 50,
-   render: (text, record) => <Space size="middle">{record?.owner?.name}</Space>,
+   render: (text, record) => (
+    <Space size="middle">{record?.owner?.ownerId}</Space>
+   ),
   },
   {
    title: 'ស្ថានភាព',
@@ -108,11 +110,12 @@ export const landCol = ({
   },
  ];
 
+ let newArr = array.filter(
+  (key) => key.key !== 'address' && key.key !== 'owner'
+ );
 
- let newArr = array.filter(key=> key.key !== "address" && key.key !== "owner")
-
- if(landOwner === true){
-   return newArr;
+ if (landOwner === true) {
+  return newArr;
  }
 
  return array;

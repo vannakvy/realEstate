@@ -56,13 +56,19 @@ export const getLandList =
    dispatch({ type: LAND_LIST_REQ });
    let ref = db.collection('landList').orderBy('createAt', 'desc');
 
-   if (pro) {
-    ref = db.collection('landList').where('add.pro', '==', pro);
+   if (pro && dis === '') {
+    console.log(dis);
+    ref = db
+     .collection('landList')
+     .orderBy('add.pro')
+     .startAt(pro)
+     .endAt('\uf8ff');
    } else if (pro && dis) {
     ref = db
      .collection('landList')
-     .where('add.pro', '==', pro)
-     .where('add.dis', '==', dis);
+     .orderBy('add.dis')
+     .startAt(dis)
+     .endAt('\uf8ff');
    }
 
    ref.onSnapshot((queryS) => {
@@ -120,7 +126,10 @@ export const getLandById = (id) => async (dispatch) => {
   dispatch({ type: LAND_BY_ID_REQ });
   let ref = db.collection('landList').doc(id);
   ref.onSnapshot((queryS) => {
-   dispatch({ type: LAND_BY_ID_SUC, payload: queryS.data() });
+   dispatch({
+    type: LAND_BY_ID_SUC,
+    payload: { ...queryS.data(), id: id },
+   });
   });
  } catch (error) {
   dispatch({ type: LAND_BY_ID_FAI, payload: error.message });

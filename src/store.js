@@ -18,6 +18,7 @@ import {
  landListByUserReducer,
  landListReducer,
 } from './reducer/landReducer';
+import { shareLandReducer } from './reducer/shareReducer';
 
 const reducer = combineReducers({
  // user
@@ -36,6 +37,8 @@ const reducer = combineReducers({
  landList: landListReducer,
  landById: landByIdReducer,
  landListByUser: landListByUserReducer,
+ //share
+ shareLand: shareLandReducer,
 });
 
 const userInformationFromStorage = localStorage.getItem('userInformation')

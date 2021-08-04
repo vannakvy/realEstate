@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.565b3913.chunk.css",
+    "main.js": "/static/js/main.7e1848ee.chunk.js",
+    "main.js.map": "/static/js/main.7e1848ee.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.433ed129.js",
+    "runtime-main.js.map": "/static/js/runtime-main.433ed129.js.map",
+    "static/css/2.9ff5e96c.chunk.css": "/static/css/2.9ff5e96c.chunk.css",
+    "static/js/2.ae1518c6.chunk.js": "/static/js/2.ae1518c6.chunk.js",
+    "static/js/2.ae1518c6.chunk.js.map": "/static/js/2.ae1518c6.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e78ffd825571e721b7673e46cf540e4b.js": "/precache-manifest.e78ffd825571e721b7673e46cf540e4b.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.9ff5e96c.chunk.css.map": "/static/css/2.9ff5e96c.chunk.css.map",
+    "static/css/main.565b3913.chunk.css.map": "/static/css/main.565b3913.chunk.css.map",
+    "static/js/2.ae1518c6.chunk.js.LICENSE.txt": "/static/js/2.ae1518c6.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/TACTENG.f40cb87f.TTF",
+    "static/media/covid19.png": "/static/media/covid19.77bcf725.png",
+    "static/media/death.png": "/static/media/death.6e845915.png",
+    "static/media/goglobalschool.png": "/static/media/goglobalschool.28267563.png",
+    "static/media/logo-company.png": "/static/media/logo-company.9b14bdb3.png",
+    "static/media/recover.png": "/static/media/recover.5cb2be8b.png",
+    "static/media/leaflet.draw.css": "/static/media/spritesheet.8b8e805f.svg",
+    "static/media/srLogo.png": "/static/media/srLogo.7a6f946f.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.433ed129.js",
+    "static/css/2.9ff5e96c.chunk.css",
+    "static/js/2.ae1518c6.chunk.js",
+    "static/css/main.565b3913.chunk.css",
+    "static/js/main.7e1848ee.chunk.js"
+  ]
+}

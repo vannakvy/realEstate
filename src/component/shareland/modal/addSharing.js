@@ -77,7 +77,12 @@ export default function AddSharing({ open, setOpen }) {
        name="duration"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
-       <Input type="number" placeholder="duration" style={{ width: '100%' }} />
+       <Input
+        type="number"
+        min={1}
+        placeholder="duration"
+        style={{ width: '100%' }}
+       />
       </Form.Item>
      </Col>
 

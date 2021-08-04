@@ -164,47 +164,6 @@ export default function ShareLand() {
      />
     </Col>
    </Row>
-   <h1>create Share</h1>
-   <Row>
-    <Col md={6}>
-     <form onSubmit={createShareHandler}>
-      <div className="mb-3">
-       <input
-        type="text"
-        name="landID"
-        className="form-control"
-        placeholder="idLand"
-        onChange={onChangeShare}
-        required
-       />
-      </div>
-      <div className="mb-3">
-       <input
-        type="text"
-        name="customer"
-        className="form-control"
-        placeholder="customer"
-        onChange={onChangeShare}
-        required
-       />
-      </div>
-      <div className="mb-3">
-       <input
-        type="number"
-        name="duration"
-        className="form-control"
-        placeholder="duration(day)"
-        min={1}
-        onChange={onChangeShare}
-        required
-       />
-      </div>
-      <button type="submit" className="btn btn-primary">
-       Submit
-      </button>
-     </form>
-    </Col>
-   </Row>
   </>
  );
 }

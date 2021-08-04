@@ -9,7 +9,7 @@ import db from '../firebase/db';
 export const getShareLand = () => async (dispatch, getState) => {
  try {
   dispatch({ type: GET_SHARE_REQ });
-  const ref = db.collection('shareLand');
+  const ref = db.collection('shareLand').orderBy('createAt', 'desc');
   ref.onSnapshot((queryS) => {
    const items = [];
    queryS.forEach((doc) => {
@@ -38,6 +38,7 @@ export const createShareLand = (data) => async (dispatch, getState) => {
     new Date().getTime() + (data.duration > 0 ? data.duration : 0) * 86400000,
    createBy: userInformation.uid,
   });
+  message.success('បង្កើត Sharing ជោគជ័យ');
  } catch (error) {
   message.error(error.message);
  }
@@ -46,6 +47,7 @@ export const createShareLand = (data) => async (dispatch, getState) => {
 export const deleteShareLand = (id) => async (dispatch, getState) => {
  try {
   await db.collection('shareLand').doc(id).delete();
+  message.success('លុប Sharing ជោគជ័យ');
  } catch (error) {
   message.error(error.message);
  }

@@ -86,7 +86,10 @@ export const landCol = ({
    render: (text, record) => (
     <Space size="middle">
      {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-     <Link to={'/landdetail/' + record.id} className="link">
+     <Link
+      to={'/ownerdetail/' + record?.owner?.ownerId + '?landId=' + record.id}
+      className="link"
+     >
       <EyeOutlined />
      </Link>
 

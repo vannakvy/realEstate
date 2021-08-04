@@ -35,6 +35,8 @@ export default function AddOwnerLand({
       email: res.user.email,
       phone: values.phone,
      });
+    // setOwnerId("set")
+    setOwnerData({ id: res.user.uid, name: values.name });
    });
 
   message.success('បញ្ចូលទិន្នន័យជោគជ័យ');
@@ -51,7 +53,7 @@ export default function AddOwnerLand({
 
  return (
   <Modal
-   title="បញ្ចូលអ្នកប្រើប្រាស់ថ្មី"
+   title="បញ្ចូលម្ចាស់ដីថ្មី"
    visible={open}
    onOk={() => setOpen(false)}
    onCancel={() => setOpen(false)}
@@ -103,14 +105,15 @@ export default function AddOwnerLand({
      <Col xs={24} md={{ span: 11 }}>
       <Form.Item
        name="role"
+       initialValue="LANDOWNER"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
        {/* <Input placeholder="តួនាទី" /> */}
-       <Select placeholder="តួនាទី" style={{ width: '100%' }}>
-        <Option value="STAFF">STAFF</Option>
+       <Select disabled placeholder="តួនាទី" style={{ width: '100%' }}>
+        {/* <Option value="STAFF">STAFF</Option> */}
         <Option value="LANDOWNER">LANDOWNER</Option>
-        <Option value="CUSTOMER">CUSTOMER</Option>
-        <Option value="ADMIN">ADMIN</Option>
+        {/* <Option value="CUSTOMER">CUSTOMER</Option> */}
+        {/* <Option value="ADMIN">ADMIN</Option> */}
        </Select>
       </Form.Item>
      </Col>

@@ -4,9 +4,14 @@ import { PlusOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { sharelandCol } from '../component/shareland/tableColumn/sharelandColumn';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { createShareLand, getShareLand } from '../actions/SharingActions';
+import {
+ createShareLand,
+ getShareLand,
+ deleteShareLand,
+} from '../actions/SharingActions';
+import copy from 'copy-to-clipboard';
 
-// import AddUser from '../component/user/modal/addUser';
+import AddSharing from '../component/shareland/modal/addSharing';
 // import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
 // import EditAccount from '../component/user/modal/editAccount';
@@ -14,30 +19,6 @@ import { createShareLand, getShareLand } from '../actions/SharingActions';
 const { Option } = Select;
 
 export default function ShareLand() {
- const fake = [
-  {
-   createAt: moment(new Date()).format('DD-MMM-YYYY'),
-   landID: 'ក្បាលដីមួយ',
-   customer: 'លីណា',
-   duration: 2,
-   status: 'expired',
-  },
-  {
-   createAt: moment(new Date()).format('DD-MMM-YYYY'),
-   landID: 'thenan',
-   customer: 'ដារា',
-   duration: 2,
-   status: 'sharing',
-  },
-  {
-   createAt: moment(new Date()).format('DD-MMM-YYYY'),
-   landID: 'dora',
-   customer: 'ស្វាហ៉ាប់',
-   duration: 2,
-   status: 'sharing',
-  },
- ];
-
  const [landData, setLandData] = useState([]);
  const [page, setPage] = useState(1);
  const [limit, setLimit] = useState(10);
@@ -91,7 +72,9 @@ export default function ShareLand() {
   setOpenEditAccount(true);
  };
 
- const handleDelete = (e) => {};
+ const handleDelete = (e) => {
+  dispatch(deleteShareLand(e));
+ };
 
  const onChangeShare = (e) => {
   setShareObj({ ...shareObj, [e.target.name]: e.target.value });
@@ -112,7 +95,7 @@ export default function ShareLand() {
   <>
    <h2>តារាងដី Sharing</h2>
    <Row>
-    {/* <AddUser open={openAdd} setOpen={setOpenAdd} /> */}
+    <AddSharing open={openAdd} setOpen={setOpenAdd} />
     {/* <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
             <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
             <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}

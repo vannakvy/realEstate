@@ -8,6 +8,7 @@ import {
  LAND_LIST_FAI,
  LAND_LIST_REQ,
  LAND_LIST_SUC,
+ LAND_BY_ID_RES,
 } from '../constants/land';
 
 export const landListReducer = (state = { landList: [] }, action) => {
@@ -31,6 +32,8 @@ export const landByIdReducer = (state = { landById: {} }, action) => {
    return { loading: false, landById: action.payload };
   case LAND_BY_ID_FAI:
    return { loading: false, error: action.payload };
+  case LAND_BY_ID_RES:
+   return {};
   default:
    return state;
  }

@@ -127,7 +127,7 @@ export const getUserById = (id) => async (dispatch) => {
   dispatch({ type: USER_BY_ID_REQ });
   let ref = db.collection('account').doc(id);
   ref.onSnapshot((queryS) => {
-   dispatch({ type: USER_BY_ID_SUC, payload: queryS.data() });
+   dispatch({ type: USER_BY_ID_SUC, payload: { ...queryS.data(), id: id } });
   });
  } catch (error) {
   dispatch({ type: USER_BY_ID_FAI, payload: error.message });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Popconfirm } from 'antd';
+import { Space, Popconfirm, message } from 'antd';
 import {
  EditOutlined,
  DeleteOutlined,
@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
+import copy from 'copy-to-clipboard';
 
 export const sharelandCol = ({
  handleDelete,
@@ -18,6 +19,7 @@ export const sharelandCol = ({
  setRoleUserID,
  limit,
  page,
+ setCopy,
 }) => {
  // let l = limit >= 20 ? limit/page : limit
  // let no = ((page-1) * l)
@@ -86,9 +88,15 @@ export const sharelandCol = ({
        <DeleteOutlined />
       </span>
      </Popconfirm>
-     <Link className="link">
+     <span
+      className="link"
+      onClick={() => {
+       copy('/share/' + record.id);
+       message.success('Link Copied!');
+      }}
+     >
       <RotateRightOutlined />
-     </Link>
+     </span>
     </Space>
    ),
   },

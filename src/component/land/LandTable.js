@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom';
 
 const { Option } = Select;
 
-export default function LandTable({ landOwner }) {
+export default function LandTable({ landOwner, landListByUser }) {
  const fake = [
   {
    id: 320,
@@ -99,7 +99,7 @@ export default function LandTable({ landOwner }) {
      page,
      landOwner,
     })}
-    dataSource={landList}
+    dataSource={landListByUser ? landListByUser : landList}
     rowKey={(record) => record.id}
     pagination={true}
     // pagination={{

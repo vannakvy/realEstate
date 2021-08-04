@@ -1,6 +1,11 @@
 import React from 'react';
 import { Space, Popconfirm } from 'antd';
-import { EditOutlined, DeleteOutlined, KeyOutlined,EyeOutlined } from '@ant-design/icons';
+import {
+ EditOutlined,
+ DeleteOutlined,
+ KeyOutlined,
+ EyeOutlined,
+} from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
 
@@ -28,12 +33,12 @@ export const userCol = ({
  var array = [
   {
    title: 'តួនាទី',
-   dataIndex: 'admin',
-   key: 'admin',
+   dataIndex: 'role',
+   key: 'role',
    width: 50,
-   render: (text, record) => (
-    <Space size="middle">{record?.admin ? 'ADMIN' : 'USER'}</Space>
-   ),
+   //    render: (text, record) => (
+   //     <Space size="middle">{record?.admin ? 'ADMIN' : 'USER'}</Space>
+   //    ),
   },
   {
    title: 'ឈ្មោះ',
@@ -86,7 +91,9 @@ export const userCol = ({
      {/* <span className="link" onClick={() => handleUserEdit(record)}>
       <EditOutlined />
      </span> */}
-     <Link className="link" to={"/userdetail/"+ record.id}><EyeOutlined /></Link>
+     <Link className="link" to={'/userdetail/' + record.id}>
+      <EyeOutlined />
+     </Link>
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {

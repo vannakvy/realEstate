@@ -1,23 +1,21 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Row, Col, Image } from 'antd';
-import { Redirect, useHistory, } from 'react-router-dom';
-import Logo from '../asset/srLogo.png';
-import {useDispatch} from 'react-redux'
-import {login} from '../actions/authAction'
-
+import { Redirect, useHistory } from 'react-router-dom';
+import Logo from '../asset/World-Earth-Download-Free-PNG.png';
+import { useDispatch } from 'react-redux';
+import { login } from '../actions/authAction';
 
 export default function Login() {
  const history = useHistory();
-  const dispatch = useDispatch()
+ const dispatch = useDispatch();
 
  const onFinish = (values) => {
-  dispatch(login(values.email, values.password ))
+  dispatch(login(values.email, values.password));
  };
 
  const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
- }; 
-
+ };
 
  return (
   <Row>

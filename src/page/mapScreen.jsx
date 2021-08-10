@@ -79,30 +79,30 @@ const MapScreen = () => {
      </div>
      <div className="app__stats">
       <InfoBox
-       onClick={(e) => setCasesType('sold')}
-       title="Sold"
+       onClick={(e) => setCasesType('ដីសរុប')}
+       title="ដីសរុប"
        isRed
-       active={casesType === 'sold'}
+       active={casesType === 'ដីសរុប'}
        cases={districtDatas.confirmedCaseToday}
        total={numeral(districtDatas.confirmedCase).format('0')}
-       ImageShow={ImageCovid}
+       //  ImageShow={ImageCovid}
       />
       <InfoBox
-       onClick={(e) => setCasesType('recovered')}
-       title="អ្នកជាសះស្បើយ"
-       active={casesType === 'recovered'}
+       onClick={(e) => setCasesType('ដីបានដាក់លក់')}
+       title="ដីបានដាក់លក់"
+       active={casesType === 'ដីបានដាក់លក់'}
        cases={districtDatas.recoveredToday}
        total={numeral(districtDatas.recovered).format('0')}
-       ImageShow={ImageRecover}
+       //  ImageShow={ImageRecover}
       />
       <InfoBox
-       onClick={(e) => setCasesType('deaths')}
-       title="អ្នកស្លាប់"
+       onClick={(e) => setCasesType('ដីមិនទាន់បានដាក់លក់')}
+       title="ដីមិនទាន់បានដាក់លក់"
        isRed
-       active={casesType === 'deaths'}
+       active={casesType === 'ដីមិនទាន់បានដាក់លក់'}
        cases={districtDatas.deathToday}
        total={numeral(districtDatas.death).format('0')}
-       ImageShow={ImageDeath}
+       //  ImageShow={ImageDeath}
       />
      </div>
 

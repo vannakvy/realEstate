@@ -82,7 +82,7 @@ const Routes = () => {
           </Route>
          </Switch>
         </Content>
-        <Footer style={{ textAlign: 'center', color: 'red', fontSize: 17 }}>
+        {/* <Footer style={{ textAlign: 'center', color: 'red', fontSize: 17 }}>
          <marquee>
           <span style={{}}>
            <span style={{ marginRight: 15 }}>
@@ -98,7 +98,7 @@ const Routes = () => {
            </span>
           </span>
          </marquee>
-        </Footer>
+        </Footer> */}
        </Layout>
       </Fragment>
      ) : (

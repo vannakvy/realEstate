@@ -151,6 +151,31 @@ function OwnerDetail() {
    </div>
    <h6 className="fw-bold">ផែនទីបង្ហាញទីតាំងដី</h6>
    <MapDraw landList={land} edit={false} zoom={zoom} pos={posi} />
+
+   <div>
+    <div className="bg-light rounded overflow-hidden shadow-sm">
+     <div className="bg-dark text-light text-center p-2 fs-6 fw-bold">
+      រូបភាពដី
+     </div>
+     <div className="w-100 text-center" style={{ minHeight: '300px' }}>
+      {landById &&
+       landById.img &&
+       landById.img.map((img) => (
+        <img
+         width="240px"
+         key={img.name}
+         className="mx-1 my-1"
+         src={img.url}
+         alt={img.name}
+        />
+       ))}
+
+      {landById && landById.img && landById.img.length === 0 ? (
+       <h6 className="mt-5 pt-5 fw-bold">មិនទាន់មានរូបភាពនៅឡើយ</h6>
+      ) : null}
+     </div>
+    </div>
+   </div>
   </>
  );
 }

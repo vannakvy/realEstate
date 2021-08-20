@@ -26,6 +26,7 @@ import OwnerDetail from './component/owner/ownerdetail';
 import Drawer from './component/Drawer';
 import ViewShareLand from './page/ViewShareLand';
 import CreateLand from './page/CreateLand';
+import EditLand from './page/EditLand';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
@@ -33,16 +34,17 @@ const Routes = () => {
 
  return (
   <Router>
-   <div className="App bg_color">
-    <Layout style={{ minHeight: '100vh' }}>
-     {login ? (
-      <Drawer>
-       <div className="w-100">
-        {/* <MenuHeader /> */}
+   <Layout className="">
+    <Content>
+     <div className="App bg_color">
+      <Layout style={{ minHeight: '100vh' }}>
+       {login ? (
+        <Drawer>
+         <div className="w-100">
+          {/* <MenuHeader /> */}
 
-        <Layout className="">
-         {/* <Navbar /> */}
-         <Content>
+          {/* <Navbar /> */}
+
           <Switch>
            <Route exact path="/">
             <MapScreen />
@@ -59,6 +61,9 @@ const Routes = () => {
            </Route>
            <Route path="/land/create">
             <CreateLand />
+           </Route>
+           <Route path="/land/:id/edit">
+            <EditLand />
            </Route>
            <Route path="/landdetail/:id">
             <LandDetail />
@@ -88,25 +93,25 @@ const Routes = () => {
             <TestLogin />
            </Route>
           </Switch>
-         </Content>
-        </Layout>
-       </div>
-      </Drawer>
-     ) : (
-      <Switch>
-       <Route path="/login">
-        <Login />
-       </Route>
-       <Route path="/shareland/:id/view">
-        <ViewShareLand />
-       </Route>
-       <Route path="/" render={() => <Redirect to="/login" />} />
-       <Route render={() => <h1>Opps! Something went wrong</h1>} />
-      </Switch>
-     )}
-     {/* {login && <Redirect to="/" />} */}
-    </Layout>
-   </div>
+         </div>
+        </Drawer>
+       ) : (
+        <Switch>
+         <Route path="/login">
+          <Login />
+         </Route>
+         <Route path="/shareland/:id/view">
+          <ViewShareLand />
+         </Route>
+         <Route path="/" render={() => <Redirect to="/login" />} />
+         <Route render={() => <h1>Opps! Something went wrong</h1>} />
+        </Switch>
+       )}
+       {/* {login && <Redirect to="/" />} */}
+      </Layout>
+     </div>
+    </Content>
+   </Layout>
   </Router>
  );
 };

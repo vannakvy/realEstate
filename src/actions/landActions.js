@@ -12,6 +12,9 @@ import {
  LAND_LIST_FAI,
  LAND_LIST_REQ,
  LAND_LIST_SUC,
+ LAND_UPDATE_FAI,
+ LAND_UPDATE_REQ,
+ LAND_UPDATE_SUC,
 } from '../constants/land';
 import db, { auth } from '../firebase/db';
 
@@ -102,6 +105,8 @@ export const deleteLand = (id) => async (dispatch) => {
 
 export const updateLand = (land) => async (dispatch, getState) => {
  try {
+  dispatch({ type: LAND_UPDATE_REQ });
+
   await db
    .collection('landList')
    .doc(land.id)
@@ -109,21 +114,24 @@ export const updateLand = (land) => async (dispatch, getState) => {
     idLand: land.idLand,
     landType: land.landType,
     owner: {
-     ownerId: land.owner.ownerId,
-     img: land.owner.img,
-     size: land.owner.size,
-     detail: land.owner.detail,
+     ownerId: land.ownerId,
+     size: land.size,
     },
     add: {
-     pro: land.add.pro,
-     dis: land.add.dis,
-     com: land.add.com,
-     vil: land.add.vil,
+     pro: land.pro,
+     dis: land.dis,
+     com: land.com,
+     vil: land.vil,
     },
     coordinates: land.coordinates,
+    img: land.img,
    });
+
+  dispatch({ type: LAND_UPDATE_SUC });
+  message.success('កែប្រែទិន្នន័យបានជោគជ័យ');
  } catch (error) {
-  alert(error.message);
+  message.error(error.message);
+  dispatch({ type: LAND_UPDATE_FAI, payload: error.message });
  }
 };
 

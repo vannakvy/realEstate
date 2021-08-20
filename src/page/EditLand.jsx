@@ -1,35 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { IoHome } from 'react-icons/io5';
 import MapDrawCreate from '../components/MapDrawCreate';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserByRole } from '../actions/authAction';
-import { createLand } from '../actions/landActions';
+import { createLand, getLandById, updateLand } from '../actions/landActions';
 import Message from '../component/Message';
 import { LAND_CREATE_RES } from '../constants/land';
 import Loader from '../component/Loader';
 import { storageRef } from '../firebase/db';
 import ViewImg from '../component/ViewImg';
+import MapDraw from '../components/MapDraw';
 
-const CreateLand = () => {
+const EditLand = () => {
+ const { id } = useParams();
  const history = useHistory();
+ const dispatch = useDispatch();
  const [coordinates, setCoordinates] = useState([]);
  const [imageLand, setImageLand] = useState([]);
  const [progress, setProgress] = useState(0);
- const dispatch = useDispatch();
+ const [land, setLand] = useState({});
+ const [posi, setPosi] = useState([12.5657, 104.991]);
+ const [zoom, setZoom] = useState(8);
+ const [landMap, setLandMap] = useState([]);
+
  const { userByRoles } = useSelector((state) => state.userByRole);
- const { success, error, loading } = useSelector((state) => state.createLand);
+ const { success, error, loading } = useSelector((state) => state.updateLand);
+ const { landById } = useSelector((state) => state.landById);
 
  useEffect(() => {
   dispatch(getUserByRole('LANDOWNER'));
  }, [dispatch]);
 
  useEffect(() => {
-  if (success) {
-   history.push('/land');
+  if (!landById || landById.id !== id) {
+   dispatch(getLandById(id));
+  } else {
+   setLand({
+    id: landById.id,
+    ownerId: landById.owner && landById.owner.ownerId,
+    idLand: landById.idLand,
+    landType: landById.landType,
+    pro: landById.add && landById.add.pro,
+    dis: landById.add && landById.add.dis,
+    com: landById.add && landById.add.com,
+    vil: landById.add && landById.add.vil,
+    size: landById.owner && landById.owner.size,
+   });
+
+   setImageLand(landById.img || []);
+   setCoordinates(landById.coordinates);
   }
-  dispatch({ type: LAND_CREATE_RES });
- }, [dispatch, success]);
+ }, [dispatch, id, landById]);
+
+ useEffect(() => {
+  setLandMap([]);
+  setZoom(8);
+  if (
+   landById !== undefined &&
+   landById !== {} &&
+   landById.id &&
+   landById.coordinates &&
+   landById.coordinates[0]
+  ) {
+   setLandMap([landById]);
+   setPosi([landById.coordinates[0].lat, landById.coordinates[0].lng]);
+   setZoom(18);
+  }
+ }, [landById]);
+
+ console.log(coordinates);
 
  async function uploadImg(e, img) {
   e.preventDefault();
@@ -66,22 +106,20 @@ const CreateLand = () => {
   );
  }
 
- const submitCreate = (e) => {
+ const submitUpdate = (e) => {
   e.preventDefault();
 
   const data = {
-   idLand: e.target.idLand.value,
-   landType: e.target.landType.value,
-   ownerId: e.target.ownerId.value,
-   size: e.target.size.value,
-   pro: e.target.pro.value,
-   dis: e.target.dis.value,
-   com: e.target.com.value,
-   vil: e.target.vil.value,
+   ...land,
    img: imageLand,
    coordinates: coordinates,
   };
-  dispatch(createLand(data));
+
+  dispatch(updateLand(data));
+ };
+
+ const onChange = (e) => {
+  setLand({ ...land, [e.target.name]: e.target.value });
  };
 
  return (
@@ -91,7 +129,12 @@ const CreateLand = () => {
     <IoHome style={{ marginTop: -5 }} /> / ទំព័រដើម
    </NavLink>
    <div className="mt-2 w-100">
-    <MapDrawCreate setCoordinates={setCoordinates} />
+    <MapDrawCreate
+     pos={posi}
+     zoom={zoom}
+     landList={landMap}
+     setCoordinates={setCoordinates}
+    />
     <br />
     {error && (
      <Message variant="danger">
@@ -104,11 +147,17 @@ const CreateLand = () => {
        <div className="bg-dark text-light text-center p-2 fs-6 fw-bold">
         ព័ត៌មានបន្ថែម
        </div>
-       <form onSubmit={submitCreate} className="">
+       <form onSubmit={submitUpdate} className="">
         <div className="row p-3">
          <h6 className="col-3 py-2 fw-bold">ម្ចាស់ដី</h6>
          <div className="col-9">
-          <select className="form-select" name="ownerId" required>
+          <select
+           onChange={onChange}
+           className="form-select"
+           value={land && land.ownerId}
+           name="ownerId"
+           required
+          >
            <option value="">ជ្រើសរើសម្ចាស់ដី...</option>
            {userByRoles &&
             userByRoles.map((owner) => (
@@ -120,11 +169,24 @@ const CreateLand = () => {
          </div>
          <h6 className="col-3 py-2 fw-bold">ក្បាលដី</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="idLand" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.idLand}
+           className="form-control"
+           name="idLand"
+           required
+          />
          </div>
          <h6 className="col-3 py-2 fw-bold">ស្ថានភាព</h6>
          <div className="col-9">
-          <select className="form-select" name="landType" required>
+          <select
+           onChange={onChange}
+           value={land && land.landType}
+           className="form-select"
+           name="landType"
+           required
+          >
            <option value="">ស្ថានភាព...</option>
            <option value="ដាក់លក់">ដាក់លក់</option>
            <option value="មិនដាក់លក់">មិនដាក់លក់</option>
@@ -132,32 +194,67 @@ const CreateLand = () => {
          </div>
          <h6 className="col-3 py-2 fw-bold">ទំហំ</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="size" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.size}
+           className="form-control"
+           name="size"
+           required
+          />
          </div>
          <h6 className="col-12 py-2 fw-bold text-center">អាស័យដ្ឋាន</h6>
          <h6 className="col-3 py-2 fw-bold">ភូមិ</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="vil" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.vil}
+           className="form-control"
+           name="vil"
+           required
+          />
          </div>
          <h6 className="col-3 py-2 fw-bold">ឃុំ/សង្កាត់</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="com" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.com}
+           className="form-control"
+           name="com"
+           required
+          />
          </div>
          <h6 className="col-3 py-2 fw-bold">ស្រុក​/ខណ្ឌ</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="dis" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.dis}
+           className="form-control"
+           name="dis"
+           required
+          />
          </div>
          <h6 className="col-3 py-2 fw-bold">ខេត្ដ/ក្រុង</h6>
          <div className="col-9">
-          <input type="text" className="form-control" name="pro" required />
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.pro}
+           className="form-control"
+           name="pro"
+           required
+          />
          </div>
          <div className="col-12 text-center mt-2">
           <button
            type="submit"
-           className="btn btn_color px-5"
+           className="btn btn_color px-5 fw-bold"
            disabled={loading ? true : false}
           >
-           {loading ? <Loader /> : 'បង្កើតដី'}
+           {loading ? <Loader /> : 'រក្សាទុក'}
           </button>
          </div>
         </div>
@@ -178,4 +275,4 @@ const CreateLand = () => {
  );
 };
 
-export default CreateLand;
+export default EditLand;

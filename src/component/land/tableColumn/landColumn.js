@@ -95,6 +95,10 @@ export const landCol = ({
       <EyeOutlined />
      </Link>
 
+     <Link to={'/land/' + record?.id + '/edit'} className="text-warning">
+      <EditOutlined />
+     </Link>
+
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {

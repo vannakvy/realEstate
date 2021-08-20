@@ -36,7 +36,7 @@ const ViewShareLand = () => {
      if (queryS.data()) {
       setLand([{ ...queryS.data(), id: id }]);
       setLandById({ ...queryS.data(), id: id });
-      setZoom(17);
+      setZoom(18);
       setPosi([
        queryS.data().coordinates[0].lat,
        queryS.data().coordinates[0].lng,

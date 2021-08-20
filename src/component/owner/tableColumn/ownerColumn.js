@@ -25,12 +25,10 @@ export const ownerCol = ({
  var array = [
   {
    title: 'តួនាទី',
-   dataIndex: 'admin',
-   key: 'admin',
+   dataIndex: 'role',
+   key: 'role',
    width: 50,
-   render: (text, record) => (
-    <Space size="middle">{record?.admin ? 'ADMIN' : 'USER'}</Space>
-   ),
+   render: (text, record) => <Space size="middle">{record?.role}</Space>,
   },
   {
    title: 'ឈ្មោះ',

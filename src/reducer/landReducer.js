@@ -13,6 +13,10 @@ import {
  LAND_CREATE_SUC,
  LAND_CREATE_FAI,
  LAND_CREATE_RES,
+ LAND_UPDATE_REQ,
+ LAND_UPDATE_SUC,
+ LAND_UPDATE_RES,
+ LAND_UPDATE_FAI,
 } from '../constants/land';
 
 export const landListReducer = (state = { landList: [] }, action) => {
@@ -68,6 +72,21 @@ export const createLandReducer = (state = { landCreate: {} }, action) => {
   case LAND_CREATE_FAI:
    return { loading: false, error: action.payload };
   case LAND_CREATE_RES:
+   return {};
+  default:
+   return state;
+ }
+};
+
+export const updateLandReducer = (state = { landUpdate: {} }, action) => {
+ switch (action.type) {
+  case LAND_UPDATE_REQ:
+   return { loading: true };
+  case LAND_UPDATE_SUC:
+   return { loading: false, success: true };
+  case LAND_UPDATE_FAI:
+   return { loading: false, error: action.payload };
+  case LAND_UPDATE_RES:
    return {};
   default:
    return state;

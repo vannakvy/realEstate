@@ -2,13 +2,13 @@ import React from 'react';
 
 const Loader = () => {
  return (
-  <span>
+  <span className="fw-bold">
    <span
     className="spinner-border spinner-border-sm"
     role="status"
     aria-hidden="true"
    ></span>{' '}
-   Loading...
+   កំពុងដំណើរការ...
   </span>
  );
 };

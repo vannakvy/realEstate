@@ -34,3 +34,7 @@ code {
  color: #25a9e0 !important;
  cursor: pointer;
 }
+
+.ant-message {
+ margin-top: 50px !important;
+}

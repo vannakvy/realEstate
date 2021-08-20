@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const MapDrawCreate = (props) => {
- const { zoom = 8, pos = [12.5657, 104.991], setCoordinates } = props;
+ const { zoom = 8, pos = [12.5657, 104.991], setCoordinates, landList } = props;
  const classes = useStyles(props);
  const editRef = useRef();
  const [mapLayers, setMapLayers] = useState([]);
@@ -66,9 +66,10 @@ export const MapDrawCreate = (props) => {
  const [onCreateL, setOnCreateL] = useState(false);
 
  useEffect(() => {
+  setLand(landList);
   setPosi({ ...posi, posi: pos, zoom: zoom });
   setZo(zoom);
- }, [zoom]);
+ }, [zoom, landList]);
 
  useEffect(() => {
   setMapJson(geoJson);
@@ -222,6 +223,40 @@ export const MapDrawCreate = (props) => {
         },
        }}
       />
+      {land &&
+       land !== [] &&
+       land.map((l) => (
+        <div key={l.id}>
+         {zo >= 14 ? (
+          <Polygon
+           onClick={() =>
+            setPosi({
+             ...posi,
+             posi: [l.coordinates[0].lat, l.coordinates[0].lng],
+             zoom: 18,
+            })
+           }
+           className="bg-light"
+           positions={l.coordinates}
+          >
+           <Popup direction="top">
+            <PupupCom land={l} />
+           </Popup>
+          </Polygon>
+         ) : (
+          <Marker
+           onClick={() =>
+            setPosi({
+             ...posi,
+             posi: [l.coordinates[0].lat, l.coordinates[0].lng],
+             zoom: 18,
+            })
+           }
+           position={[l.coordinates[0].lat, l.coordinates[0].lng]}
+          ></Marker>
+         )}
+        </div>
+       ))}
      </FeatureGroup>
 
      <ReactLeafletGoogleLayer

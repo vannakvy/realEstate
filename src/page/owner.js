@@ -15,6 +15,7 @@ import {
  getAllLandOwner,
  deleteLandOwner,
  getUserAccount,
+ getUserByRole,
 } from '../actions/authAction';
 import EditOwner from '../component/owner/modal/editOwner';
 
@@ -62,14 +63,12 @@ export default function Owner() {
  const [openEditAccount, setOpenEditAccount] = useState(false);
 
  const dispatch = useDispatch();
- const { userAccounts, loading: userListLoading } = useSelector(
-  (state) => state.userAccountList
- );
+ const { userByRoles, loading } = useSelector((state) => state.userByRole);
 
  useEffect(() => {
   // dispatch({ type: USER_UPDATE_RESET });
   // dispatch(getUserAccount());
-  dispatch(getUserAccount());
+  dispatch(getUserByRole('LANDOWNER'));
  }, [dispatch]);
 
  const handleUserRole = (e) => {
@@ -116,7 +115,8 @@ export default function Owner() {
        limit,
        page,
       })}
-      dataSource={userAccounts}
+      loading={loading}
+      dataSource={userByRoles}
       rowKey={(record) => record.id}
       pagination={true}
       // pagination={{

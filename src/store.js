@@ -18,6 +18,7 @@ import {
  landByIdReducer,
  landListByUserReducer,
  landListReducer,
+ updateLandReducer,
 } from './reducer/landReducer';
 import { shareLandIdReducer, shareLandReducer } from './reducer/shareReducer';
 
@@ -39,6 +40,7 @@ const reducer = combineReducers({
  landById: landByIdReducer,
  landListByUser: landListByUserReducer,
  createLand: createLandReducer,
+ updateLand: updateLandReducer,
  //share
  shareLand: shareLandReducer,
  shareLandId: shareLandIdReducer,

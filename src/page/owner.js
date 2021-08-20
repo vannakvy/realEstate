@@ -18,34 +18,11 @@ import {
  getUserByRole,
 } from '../actions/authAction';
 import EditOwner from '../component/owner/modal/editOwner';
+import AddUser from '../component/user/modal/addUser';
 
 const { Option } = Select;
 
 export default function Owner() {
- const fake = [
-  {
-   date: moment(new Date()).format('DD-MMM-YYYY'),
-   staff: 'ក្បាលដីមួយ',
-   action: 'សកម្មភាព ១',
-   other: '.....',
-   status: 'completed',
-  },
-  {
-   date: moment(new Date()).format('DD-MMM-YYYY'),
-   staff: 'thenan',
-   action: 'សកម្មភាព ២',
-   other: '.....',
-   status: 'pending',
-  },
-  {
-   date: moment(new Date()).format('DD-MMM-YYYY'),
-   staff: 'dora',
-   action: 'សកម្មភាព ៣',
-   other: '.....',
-   status: 'pending',
-  },
- ];
-
  // const dispatch = useDispatch()
  // const {landOwnerList} = useSelector(state => state.landOwnerList)
 
@@ -90,7 +67,7 @@ export default function Owner() {
   <>
    <h5>តារាងម្ចាស់ដី</h5>
    <Row>
-    <AddOwner open={openAdd} setOpen={setOpenAdd} />
+    <AddUser open={openAdd} setOpen={setOpenAdd} />
     <EditOwner open={openEdit} setOpen={setOpenEdit} data={ownerEdit} />
 
     <Col xs={6} md={12}>

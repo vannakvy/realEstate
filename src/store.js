@@ -46,8 +46,8 @@ const reducer = combineReducers({
  shareLandId: shareLandIdReducer,
 });
 
-const userInformationFromStorage = localStorage.getItem('userInformation')
- ? JSON.parse(localStorage.getItem('userInformation'))
+const userInformationFromStorage = localStorage.getItem('Information')
+ ? JSON.parse(localStorage.getItem('Information'))
  : null;
 const initialState = {
  userLogin: { userInformation: userInformationFromStorage },

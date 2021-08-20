@@ -42,7 +42,7 @@ export const login = (email, password) => async (dispatch) => {
    .signInWithEmailAndPassword(email, password)
    .then(async (res) => {
     const user = await db.collection('account').doc(res.user.uid).get();
-    localStorage.setItem('userInformation', JSON.stringify(user.data()));
+    localStorage.setItem('Information', JSON.stringify(user.data()));
     dispatch({
      type: USER_LOGIN_SUCCESS,
      payload: user.data(),
@@ -65,7 +65,7 @@ export const login = (email, password) => async (dispatch) => {
 export const signout = () => async (dispatch) => {
  auth.signOut().then(() => {
   dispatch({ type: USER_LOGOUT });
-  localStorage.removeItem('userInformation');
+  localStorage.removeItem('Information');
  });
 };
 

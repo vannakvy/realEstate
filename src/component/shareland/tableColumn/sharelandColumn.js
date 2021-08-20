@@ -72,7 +72,10 @@ export const sharelandCol = ({
    render: (text, record) => (
     <Space size="middle">
      {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-     <Link className="link" to={`/shareland/${record.id}/view`}>
+     <Link
+      className="link"
+      to={`http://96.9.91.83:3000/shareland/${record.id}/view`}
+     >
       <EyeOutlined />
      </Link>
 

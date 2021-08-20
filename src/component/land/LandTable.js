@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createLand, deleteLand, getLandList } from '../../actions/landActions';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import AddSharingFromLand from '../shareland/modal/addSharingFromLand';
 
 // import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
@@ -58,6 +59,7 @@ export default function LandTable({ landOwner, landListByUser }) {
  const [openRole, setOpenRole] = useState(false);
  const [roleUserID, setRoleUserID] = useState('');
  const [openEditAccount, setOpenEditAccount] = useState(false);
+ const [landAdd, setLandAdd] = useState();
 
  useEffect(() => {
   if (fake) {
@@ -84,8 +86,19 @@ export default function LandTable({ landOwner, landListByUser }) {
   dispatch(deleteLand(e));
  };
 
+ const handleShare = (e) => {
+  setLandAdd(e);
+ };
+
  return (
   <>
+   {landAdd && (
+    <AddSharingFromLand
+     open={openAdd}
+     setOpen={setOpenAdd}
+     land={landAdd && landAdd}
+    />
+   )}
    <Table
     className="table-go-list"
     // caseCol({handleDelete})
@@ -98,6 +111,8 @@ export default function LandTable({ landOwner, landListByUser }) {
      limit,
      page,
      landOwner,
+     setOpenAdd,
+     handleShare,
     })}
     dataSource={landListByUser ? landListByUser : landList}
     rowKey={(record) => record.id}

@@ -18,8 +18,6 @@ import './assets/leaflet.css';
 import './assets/leaflet.draw.css';
 import geoJson from './geo.json';
 import geoDisJson from './geoDis.json';
-import colorJson from './color.json';
-import SimpleModal from './CreateLand';
 
 // Material components
 import { makeStyles } from '@material-ui/core';
@@ -49,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
  },
 }));
 
-export const MapDraw = (props) => {
- const { landList, edit, zoom = 8, pos = [12.5657, 104.991] } = props;
+export const MapDrawCreate = (props) => {
+ const { zoom = 8, pos = [12.5657, 104.991], setCoordinates } = props;
  const classes = useStyles(props);
  const editRef = useRef();
  const [mapLayers, setMapLayers] = useState([]);
@@ -68,10 +66,9 @@ export const MapDraw = (props) => {
  const [onCreateL, setOnCreateL] = useState(false);
 
  useEffect(() => {
-  setLand(landList);
   setPosi({ ...posi, posi: pos, zoom: zoom });
   setZo(zoom);
- }, [landList, zoom]);
+ }, [zoom]);
 
  useEffect(() => {
   setMapJson(geoJson);
@@ -85,6 +82,7 @@ export const MapDraw = (props) => {
     items.push({ lat: la.lat, lng: la.lng });
    });
    setMapLayers(items);
+   setCoordinates(items);
   }
   setOnCreateL(true);
  };
@@ -95,9 +93,12 @@ export const MapDraw = (props) => {
   layers.getLayers()[0]._latlngs[0].forEach((la) => {
    items.push({ lat: la.lat, lng: la.lng });
   });
+
+  setCoordinates(items);
  };
+
  const _onDeleted = (e) => {
-  console.log(e);
+  setCoordinates([]);
  };
 
  const gotoMap = (lan) => {
@@ -173,33 +174,6 @@ export const MapDraw = (props) => {
   });
  };
 
- const getColor = (d) => {
-  // now uses palette from google material design: https://material.io/guidelines/style/color.html#color-color-palette
-  var material_design_color_idx = [
-   '50',
-   '100',
-   '200',
-   '300',
-   '400',
-   '500',
-   '600',
-   '700',
-   '800',
-   '900',
-  ];
-  var palette = new Array(material_design_color_idx.length);
-  var i;
-  for (i = 0; i < material_design_color_idx.length; i++) {
-   palette[i] = colorJson['pink'][material_design_color_idx[i]];
-  }
-  for (i = 1; i <= palette.length; i++) {
-   // values of the property are between -10,0 and 10.0
-   if (d < -10.0 + (i * (10.0 - -10.0)) / palette.length) {
-    return palette[i - 1];
-   }
-  }
- };
-
  const style = (feature) => {
   return {
    //  fillColor: '#' + Math.floor(Math.random() * 16777215).toString(16),
@@ -213,7 +187,6 @@ export const MapDraw = (props) => {
 
  return (
   <div>
-   {/* <div className="row w-100"> */}
    <div className="position-relative shadow w-100 p-1 bg-light rounded">
     <Map
      center={posi.posi}
@@ -229,40 +202,26 @@ export const MapDraw = (props) => {
      />
 
      <FeatureGroup>
-      {land &&
-       land !== [] &&
-       land.map((l) => (
-        <div key={l.id}>
-         {zo >= 14 ? (
-          <Polygon
-           onClick={() =>
-            setPosi({
-             ...posi,
-             posi: [l.coordinates[0].lat, l.coordinates[0].lng],
-             zoom: 18,
-            })
-           }
-           className="bg-light"
-           positions={l.coordinates}
-          >
-           <Popup direction="top">
-            <PupupCom land={l} />
-           </Popup>
-          </Polygon>
-         ) : (
-          <Marker
-           onClick={() =>
-            setPosi({
-             ...posi,
-             posi: [l.coordinates[0].lat, l.coordinates[0].lng],
-             zoom: 18,
-            })
-           }
-           position={[l.coordinates[0].lat, l.coordinates[0].lng]}
-          ></Marker>
-         )}
-        </div>
-       ))}
+      <EditControl
+       ref={editRef}
+       position="topright"
+       onCreated={_onCreated}
+       onEdited={_onEdited}
+       onDeleted={_onDeleted}
+       draw={{
+        rectangle: false,
+        circle: false,
+        polyline: false,
+        circlemarker: false,
+        marker: false,
+        polygon: {
+         allowIntersection: false,
+         shapeOptions: {
+          color: '#ff0000',
+         },
+        },
+       }}
+      />
      </FeatureGroup>
 
      <ReactLeafletGoogleLayer
@@ -276,47 +235,10 @@ export const MapDraw = (props) => {
      <GeoJSON data={mapJson} onEachFeature={onEachFeature} style={style} />
     </Map>
    </div>
-   {/* <div className="col-3 mt-3">
-     <form onSubmit={searchSubmit}>
-      <div className="input-group mb-3">
-       <span
-        className="input-group-text"
-        id="basic-addon1"
-        style={{ cursor: 'pointer' }}
-        onClick={searchSubmit}
-       >
-        <FaMapMarkedAlt />
-       </span>
-       <input
-        type="text"
-        value={keyId}
-        onChange={searchHandler}
-        className="form-control"
-        placeholder="Land ID"
-       />
-      </div>
-      <input type="submit" value="search" className="" hidden />
-     </form>
-     <FormProvice setPosi={setPosi} posi={posi} addr={addr} setAddr={setAddr} />
-     <p>{land.length ? `មាន(${land.length})` : 'មិនមានទីតាំងដី'}</p>
-     {land &&
-      land.map((l) => (
-       <div
-        key={l.idLand}
-        className={`px-3 py-3 mb-1 text-dark rounded`}
-        style={{ cursor: 'pointer', background: 'rgb(201, 201, 201)' }}
-        onClick={() => gotoMap(l)}
-       >
-        <FaMapMarkedAlt /> ID: {l.idLand} / {l.addr.pro}-{l.addr.dis}-
-        {l.addr.com}
-       </div>
-      ))}
-    </div> */}
-   {/* </div> */}
-   <SimpleModal open={onCreateL} setOpen={setOnCreateL} latLng={mapLayers} />
+
    {/* <pre>{JSON.stringify(mapLayers, 0, 2)}</pre> */}
   </div>
  );
 };
 
-export default MapDraw;
+export default MapDrawCreate;

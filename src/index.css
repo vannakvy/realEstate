@@ -4,7 +4,10 @@ body {
  margin: 0;
  font-family: myriad-pro, Lucida Grande, Arial, 'Kantumruy', 'Siemreap',
   sans-serif;
- font-size: 100%;
+}
+* {
+ font-family: myriad-pro, Lucida Grande, Arial, 'Kantumruy', 'Siemreap',
+  sans-serif;
 }
 
 code {
@@ -22,4 +25,12 @@ code {
 
 .test {
  color: transparent;
+}
+
+.btn_color {
+ background-color: #25a9e0 !important;
+}
+.btn_text {
+ color: #25a9e0 !important;
+ cursor: pointer;
 }

@@ -8,24 +8,19 @@ import {
  Popup,
  Marker,
  GeoJSON,
- Tooltip,
 } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer';
-import FormProvice from './FormProvice';
 
 import './assets/leaflet.css';
 import './assets/leaflet.draw.css';
 import geoJson from './geo.json';
-import geoDisJson from './geoDis.json';
 import colorJson from './color.json';
 import SimpleModal from './CreateLand';
 
 // Material components
 import { makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
-
-import { Land as sellLand } from './Api';
 import PupupCom from './PupupCom.jsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,13 +44,13 @@ const useStyles = makeStyles((theme) => ({
  },
 }));
 
-export const MapDraw = (props) => {
+export const MapDrawShare = (props) => {
  const { landList, edit, zoom = 8, pos = [12.5657, 104.991] } = props;
  const classes = useStyles(props);
  const editRef = useRef();
  const [mapLayers, setMapLayers] = useState([]);
  const [posi, setPosi] = useState({
-  posi: pos,
+  posi: [12.5657, 104.991],
   zoom: zoom,
  });
 
@@ -71,7 +66,7 @@ export const MapDraw = (props) => {
   setLand(landList);
   setPosi({ ...posi, posi: pos, zoom: zoom });
   setZo(zoom);
- }, [landList, zoom]);
+ }, [landList, zoom, pos]);
 
  useEffect(() => {
   setMapJson(geoJson);
@@ -103,14 +98,6 @@ export const MapDraw = (props) => {
  const gotoMap = (lan) => {
   const l = lan.coordinates[0];
   setPosi({ ...posi, posi: [l.lat, l.lng], zoom: 17 });
- };
-
- const searchHandler = (e) => {
-  setKeyId(e.target.value);
- };
- const searchSubmit = (e) => {
-  e.preventDefault();
-  setSearchId(keyId);
  };
 
  delete L.Icon.Default.prototype._getIconUrl;
@@ -319,4 +306,4 @@ export const MapDraw = (props) => {
  );
 };
 
-export default MapDraw;
+export default MapDrawShare;

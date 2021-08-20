@@ -158,12 +158,12 @@ export const allActionListReducer = (state = {}, action) => {
 };
 
 // land Owner
-export const landOwnerListReducer = (state = { landOwnerList: [] }, action) => {
+export const userByRoleReducer = (state = { userByRoles: [] }, action) => {
  switch (action.type) {
   case LANDOWNER_LIST_REQ:
    return { loading: true };
   case LANDOWNER_LIST_SUC:
-   return { loading: false, landOwnerList: action.payload };
+   return { loading: false, userByRoles: action.payload };
   case LANDOWNER_LIST_FAI:
    return { loading: false, error: action.payload };
   case LANDOWNER_LIST_RES:

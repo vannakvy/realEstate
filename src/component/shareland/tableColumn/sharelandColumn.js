@@ -72,7 +72,7 @@ export const sharelandCol = ({
    render: (text, record) => (
     <Space size="middle">
      {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-     <Link className="link">
+     <Link className="link" to={`/shareland/${record.id}/view`}>
       <EyeOutlined />
      </Link>
 
@@ -91,7 +91,7 @@ export const sharelandCol = ({
      <span
       className="link"
       onClick={() => {
-       copy('/share/' + record.id);
+       copy('/shareland/' + record.id + '/view');
        message.success('Link Copied!');
       }}
      >

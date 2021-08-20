@@ -19,6 +19,8 @@ export const landCol = ({
  limit,
  page,
  landOwner,
+ setOpenAdd,
+ handleShare,
 }) => {
  // let l = limit >= 20 ? limit/page : limit
  // let no = ((page-1) * l)
@@ -51,11 +53,11 @@ export const landCol = ({
     <Space size="middle">
      {'ភូមិ' +
       record?.add?.vil +
-      ',ឃុំ' +
+      ' ឃុំ' +
       record?.add?.com +
-      ',ស្រុក' +
+      ' ស្រុក' +
       record?.add?.dis +
-      ',ខេត្ត' +
+      ' ខេត្ត' +
       record?.add?.pro}
     </Space>
    ),
@@ -65,7 +67,7 @@ export const landCol = ({
    title: 'ម្ចាស់ដី',
    dataIndex: 'owner',
    key: 'owner',
-   width: 50,
+   width: 80,
    render: (text, record) => (
     <Space size="middle">{record?.owner?.ownerId}</Space>
    ),
@@ -74,7 +76,7 @@ export const landCol = ({
    title: 'ស្ថានភាព',
    dataIndex: 'landType',
    key: 'landType',
-   width: 80,
+   width: 50,
   },
 
   {
@@ -105,9 +107,15 @@ export const landCol = ({
        <DeleteOutlined />
       </span>
      </Popconfirm>
-     <Link className="link">
+     <span
+      className="btn_text"
+      onClick={() => {
+       handleShare(record.id);
+       setOpenAdd(true);
+      }}
+     >
       <RotateRightOutlined />
-     </Link>
+     </span>
     </Space>
    ),
   },

@@ -21,28 +21,34 @@ export const createLand = (land) => async (dispatch, getState) => {
  } = getState();
 
  try {
-  dispatch({ type: LAND_CREATE_REQ });
-  await db.collection('landList').add({
-   idLand: land.idLand,
-   landType: land.landType,
-   owner: {
-    ownerId: land.ownerId,
-    img: [],
-    size: land.size,
-    detail: land.detail || '',
-   },
-   add: {
-    pro: land.pro,
-    dis: land.dis,
-    com: land.com,
-    vil: land.vil,
-   },
-   coordinates: land.coordinates,
-   createBy: userInformation.uid,
-   createAt: new Date().getTime(),
-  });
-
-  dispatch({ type: LAND_CREATE_SUC });
+  if (land.coordinates !== [] && land.coordinates.length !== 0) {
+   dispatch({ type: LAND_CREATE_REQ });
+   await db.collection('landList').add({
+    idLand: land.idLand,
+    landType: land.landType,
+    owner: {
+     ownerId: land.ownerId,
+     size: land.size,
+     detail: land.detail || '',
+    },
+    add: {
+     pro: land.pro,
+     dis: land.dis,
+     com: land.com,
+     vil: land.vil,
+    },
+    img: land.img || [],
+    coordinates: land.coordinates,
+    createBy: userInformation.uid,
+    createAt: new Date().getTime(),
+   });
+   dispatch({ type: LAND_CREATE_SUC });
+  } else {
+   dispatch({
+    type: LAND_CREATE_FAI,
+    payload: 'សូមគូសផ្លង់នៅលើ Map បញ្ជាក់េពីទីតាំងដី',
+   });
+  }
  } catch (error) {
   message.error(error.message);
   dispatch({ type: LAND_CREATE_FAI, payload: error.message });

@@ -1,6 +1,9 @@
 import { message } from 'antd';
 import {
  GET_SHARE_FAI,
+ GET_SHARE_ID_FAI,
+ GET_SHARE_ID_REQ,
+ GET_SHARE_ID_SUC,
  GET_SHARE_REQ,
  GET_SHARE_SUC,
 } from '../constants/share';
@@ -20,6 +23,23 @@ export const getShareLand = () => async (dispatch, getState) => {
  } catch (error) {
   dispatch({ type: GET_SHARE_FAI });
   message.error(error.message);
+ }
+};
+
+export const getShareLandById = (id) => async (dispatch) => {
+ try {
+  dispatch({
+   type: GET_SHARE_ID_REQ,
+  });
+  let ref = db.collection('shareLand').doc(id);
+  ref.onSnapshot((queryS) => {
+   dispatch({
+    type: GET_SHARE_ID_SUC,
+    payload: { ...queryS.data(), id: id },
+   });
+  });
+ } catch (error) {
+  dispatch({ type: GET_SHARE_ID_FAI, payload: error.message });
  }
 };
 

@@ -4,21 +4,22 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  allActionListReducer,
  landOwnerByIdReducer,
- landOwnerListReducer,
  userAccountByIdReducer,
  userAccountDeleteReducer,
  userAccountListReducer,
  userAccountUpdateReducer,
+ userByRoleReducer,
  userCreateActionReducer,
  userLoginReducer,
  userRegisterReducer,
 } from './reducer/authReducer';
 import {
+ createLandReducer,
  landByIdReducer,
  landListByUserReducer,
  landListReducer,
 } from './reducer/landReducer';
-import { shareLandReducer } from './reducer/shareReducer';
+import { shareLandIdReducer, shareLandReducer } from './reducer/shareReducer';
 
 const reducer = combineReducers({
  // user
@@ -31,14 +32,16 @@ const reducer = combineReducers({
  userCreateAction: userCreateActionReducer,
  allActionList: allActionListReducer,
  //  landOwner
- landOwnerList: landOwnerListReducer,
+ userByRole: userByRoleReducer,
  landOwnerById: landOwnerByIdReducer,
  //  land
  landList: landListReducer,
  landById: landByIdReducer,
  landListByUser: landListByUserReducer,
+ createLand: createLandReducer,
  //share
  shareLand: shareLandReducer,
+ shareLandId: shareLandIdReducer,
 });
 
 const userInformationFromStorage = localStorage.getItem('userInformation')

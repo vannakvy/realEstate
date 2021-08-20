@@ -33,7 +33,8 @@ import {
  LANDOWNER_BY_ID_SUC,
  LANDOWNER_BY_ID_FAI,
 } from '../constants/auth';
-import { CodeSharp } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
+
 export const login = (email, password) => async (dispatch) => {
  try {
   dispatch({ type: USER_LOGIN_REQUEST });
@@ -42,7 +43,6 @@ export const login = (email, password) => async (dispatch) => {
    .then(async (res) => {
     const user = await db.collection('account').doc(res.user.uid).get();
     localStorage.setItem('userInformation', JSON.stringify(user.data()));
-    console.log(user.data());
     dispatch({
      type: USER_LOGIN_SUCCESS,
      payload: user.data(),
@@ -249,10 +249,10 @@ export const deleteLandOwner = (id) => async (dispatch, getState) => {
  }
 };
 
-export const getAllLandOwner = () => async (dispatch, getState) => {
+export const getUserByRole = (role) => async (dispatch, getState) => {
  try {
   dispatch({ type: LANDOWNER_LIST_REQ });
-  const ref = db.collection('landOwner');
+  const ref = db.collection('account').where('role', '==', role);
 
   ref.onSnapshot((queryS) => {
    const items = [];

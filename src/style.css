@@ -1,0 +1,27 @@
+.bg_color {
+ background: #f4f7f6 !important;
+}
+.btn_color {
+ background: #25a9e0 !important;
+}
+
+.round {
+ border-radius: 10px !important;
+}
+
+.MuiDrawer-paperAnchorDockedLeft {
+ background: #f0f2f5 !important;
+}
+
+.MuiToolbar-gutters {
+ box-shadow: none !important;
+}
+
+.borderNotActive {
+ border: rgb(240, 242, 245);
+ padding: 12px;
+}
+
+.bg_Nav_active {
+ background: rgb(220, 227, 233) !important;
+}

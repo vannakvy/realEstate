@@ -7,6 +7,7 @@ import { createLand, deleteLand, getLandList } from '../actions/landActions';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import LandTable from '../component/land/LandTable';
+import { RiSearchLine } from 'react-icons/ri';
 
 import AddUser from '../component/user/modal/addUser';
 // import EditUser from '../component/user/modal/editUser';
@@ -87,61 +88,61 @@ export default function Land() {
  };
 
  return (
-  <>
-   <h2>តារាងដីនីមួយៗ</h2>
-   <Row>
-    <AddUser open={openAdd} setOpen={setOpenAdd} />
-    {/* <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
-            <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
-            <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}
-    <Col xs={6} md={12}>
-     <NavLink
-      // type="primary"
-
-      to="/"
-      //       onClick={() => setOpenAdd(true)}
-     >
-      <Button style={{ backgroundColor: '#FF5A87', color: '#FFF' }}>
-       បញ្ចូលដីថ្មី
-       <PlusOutlined />
-      </Button>
-     </NavLink>
-    </Col>
+  <div className="w-100">
+   <h4>តារាងដីនីមួយៗ</h4>
+   <Row className="w-100">
     <Col xs={20} md={12}>
      <Row>
-      <Col xs={8}>
-       <Input.Search
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="ស្វែងរក..."
-        style={{ width: '100%' }}
-       />
+      <Col xs={10}>
+       <div class="input-group pe-2">
+        <select class="form-select" style={{ maxWidth: '100px' }}>
+         <option selected>ខេត្ត</option>
+         <option value="ដាក់លក់">ដាក់លក់</option>
+         <option value="មិនដាក់លក់">មិនដាក់លក់</option>
+        </select>
+        <input type="text" class="form-control" placeholder="ស្វែងរកទីនេះ..." />
+        <span class="input-group-text">
+         <RiSearchLine />
+        </span>
+       </div>
       </Col>
-      <Col xs={8}>
-       <Select
-        placeholder="ស្ថានភាព"
-        style={{ width: '100%' }}
-        onChange={(e) => console.log(e.target.value)}
-       >
-        <Option value={true}>ដាក់លក់</Option>
-        <Option value={false}>មិនដាក់លក់</Option>
-       </Select>
+      <Col xs={7}>
+       <div className="pe-2">
+        <select class="form-select">
+         <option selected>ស្ថានភាព</option>
+         <option value="ដាក់លក់">ដាក់លក់</option>
+         <option value="មិនដាក់លក់">មិនដាក់លក់</option>
+        </select>
+       </div>
       </Col>
-      <Col xs={8}>
-       <Select
-        placeholder="តាមខេត្ត"
-        style={{ width: '100%' }}
-        onChange={(e) => console.log(e.target.value)}
-       >
-        <Option value="សៀមរាប">សៀមរាប</Option>
-        <Option value="ភ្នំពេញ">ភ្នំពេញ</Option>
-       </Select>
+      <Col xs={7}>
+       <div className="pe-2">
+        <select class="form-select">
+         <option selected>តាមខេត្ត</option>
+         <option value="ដាក់លក់">ដាក់លក់</option>
+         <option value="មិនដាក់លក់">មិនដាក់លក់</option>
+        </select>
+       </div>
       </Col>
      </Row>
     </Col>
-    <Col xs={24} style={{ marginTop: 20 }}>
-     <LandTable />
+    <Col xs={6} md={12} className="text-end">
+     <NavLink to="/land/create">
+      <button
+       className="btn"
+       style={{ backgroundColor: '#25A9E0', color: '#FFF', fontSize: 14 }}
+      >
+       បញ្ចូលដីថ្មី
+       <PlusOutlined />
+      </button>
+     </NavLink>
     </Col>
+    <Row>
+     <Col xs={24} className="w-100" style={{ marginTop: 20 }}>
+      <LandTable />
+     </Col>
+    </Row>
    </Row>
-  </>
+  </div>
  );
 }

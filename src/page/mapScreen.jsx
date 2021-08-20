@@ -9,23 +9,16 @@ import {
  CardContent,
 } from '@material-ui/core';
 
-import { ListSelect } from '../static/own-comp';
-import { convertToDistrict } from '../function/fn';
 import InfoBox from '../component/maps/InfoBox';
-import LineGraph from '../component/maps/LineGraph';
 import Table from '../component/maps/Table';
-
 import numeral from 'numeral';
 // import Map from "../component/covideComponents/Map";
 
-import { Form, Divider } from 'antd';
-
-import ImageCovid from '../asset/covid19.png';
-import ImageRecover from '../asset/recover.png';
-import ImageDeath from '../asset/death.png';
+import { Form } from 'antd';
 import MapDraw from '../components/MapDraw';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandList } from '../actions/landActions';
+import { BsGrid } from 'react-icons/bs';
 
 const MapScreen = () => {
  const [countryInfo, setCountryInfo] = useState({});
@@ -58,69 +51,47 @@ const MapScreen = () => {
   setDistrict(e);
  };
 
+ const findStateLand = (arr, state) => {
+  let newArr = arr?.filter((a) => a?.landType === state);
+  return newArr?.length;
+ };
+
  return (
   <Fragment>
+   <h6 className="fw-bold">ទំព័រដើម</h6>
+   <span>
+    <BsGrid style={{ marginTop: -5 }} /> /​​ ទំព័រដើម
+   </span>
    <div className="app">
     <div className="app__left">
-     <div className="app__header">
-      <FormControl className="app__dropdown">
-       <Form.Item
-        name="district"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-       >
-        <ListSelect
-         type={0}
-         data={convertToDistrict(['ddd', 'ddd'])}
-         title="ស្រុក/ខណ្ឌ"
-         setValue={setToDistrictFn}
-        />
-       </Form.Item>
-      </FormControl>
-     </div>
      <div className="app__stats">
       <InfoBox
-       onClick={(e) => setCasesType('ដីសរុប')}
+       bg="rgb(93,169,221)"
        title="ដីសរុប"
-       isRed
-       active={casesType === 'ដីសរុប'}
-       cases={districtDatas.confirmedCaseToday}
-       total={numeral(districtDatas.confirmedCase).format('0')}
-       //  ImageShow={ImageCovid}
+       total={numeral(landList?.length).format('0,0')}
       />
       <InfoBox
-       onClick={(e) => setCasesType('ដីបានដាក់លក់')}
+       bg="rgb(255,195,172)"
        title="ដីបានដាក់លក់"
-       active={casesType === 'ដីបានដាក់លក់'}
-       cases={districtDatas.recoveredToday}
-       total={numeral(districtDatas.recovered).format('0')}
-       //  ImageShow={ImageRecover}
+       total={numeral(findStateLand(landList, 'ដាក់លក់')).format('0,0')}
       />
       <InfoBox
-       onClick={(e) => setCasesType('ដីមិនទាន់បានដាក់លក់')}
+       bg="rgb(250,108,126)"
        title="ដីមិនទាន់បានដាក់លក់"
-       isRed
-       active={casesType === 'ដីមិនទាន់បានដាក់លក់'}
-       cases={districtDatas.deathToday}
-       total={numeral(districtDatas.death).format('0')}
-       //  ImageShow={ImageDeath}
+       total={numeral(findStateLand(landList, 'មិនដាក់លក់')).format('0,0')}
       />
      </div>
 
      <MapDraw landList={landList} edit={false} />
     </div>
     <div className="app__right">
-     <Card style={{ marginTop: '70px' }}>
+     <Card style={{ marginTop: '10px', width: '350px' }}>
       <CardContent>
        <div className="app__information">
-        <h3 className="covid_table">By Province</h3>
-        <Divider />
+        <h5 className="covid_table fw-bold m-0 pb-0">ដីតាមបណ្ដាខេត្ដ</h5>
+        <hr className="p-0 mb-0" />
         <Table />
        </div>
-      </CardContent>
-     </Card>
-     <Card style={{ marginTop: '10px' }}>
-      <CardContent>
-       <LineGraph casesType={casesType} />
       </CardContent>
      </Card>
     </div>

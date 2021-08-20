@@ -4,11 +4,15 @@ import { Redirect, useHistory } from 'react-router-dom';
 import Logo from '../asset/logoo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/authAction';
+import Loader from '../component/Loader';
+import Message from '../component/Message';
 
 export default function Login() {
  const history = useHistory();
  const dispatch = useDispatch();
- const { userInformation } = useSelector((state) => state.userLogin);
+ const { userInformation, loading, error } = useSelector(
+  (state) => state.userLogin
+ );
 
  const onFinish = (values) => {
   dispatch(login(values.email, values.password));
@@ -39,7 +43,12 @@ export default function Login() {
     alt=""
    />
    <div className="bg-light mx-auto p-4 round" style={{ width: 400 }}>
-    <h6 className="text-center fw-bold mt-4 mb-5">ចូលទៅកាន់គណនីរបស់អ្នក</h6>
+    <h6 className="text-center fw-bold mt-4 mb-4">ចូលទៅកាន់គណនីរបស់អ្នក</h6>
+    {error && (
+     <Message variant="danger">
+      <h6 className="fw-bold">{error}</h6>
+     </Message>
+    )}
     <form onSubmit={submitLogin}>
      <div className="mb-3">
       <input
@@ -65,8 +74,11 @@ export default function Login() {
        ចងចាំខ្ញុំ
       </label>
      </div>
-     <button type="submit" className="btn btn_color w-100 text-light">
-      <h6 className="text-light fw-bold">ចូល</h6>
+     <button
+      type="submit"
+      className="btn btn_color w-100 text-light fs-6 fw-bold"
+     >
+      {loading ? <Loader /> : 'ចូល'}
      </button>
     </form>
     <p className="text-primary text-center my-2">ភ្លេចពាក្យសម្ងាត់?</p>

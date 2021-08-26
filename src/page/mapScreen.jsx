@@ -48,6 +48,11 @@ const MapScreen = () => {
   }
  }, [pro, landList]);
 
+ const gotoLand = (id) => {
+  const win = window.open(`/land/${id}`, '_blank');
+  win.focus();
+ };
+
  const findStateLand = (arr, state) => {
   let newArr = arr?.filter((a) => a?.landType === state);
   return newArr?.length;
@@ -117,9 +122,12 @@ const MapScreen = () => {
                 <td className="td">{l.landType}</td>
                 <td className="td">
                  <TotipCom title="watch">
-                  <NavLink to="/">
-                   <BsEye />
-                  </NavLink>
+                  <span>
+                   <BsEye
+                    className="link text-info"
+                    onClick={() => gotoLand(l.id)}
+                   />
+                  </span>
                  </TotipCom>
                 </td>
                </tr>

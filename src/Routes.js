@@ -52,6 +52,7 @@ const Routes = () => {
             <Route path="/user">
              <User />
             </Route>
+
             <Route path="/userdetail/:id">
              <UserDetail />
             </Route>
@@ -91,6 +92,13 @@ const Routes = () => {
             <Route path="/test">
              <TestLogin />
             </Route>
+            <Route
+             render={() => (
+              <h5 className="text-center fw-bold py-5">
+               Opps! Something went wrong
+              </h5>
+             )}
+            />
            </Switch>
           </div>
          </Drawer>

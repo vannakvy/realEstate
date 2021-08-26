@@ -269,6 +269,20 @@ export default function DrawerLeft({ children }) {
       >
        <span className="ms-4 fw-bold">អ្នកប្រើប្រាស់</span>
       </NavLink>
+      <NavLink
+       to="/admin"
+       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
+       activeClassName="border-info bg_Nav_active"
+      >
+       <span className="ms-4 fw-bold">អែតមីន</span>
+      </NavLink>
+      <NavLink
+       to="/landowner"
+       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
+       activeClassName="border-info bg_Nav_active"
+      >
+       <span className="ms-4 fw-bold">ម្ចាស់ដី</span>
+      </NavLink>
      </div>
     </div>
     <div

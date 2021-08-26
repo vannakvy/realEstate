@@ -163,7 +163,7 @@ export const getUserAccount = () => async (dispatch) => {
   ref.onSnapshot((queryS) => {
    const items = [];
    queryS.forEach((doc) => {
-    items.push({ ...doc.data(), id: doc.id });
+    items.push({ ...doc.data(), id: doc.id, password: null });
    });
    dispatch({ type: USER_LIST_SUCCESS, payload: items });
   });
@@ -177,7 +177,10 @@ export const getUserById = (id) => async (dispatch) => {
   dispatch({ type: USER_BY_ID_REQ });
   let ref = db.collection('account').doc(id);
   ref.onSnapshot((queryS) => {
-   dispatch({ type: USER_BY_ID_SUC, payload: { ...queryS.data(), id: id } });
+   dispatch({
+    type: USER_BY_ID_SUC,
+    payload: { ...queryS.data(), id: id, password: null },
+   });
   });
  } catch (error) {
   dispatch({ type: USER_BY_ID_FAI, payload: error.message });

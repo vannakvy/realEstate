@@ -16,7 +16,7 @@ import AddSharingFromLand from '../shareland/modal/addSharingFromLand';
 
 const { Option } = Select;
 
-export default function LandTable({ landOwner, landListByUser }) {
+export default function LandTable({ landOwner, landListByUser, loading }) {
  const fake = [
   {
    id: 320,
@@ -43,9 +43,6 @@ export default function LandTable({ landOwner, landListByUser }) {
 
  const { landList } = useSelector((state) => state.landList);
  const dispatch = useDispatch();
- useEffect(() => {
-  dispatch(getLandList());
- }, [dispatch]);
 
  const [landData, setLandData] = useState([]);
  const [page, setPage] = useState(1);
@@ -100,7 +97,6 @@ export default function LandTable({ landOwner, landListByUser }) {
     />
    )}
    <Table
-    className="table-go-list"
     // caseCol({handleDelete})
     columns={landCol({
      handleDelete,
@@ -114,6 +110,7 @@ export default function LandTable({ landOwner, landListByUser }) {
      setOpenAdd,
      handleShare,
     })}
+    loading={loading}
     dataSource={landListByUser ? landListByUser : landList}
     rowKey={(record) => record.id}
     pagination={true}

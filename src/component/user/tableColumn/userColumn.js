@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
+import TotipCom from '../../TotipCom';
 
 export const userCol = ({
  handleDelete,
@@ -17,18 +18,11 @@ export const userCol = ({
  setRoleUserID,
  limit,
  page,
+ setOpen,
+ setUserEdit,
 }) => {
  let l = limit >= 20 ? limit / page : limit;
  let no = (page - 1) * l;
-
- //  admin: false
- // createAt: t {seconds: 1627365944, nanoseconds: 205000000}
- // createdBy: "y8V7R5nwsecxL1l4ZcluK4EMOxx1"
- // email: "test@gmail.com"
- // imgUrl: ""
- // name: "test servertttt"
- // phone: "0123dsfsdfdsf"
- // uid: "2EdB2x6wvPZUGLcwfuyiecZtQME3"
 
  var array = [
   {
@@ -36,9 +30,6 @@ export const userCol = ({
    dataIndex: 'role',
    key: 'role',
    width: 50,
-   //    render: (text, record) => (
-   //     <Space size="middle">{record?.admin ? 'ADMIN' : 'USER'}</Space>
-   //    ),
   },
   {
    title: 'ឈ្មោះ',
@@ -58,24 +49,6 @@ export const userCol = ({
    key: 'phone',
    width: 100,
   },
-  //   {
-  //    title: 'តួនាទី',
-  //    dataIndex: 'roles',
-  //    key: 'roles',
-  //    width: 50,
-  //    render: (text, record) => (
-  //     <span
-  //      onClick={() => {
-  //       handleUserRole(record.roles);
-  //       setRoleUserID(record.id);
-  //      }}
-  //      className="link"
-  //      size="middle"
-  //     >
-  //      {getRoles(record.roles)}
-  //     </span>
-  //    ),
-  //   },
 
   {
    key: 'action',
@@ -85,15 +58,31 @@ export const userCol = ({
    align: 'center',
    render: (text, record) => (
     <Space size="middle">
-     {/* <span className="link" onClick={() => handleAccountEdit(record)}>
-      <KeyOutlined />
-     </span> */}
-     {/* <span className="link" onClick={() => handleUserEdit(record)}>
-      <EditOutlined />
-     </span> */}
-     <Link className="link" to={'/userdetail/' + record.id}>
-      <EyeOutlined />
-     </Link>
+     <TotipCom title="watch">
+      <Link
+       className="link text-info"
+       to={
+        record?.role === 'LANDOWNER'
+         ? '/ownerdetail/' + record?.id
+         : '/userdetail/' + record.id
+       }
+      >
+       <EyeOutlined />
+      </Link>
+     </TotipCom>
+
+     <TotipCom title="edit">
+      <span
+       className="link text-warning"
+       onClick={() => {
+        setUserEdit(record);
+        setOpen(true);
+       }}
+      >
+       <EditOutlined />
+      </span>
+     </TotipCom>
+
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {
@@ -103,7 +92,9 @@ export const userCol = ({
       cancelText="មិនចង់"
      >
       <span className="link" style={{ color: 'red' }}>
-       <DeleteOutlined />
+       <TotipCom title="delete">
+        <DeleteOutlined />
+       </TotipCom>
       </span>
      </Popconfirm>
     </Space>

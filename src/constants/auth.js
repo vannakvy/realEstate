@@ -59,3 +59,7 @@ export const CREATE_DELETE_USER = 'CREATE_DELETE_USER';
 export const CREATE_NEW_LAND = 'CREATE_NEW_LAND';
 export const SALE_LAND = 'SALE_LAND';
 export const UPDATE_LAND = 'UPDATE_LAND';
+
+export const LOCK_REQ = 'LOCK_REQ';
+export const LOCK_SUC = 'LOCK_SUC';
+export const LOCK_FAI = 'LOCK_FAI';

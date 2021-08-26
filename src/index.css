@@ -38,3 +38,7 @@ code {
 .ant-message {
  margin-top: 50px !important;
 }
+
+.bg_Nav_active svg {
+ color: #25a9e0 !important;
+}

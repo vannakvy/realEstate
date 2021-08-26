@@ -30,12 +30,8 @@ export default function User() {
  );
 
  useEffect(() => {
-  // dispatch({ type: USER_UPDATE_RESET });
-  // dispatch(getUserAccount());
   dispatch(getUserAccount());
  }, [dispatch]);
-
- console.log(userAccounts);
 
  const handleUserRole = (e) => {
   setOpenRole(true);
@@ -92,18 +88,21 @@ export default function User() {
        setRoleUserID,
        limit,
        page,
+       setOpen: setOpenEdit,
+       setUserEdit: setUserEdit,
       })}
       loading={userListLoading}
       dataSource={userAccounts}
       rowKey={(record) => record.uid}
-      pagination={{
-       total: 30,
-       current: 1,
-       onChange: (page, pageSize) => {
-        setPage(page);
-        setLimit(pageSize);
-       },
-      }}
+      pagination={true}
+      //       pagination={{
+      //        total: 30,
+      //        current: 1,
+      //        onChange: (page, pageSize) => {
+      //         setPage(page);
+      //         setLimit(pageSize);
+      //        },
+      //       }}
       scroll={{ x: 400 }}
       sticky
      />

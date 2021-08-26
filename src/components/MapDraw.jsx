@@ -27,6 +27,7 @@ import { useEffect } from 'react';
 
 import { Land as sellLand } from './Api';
 import PupupCom from './PupupCom.jsx';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
  map: {
@@ -66,6 +67,8 @@ export const MapDraw = (props) => {
  const [mapJson, setMapJson] = useState({});
  const [zo, setZo] = useState(8);
  const [onCreateL, setOnCreateL] = useState(false);
+
+ const history = useHistory();
 
  useEffect(() => {
   setLand(landList);
@@ -159,7 +162,7 @@ export const MapDraw = (props) => {
    posi: [lat1, lng1],
    zoom: zo > 10 ? zo : 10,
   });
-  console.log(zo);
+  history.push(`/?pro=${laye.feature.properties.adm1_altnm}`);
  };
 
  const onEachFeature = (feature, layer) => {
@@ -233,7 +236,7 @@ export const MapDraw = (props) => {
        land !== [] &&
        land.map((l) => (
         <div key={l.id}>
-         {zo >= 14 ? (
+         {zo >= 17 ? (
           <Polygon
            onClick={() =>
             setPosi({

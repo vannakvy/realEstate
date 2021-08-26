@@ -32,77 +32,127 @@ import {
  LANDOWNER_BY_ID_REQ,
  LANDOWNER_BY_ID_SUC,
  LANDOWNER_BY_ID_FAI,
+ LOCK_REQ,
+ LOCK_SUC,
+ LOCK_FAI,
 } from '../constants/auth';
-import { useHistory } from 'react-router-dom';
+import { hashPassword, matchPassword } from '../firebase/authConfig';
 
-export const login = (email, password) => async (dispatch) => {
+export const lockAccount = (password) => async (dispatch, getState) => {
+ try {
+  dispatch({ type: LOCK_REQ });
+
+  const {
+   userLogin: { userInformation },
+  } = getState();
+
+  const userExists = await db
+   .collection('account')
+   .doc(userInformation.name)
+   .get();
+
+  if (
+   userExists.data() &&
+   (await matchPassword(password, userExists.data().password))
+  ) {
+   localStorage.removeItem('lockAcc');
+   dispatch({ type: LOCK_SUC, payload: false });
+  } else {
+   dispatch({ type: LOCK_FAI, payload: 'ពាក្យសម្ងាត់របស់អ្នកមិនត្រឹមត្រូវ' });
+  }
+ } catch (error) {}
+};
+
+export const login = (name, password) => async (dispatch) => {
  try {
   dispatch({ type: USER_LOGIN_REQUEST });
-  auth
-   .signInWithEmailAndPassword(email, password)
-   .then(async (res) => {
-    const user = await db.collection('account').doc(res.user.uid).get();
-    localStorage.setItem('Information', JSON.stringify(user.data()));
-    dispatch({
-     type: USER_LOGIN_SUCCESS,
-     payload: user.data(),
-    });
-   })
-   .catch((error) => {
-    dispatch({
-     type: USER_LOGIN_FAIL,
-     payload: error.message,
-    });
+
+  const userExists = await db.collection('account').doc(name).get();
+
+  if (
+   userExists.data() &&
+   (await matchPassword(password, userExists.data().password))
+  ) {
+   localStorage.removeItem('lockAcc');
+   dispatch({ type: LOCK_SUC, payload: false });
+   const now = new Date();
+   const item = {
+    value: { ...userExists.data(), password: null },
+    expiry: now.getTime() + 24 * 60 * 60 * 1000,
+   };
+   localStorage.setItem('Informa', JSON.stringify(item));
+   dispatch({
+    type: USER_LOGIN_SUCCESS,
+    payload: { ...userExists.data(), password: null },
    });
+  } else {
+   dispatch({
+    type: USER_LOGIN_FAIL,
+    payload: 'ឈ្មោះអ្នកប្រើប្រាស់ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ',
+   });
+  }
  } catch (error) {
   dispatch({
    type: USER_LOGIN_FAIL,
-   payload: error.message,
+   payload: 'ឈ្មោះអ្នកប្រើប្រាស់ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ',
   });
  }
 };
 
 export const signout = () => async (dispatch) => {
- auth.signOut().then(() => {
-  dispatch({ type: USER_LOGOUT });
-  localStorage.removeItem('Information');
- });
+ localStorage.removeItem('Informa');
+ dispatch({ type: USER_LOGOUT });
 };
 
 export const signUp = (data) => async (dispatch, getState) => {
- console.log(data);
  const {
   userLogin: { userInformation },
  } = getState();
  dispatch({ type: USER_REGISTER_REQUEST });
- auth
-  .createUserWithEmailAndPassword(data.email, data.password)
-  .then(async (res) => {
+
+ const userExists = await db.collection('account').doc(data.name).get();
+
+ if (userExists.data()) {
+  dispatch({
+   type: USER_REGISTER_FAIL,
+   payload: 'ឈ្មោះសម្គាល់នេះមានម្ដងរួចហើយ',
+  });
+ } else {
+  try {
+   const pass = await hashPassword(data.password);
    await db
     .collection('account')
-    .doc(res.user.uid)
+    .doc(data.name)
     .set({
-     name: data.name,
-     createAt: new Date().getTime(),
-     imgUrl: '',
-     uid: res.user.uid,
      role: data.role,
+     name: data.name || '',
+     password: pass,
+     imgUrl: data.imgUrl || {},
+     gender: data.gender || '',
+     age: data.age || '',
+     uid: data.name || '',
+     phone: data.phone || '',
+     email: data.email || 'មិនមាន',
+     facebook: data.facebook || '',
+     telegram: data.telegram || '',
+     pro: data.pro || '',
+     dis: data.dis || '',
+     com: data.com || '',
+     vil: data.vil || '',
      createdBy: userInformation.uid || '',
-     email: res.user.email,
-     phone: '123456789',
+     createAt: new Date().getTime(),
     });
 
    dispatch({
     type: USER_REGISTER_SUCCESS,
-    payload: { id: res.user.uid, name: data.name },
+    payload: { id: data.name, name: data.name },
    });
-
-   //  dispatch(userCreateAction(CREATE_NEW_USER, res.user.uid));
-  })
-  .catch((error) => {
-   dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+   message.success('បង្កើតអ្នកប្រើប្រាស់បានជោគជ័យ');
+  } catch (error) {
    console.log(error.message);
-  });
+   dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+  }
+ }
 };
 
 export const getUserAccount = () => async (dispatch) => {
@@ -145,19 +195,58 @@ export const deleteUserAccount = (uid) => async (dispatch) => {
  }
 };
 
-export const updateUserAccount = (user) => async (dispatch, getState) => {
+export const updateUserAccount = (data) => async (dispatch, getState) => {
  const {
   userLogin: { userInformation },
  } = getState();
  try {
   dispatch({ type: USER_UPDATE_REQUEST });
-  await db.collection('account').doc(user.uid).update({
-   role: user.role,
-   phone: user.phone,
-   name: user.name,
-   imgUrl: user.imgUrl,
-  });
-  dispatch({ type: USER_UPDATE_SUCCESS });
+  const userExists = await db
+   .collection('account')
+   .doc(userInformation.name)
+   .get();
+
+  if (
+   userExists.data() &&
+   (await matchPassword(data.password, userExists.data().password))
+  ) {
+   await db
+    .collection('account')
+    .doc(data.name)
+    .update({
+     role: data.role,
+     imgUrl: data.imgUrl || {},
+     gender: data.gender || '',
+     age: data.age || '',
+     phone: data.phone || '',
+     email: data.email || 'មិនមាន',
+     facebook: data.facebook || '',
+     telegram: data.telegram || '',
+     pro: data.pro || '',
+     dis: data.dis || '',
+     com: data.com || '',
+     vil: data.vil || '',
+    });
+   dispatch({ type: USER_UPDATE_SUCCESS });
+   if (userInformation.name === data.name) {
+    const userExists = await db
+     .collection('account')
+     .doc(userInformation.name)
+     .get();
+    const now = new Date();
+    const item = {
+     value: { ...userExists.data(), password: null },
+     expiry: now.getTime() + 24 * 60 * 60 * 1000,
+    };
+    localStorage.setItem('Informa', JSON.stringify(item));
+    dispatch({
+     type: USER_LOGIN_SUCCESS,
+     payload: { ...userExists.data(), password: null },
+    });
+   }
+  } else {
+   dispatch({ type: USER_UPDATE_FAIL, payload: 'ពាក្យសម្ងាត់មិនត្រឹមត្រូវ' });
+  }
  } catch (error) {
   dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
  }

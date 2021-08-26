@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Input, Table, message, Divider, Image } from 'antd';
-import { PlusOutlined, EditOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, MailFilled } from '@ant-design/icons';
 import MapDraw from '../../components/MapDraw';
-import LandSideBar from '../landsidebar/landsidebar';
+
 import LandTable from '../land/LandTable';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,12 +15,17 @@ import { Card, CardContent } from '@material-ui/core';
 import numeral from 'numeral';
 import InfoBox from '../maps/InfoBox';
 import Profile from '../../asset/profile.png';
+import { SiGmail } from 'react-icons/si';
+import { FaTelegram, FaPhone } from 'react-icons/fa';
+import { ImFacebook2 } from 'react-icons/im';
 
 function OwnerDetail() {
  const { id } = useParams();
  const dispatch = useDispatch();
  const { userAccount } = useSelector((state) => state.userAccountById);
- const { landListByUser } = useSelector((state) => state.landListByUser);
+ const { landListByUser, loading } = useSelector(
+  (state) => state.landListByUser
+ );
  const { landById } = useSelector((state) => state.landById);
 
  const location = useLocation();
@@ -90,7 +95,11 @@ function OwnerDetail() {
       />
      </div>
      <h6 className="fw-bold">តារាងព័ត៌មានដី</h6>
-     <LandTable landOwner={true} landListByUser={landListByUser} />
+     <LandTable
+      landOwner={true}
+      landListByUser={landListByUser}
+      loading={loading}
+     />
     </div>
     <div className="app__right">
      <Card style={{ marginTop: '10px', width: '350px' }}>
@@ -99,7 +108,7 @@ function OwnerDetail() {
         <div className="d-flex">
          <img
           className="mx-auto my-3 rounded-circle"
-          src={Profile}
+          src={userAccount?.imgUrl?.url || Profile}
           width="100"
           height="100"
           style={{ objectFit: 'cover' }}
@@ -109,47 +118,54 @@ function OwnerDetail() {
         <hr />
 
         <div className="w-100 d-flex mb-2">
-         <div style={{ width: '60px' }}>ID</div>
-         <div>៖ {userAccount?.id}</div>
-        </div>
-        <div className="w-100 d-flex mb-2">
-         <div style={{ width: '60px' }}>ឈ្មោះ</div>
+         <div style={{ width: '100px' }}>ឈ្មោះ</div>
          <div>៖ {userAccount?.name}</div>
         </div>
         <div className="w-100 d-flex mb-2">
-         <div style={{ width: '60px' }}>ភេទ</div>
-         <div>៖ ប្រុស</div>
+         <div style={{ width: '100px' }}>ភេទ</div>
+         <div>៖ {userAccount?.gender}</div>
         </div>
         <div className="w-100 d-flex mb-2">
-         <div style={{ width: '60px' }}>អាយុ</div>
-         <div>៖ ៣០​ឆ្នាំ</div>
+         <div style={{ width: '100px' }}>អាយុ</div>
+         <div>៖ {userAccount?.age}​ឆ្នាំ</div>
         </div>
        </div>
        <br />
        <strong>អាស័យដ្ឋាន</strong>
-       <p>dsf dsfsd sdfsdf sdfsdfsf asfdsf sdf sdf</p>
+       <p>
+        {userAccount?.vil} {userAccount?.com} {userAccount?.dis}{' '}
+        {userAccount?.pro}
+       </p>
        <strong>ទំនាក់ទំនង</strong>
        <div className="w-100 d-flex mb-2">
-        <div style={{ width: '60px' }}>ទូរស័ព្ទ</div>
+        <div style={{ width: '100px' }}>
+         <FaPhone color="blur" /> ទូរស័ព្ទ
+        </div>
         <div>៖ {userAccount?.phone}</div>
        </div>
        <div className="w-100 d-flex mb-2">
-        <div style={{ width: '60px' }}>អ៊ីម៉ែល</div>
+        <div style={{ width: '100px' }}>
+         <SiGmail style={{ color: 'red' }} /> អ៊ីម៉ែល
+        </div>
         <div>៖ {userAccount?.email}</div>
        </div>
        <div className="w-100 d-flex mb-2">
-        <div style={{ width: '60px' }}>ហ្វេសបុក</div>
-        <div>៖ fdggrg sfaf</div>
+        <div style={{ width: '100px' }}>
+         <ImFacebook2 color="rgb(0,67,165)" /> ហ្វេសបុក
+        </div>
+        <div>៖ {userAccount?.facebook}</div>
        </div>
        <div className="w-100 d-flex mb-2">
-        <div style={{ width: '60px' }}>តេលេក្រាម</div>
-        <div>៖ @dsfef fsdsdfs</div>
+        <div style={{ width: '100px' }}>
+         <FaTelegram style={{ color: 'rgb(0,191,255' }} /> តេលេក្រាម
+        </div>
+        <div>៖ {userAccount?.telegram}</div>
        </div>
       </CardContent>
      </Card>
     </div>
    </div>
-   <h6 className="fw-bold">ផែនទីបង្ហាញទីតាំងដី</h6>
+   {/* <h6 className="fw-bold">ផែនទីបង្ហាញទីតាំងដី</h6>
    <MapDraw landList={land} edit={false} zoom={zoom} pos={posi} />
 
    <div>
@@ -175,7 +191,7 @@ function OwnerDetail() {
       ) : null}
      </div>
     </div>
-   </div>
+   </div> */}
   </>
  );
 }

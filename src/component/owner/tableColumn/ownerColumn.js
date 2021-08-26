@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
+import TotipCom from '../../TotipCom';
 
 export const ownerCol = ({
  handleDelete,
@@ -18,6 +19,8 @@ export const ownerCol = ({
  setRoleUserID,
  limit,
  page,
+ setOpen,
+ setOwnerEdit,
 }) => {
  // let l = limit >= 20 ? limit/page : limit
  // let no = ((page-1) * l)
@@ -81,9 +84,22 @@ export const ownerCol = ({
      {/* <span className="link" onClick={() => handleUserEdit(record)}>
             <EditOutlined />
            </span> */}
-     <Link className="link" to={'/ownerdetail/' + record.id}>
-      <EyeOutlined />
-     </Link>
+     <TotipCom title="watch">
+      <Link className="link text-info" to={'/ownerdetail/' + record.id}>
+       <EyeOutlined />
+      </Link>
+     </TotipCom>
+     <TotipCom title="edit">
+      <div
+       className="link text-warning"
+       onClick={() => {
+        setOwnerEdit(record);
+        setOpen(true);
+       }}
+      >
+       <EditOutlined />
+      </div>
+     </TotipCom>
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {
@@ -93,7 +109,9 @@ export const ownerCol = ({
       cancelText="មិនចង់"
      >
       <span className="link" style={{ color: 'red' }}>
-       <DeleteOutlined />
+       <TotipCom title="delete">
+        <DeleteOutlined />
+       </TotipCom>
       </span>
      </Popconfirm>
     </Space>

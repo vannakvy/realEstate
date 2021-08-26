@@ -1,26 +1,31 @@
 .covid_tables {
-  margin-top: 20px;
-  /* overflow-y: scroll; */
-  color: #6a5d5d;
-  background-color: white;
-  min-height: 250px;
+ /* margin-top: 20px; */
+ /* overflow-y: scroll; */
+ color: #6a5d5d;
+ background-color: white;
+ min-height: 250px;
 }
 
 .covid_tables .tr {
-  display: flex;
-  justify-content: space-between;
+ display: flex;
+ justify-content: space-between;
+ cursor: pointer;
+}
+
+.covid_tables .tr:hover {
+ background: rgb(116, 171, 255);
 }
 
 .covid_tables .td {
-  padding: 0.5rem;
-  border: none;
+ padding: 0.5rem;
+ border: none;
 }
 
 .covid_tables tr:nth-of-type(odd) {
-  background-color: #fff;
-  color: #000;
+ background-color: #fff;
+ color: #000;
 }
 .covid_tables tr:nth-of-type(even) {
-  background-color: #f1f6fa;
-  color: #000;
+ background-color: #f1f6fa;
+ color: #000;
 }

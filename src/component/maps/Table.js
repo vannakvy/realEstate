@@ -3,10 +3,13 @@ import './Table.css';
 import numeral from 'numeral';
 import db from '../../firebase/db';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
 function Table() {
  const [landByProvince, setLandByProvince] = useState([]);
  const [loading, setLoading] = useState(false);
+ const history = useHistory();
+
  useEffect(() => {
   setLoading(true);
   let ref = db.collection('landList').orderBy('createAt', 'desc');
@@ -19,7 +22,6 @@ function Table() {
     items.push({ ...doc.data(), id: doc.id });
     let p = false;
     pro.forEach((c, index) => {
-     console.log(index, c);
      if (c == doc.data().add.pro) {
       p = true;
      }
@@ -28,7 +30,6 @@ function Table() {
     if (!p) {
      pro.push(doc.data().add.pro);
     }
-    console.log(pro);
    });
 
    const landByPro = [];
@@ -58,8 +59,13 @@ function Table() {
     landByProvince
      .sort((a, b) => (a.total < b.total ? 1 : -1))
      .map((p) => (
-      <tr className="tr" key={p.pro}>
-       <td className="td">{p.pro}</td>
+      <tr
+       style={{ cursor: 'poiter' }}
+       onClick={() => history.push(`/?pro=${p.pro}`)}
+       className="tr"
+       key={p.pro}
+      >
+       <td className="td fw-bold">{p.pro}</td>
        <td className="td">
         <strong>{numeral(p.total).format('0,0')} </strong>
         ក្បលដី

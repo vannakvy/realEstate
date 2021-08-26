@@ -1,50 +1,19 @@
 import React, { useState, useEffect, Fragment } from 'react';
 
 import '../static/mapScreen.css';
-import {
- MenuItem,
- FormControl,
- Select,
- Card,
- CardContent,
-} from '@material-ui/core';
 
-import { ListSelect } from '../static/own-comp';
-import { convertToDistrict } from '../function/fn';
-import InfoBox from '../component/maps/InfoBox';
-import LineGraph from '../component/maps/LineGraph';
-import Table from '../component/maps/Table';
-
-import numeral from 'numeral';
-// import Map from "../component/covideComponents/Map";
-
-import { Form, Divider } from 'antd';
-
-import ImageCovid from '../asset/covid19.png';
-import ImageRecover from '../asset/recover.png';
-import ImageDeath from '../asset/death.png';
-import MapDraw from '../components/MapDraw';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandById } from '../actions/landActions';
+import MapDrawShare from '../components/MapDrawShare';
 
 const LandDetail = (props) => {
  const { id } = useParams();
  const dispatch = useDispatch();
- const [countryInfo, setCountryInfo] = useState({});
- const [countries, setCountries] = useState([]);
- const [mapCountries, setMapCountries] = useState([]);
- const [tableData, setTableData] = useState([]);
- const [casesType, setCasesType] = useState('cases');
- const [mapCenter, setMapCenter] = useState({ lat: 13.3633, lng: 103.8564 });
- const [mapZoom, setMapZoom] = useState(9);
- const [districtInfo, setDistrictInfo] = useState([]);
- const [landList, setLandList] = useState([]);
 
- //update the data
- const [district, setDistrict] = useState('');
- const [districtDatas, setDistrictDatas] = useState({});
- let [form] = Form.useForm();
+ const [posi, setPosi] = useState([12.5657, 104.991]);
+ const [zoom, setZoom] = useState(8);
+ const [landList, setLandList] = useState([]);
 
  const { landById } = useSelector((state) => state.landById);
  useEffect(() => {
@@ -52,62 +21,83 @@ const LandDetail = (props) => {
  }, [dispatch, id]);
 
  useEffect(() => {
-  if (landById !== undefined && landById !== {} && landById.id) {
+  setLandList([]);
+  setZoom(8);
+  if (
+   landById !== undefined &&
+   landById !== {} &&
+   landById.id &&
+   landById.coordinates &&
+   landById.coordinates[0]
+  ) {
    setLandList([landById]);
+   setPosi([landById.coordinates[0].lat, landById.coordinates[0].lng]);
+   setZoom(19);
   }
  }, [landById]);
 
- const setToDistrictFn = (e) => {
-  form.setFieldsValue({
-   district: e,
-   commune: null,
-   village: null,
-  });
-  setDistrict(e);
-  // setCommune("")
- };
-
  return (
   <Fragment>
-   <div className="app">
-    <div className="app__left">
-     <div className="app__header">
-      <FormControl className="app__dropdown">
-       <Form.Item
-        name="district"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-       >
-        <ListSelect
-         type={0}
-         data={convertToDistrict(['ddd', 'ddd'])}
-         title="ស្រុក/ខណ្ឌ"
-         setValue={setToDistrictFn}
-        />
-       </Form.Item>
-      </FormControl>
-     </div>
-
-     <MapDraw landList={landList} edit={false} />
-    </div>
-    <div className="app__right">
-     <Card style={{ marginTop: '70px' }}>
-      <CardContent>
-       <div className="app__information">
-        <h3 className="covid_table kh">ព័ត៌មានអំពីក្បាលដី</h3>
-        <Divider />
-        <h5>ម្ចាស់ដី: {landById && landById.owner && landById.owner.name}</h5>
-        <h5>LandType: {landById && landById.landType}</h5>
+   <MapDrawShare landList={landList} edit={false} zoom={zoom} pos={posi} />
+   <h5 className="mt-3 text-center fw-bold">ព័ត៌មានអំពីក្បាលដី</h5>
+   <div className="row w-100 mt-2">
+    <div className="col-md-6">
+     <div className="bg-light rounded overflow-hidden shadow-sm">
+      <div className="bg-dark text-light text-center p-2 fs-6 fw-bold">
+       ព័ត៌មានបន្ថែម
+      </div>
+      <div className="w-100">
+       <div className="row p-3 w-100">
+        <h6 className="col-3 py-2 fw-bold">ID</h6>
+        <h6 className="col-9 py-2">{landById && landById.id}</h6>
+        <h6 className="col-3 py-2 fw-bold">ម្ចាស់ដី</h6>
+        <h6 className="col-9 py-2">
+         {landById && landById.owner && landById.owner.ownerId}
+        </h6>
+        <h6 className="col-3 py-2 fw-bold">ក្បាលដី</h6>
+        <h6 className="col-9 py-2">{landById && landById.idLand}</h6>
+        <h6 className="col-3 py-2 fw-bold">ស្ថានភាព</h6>
+        <h6 className="col-9 py-2">{landById && landById.landType}</h6>
+        <h6 className="col-3 py-2 fw-bold">ទំហំ</h6>
+        <h6 className="col-9 py-2">
+         {landById && landById.owner && landById.owner.size}
+        </h6>
+        <h6 className="col-3 py-2 fw-bold">អាស័យដ្ឋាន</h6>
+        <h6 className="col-9 py-2">
+         ភូមិ{landById && landById.add && landById.add.vil}​ ឃុំ
+         {landById && landById.add && landById.add.com} ស្រុក​
+         {landById && landById.add && landById.add.dis} ខេត្ដ
+         {landById && landById.add && landById.add.pro}
+        </h6>
        </div>
-      </CardContent>
-     </Card>
-     <Card style={{ marginTop: '10px' }}>
-      <CardContent>
-       <LineGraph casesType={casesType} />
-      </CardContent>
-     </Card>
+      </div>
+     </div>
+    </div>
+    <div className="col-md-6">
+     <div className="bg-light rounded overflow-hidden shadow-sm">
+      <div className="bg-dark text-light text-center p-2 fs-6 fw-bold">
+       រូបភាពដី
+      </div>
+      <div className="w-100 text-center" style={{ minHeight: '240px' }}>
+       {landById &&
+        landById.img &&
+        landById.img.map((img) => (
+         <img
+          width="240px"
+          key={img.name}
+          className="mx-1 my-1"
+          src={img.url}
+          alt={img.name}
+         />
+        ))}
+
+       {landById && landById.img && landById.img.length === 0 ? (
+        <h6 className="mt-5 pt-5 fw-bold">មិនទាន់មានរូបភាពនៅឡើយ</h6>
+       ) : null}
+      </div>
+     </div>
     </div>
    </div>
-   {/* graph three datasets  */}
   </Fragment>
  );
 };

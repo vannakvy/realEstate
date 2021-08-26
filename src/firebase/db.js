@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import 'firebase/storage';
-import * as admin from 'firebase-admin';
 
 const Config = {
  apiKey: 'AIzaSyAMJXryxYirYxa-kwixqvEVHvXiCveyoRo',

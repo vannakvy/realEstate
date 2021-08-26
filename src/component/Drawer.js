@@ -21,6 +21,9 @@ import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscSignOut } from 'react-icons/vsc';
 import { signout } from '../actions/authAction';
+import { FcLock } from 'react-icons/fc';
+import { LOCK_SUC } from '../constants/auth';
+import TotipCom from './TotipCom';
 
 const drawerWidth = 250;
 
@@ -58,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
  drawerHeader: {
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 0),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
@@ -99,7 +102,7 @@ export default function DrawerLeft({ children }) {
      [classes.appBarShift]: open,
     })}
    >
-    <Toolbar className="bg-light border-bottom">
+    <Toolbar className="bg-light border-bottom w-100 d-flex justify-content-between p-0 ps-4">
      <IconButton
       aria-label="open drawer"
       edge="start"
@@ -108,16 +111,28 @@ export default function DrawerLeft({ children }) {
      >
       <MenuIcon />
      </IconButton>
-     <select
-      style={{ width: 300 }}
-      class="form-select"
-      aria-label="Default select example"
-     >
-      <option selected>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-     </select>
+     <div>
+      <img
+       className="rounded-circle mx-3"
+       style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+       src={userInformation?.imgUrl?.url || Profile}
+       alt=""
+      />
+
+      <TotipCom title="lock">
+       <IconButton
+        aria-label="open drawer"
+        edge="start"
+        onClick={() => {
+         localStorage.setItem('lockAcc', JSON.stringify(true));
+         dispatch({ type: LOCK_SUC, payload: true });
+        }}
+        className={classes.menuButton}
+       >
+        <FcLock />
+       </IconButton>
+      </TotipCom>
+     </div>
     </Toolbar>
    </AppBar>
    <Drawer
@@ -136,7 +151,7 @@ export default function DrawerLeft({ children }) {
       <img
        className="rounded-circle"
        style={{ objectFit: 'cover', width: 60, height: 60 }}
-       src={Profile}
+       src={userInformation?.imgUrl?.url || Profile}
        alt=""
       />
      </div>
@@ -146,14 +161,14 @@ export default function DrawerLeft({ children }) {
      </div>
     </div>
     <Divider />
-    <p className="text-center my-1">MENU</p>
+    <p className="ms-2 my-2 fw-bold ">Menu</p>
     <NavLink
      exact
      to="/"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
      activeClassName="border-info bg_Nav_active"
     >
-     <BsGrid /> <span className="ms-2">ទំព័រដើម</span>
+     <BsGrid /> <span className="ms-2 fw-bold">ទំព័រដើម</span>
     </NavLink>
     <a
      role="button"
@@ -162,30 +177,30 @@ export default function DrawerLeft({ children }) {
      aria-controls="collapseExample"
      href="#collapseExample"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-     activeClassName="border-info bg_Nav_active"
     >
      <div className="d-flex justify-content-between w-100">
       <span>
-       <IoScanCircleOutline /> <span className="ms-2">ការគ្រប់គ្រងដី</span>
+       <IoScanCircleOutline />{' '}
+       <span className="ms-2 fw-bold">ការគ្រប់គ្រងដី</span>
       </span>
       <FiChevronDown />
      </div>
     </a>
-    <div class="collapse" id="collapseExample">
+    <div className="collapse" id="collapseExample">
      <div className="w-100 d-flex flex-column">
       <NavLink
        to="/land"
        className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
        activeClassName="border-info bg_Nav_active"
       >
-       <span className="ms-4">តារាងដី</span>
+       <span className="ms-4 fw-bold">តារាងដី</span>
       </NavLink>
       <NavLink
        to="/shareland"
        className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
        activeClassName="border-info bg_Nav_active"
       >
-       <span className="ms-4">តារាងដី Sharing</span>
+       <span className="ms-4 fw-bold">តារាងដី Sharing</span>
       </NavLink>
      </div>
     </div>
@@ -194,14 +209,14 @@ export default function DrawerLeft({ children }) {
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
      activeClassName="border-info bg_Nav_active"
     >
-     <VscSmiley /> <span className="ms-2">សកម្មភាព</span>
+     <VscSmiley /> <span className="ms-2 fw-bold">សកម្មភាព</span>
     </NavLink>
     <NavLink
      to="/owner"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
      activeClassName="border-info bg_Nav_active"
     >
-     <FiUser /> <span className="ms-2">ម្ចាស់ដី</span>
+     <FiUser /> <span className="ms-2 fw-bold">ម្ចាស់ដី</span>
     </NavLink>
     <a
      role="button"
@@ -210,23 +225,23 @@ export default function DrawerLeft({ children }) {
      aria-controls="collapseExample2"
      href="#collapseExample2"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-     activeClassName="border-info bg_Nav_active"
     >
      <div className="d-flex justify-content-between w-100">
       <span>
-       <HiOutlineDocumentReport /> <span className="ms-2">របាយការណ៍</span>
+       <HiOutlineDocumentReport />{' '}
+       <span className="ms-2 fw-bold">របាយការណ៍</span>
       </span>
       <FiChevronDown />
      </div>
     </a>
-    <div class="collapse" id="collapseExample2">
+    <div className="collapse" id="collapseExample2">
      <div className="w-100 d-flex flex-column">
       <NavLink
        to="/reportdaily"
        className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
        activeClassName="border-info bg_Nav_active"
       >
-       <span className="ms-4">របាយការណ៍ប្រចាំថ្ងៃ</span>
+       <span className="ms-4 fw-bold">របាយការណ៍ប្រចាំថ្ងៃ</span>
       </NavLink>
      </div>
     </div>
@@ -237,23 +252,22 @@ export default function DrawerLeft({ children }) {
      aria-controls="collapseExample3"
      href="#collapseExample3"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-     activeClassName="border-info bg_Nav_active"
     >
      <div className="d-flex justify-content-between w-100">
       <span>
-       <FiUsers /> <span className="ms-2">ការគ្រប់គ្រងបុគ្គលិក</span>
+       <FiUsers /> <span className="ms-2 fw-bold">ការគ្រប់គ្រងបុគ្គលិក</span>
       </span>
       <FiChevronDown />
      </div>
     </a>
-    <div class="collapse" id="collapseExample3">
+    <div className="collapse" id="collapseExample3">
      <div className="w-100 d-flex flex-column">
       <NavLink
        to="/user"
        className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
        activeClassName="border-info bg_Nav_active"
       >
-       <span className="ms-4">អ្នកប្រើប្រាស់</span>
+       <span className="ms-4 fw-bold">អ្នកប្រើប្រាស់</span>
       </NavLink>
      </div>
     </div>
@@ -266,7 +280,7 @@ export default function DrawerLeft({ children }) {
      className="​nav-link text-danger border-start borderNotActive border-4 ps-3"
     >
      <VscSignOut className="text-danger" />{' '}
-     <span className="ms-2">ទំព័រដើម</span>
+     <span className="ms-2 fw-bold">ចាកចេញ</span>
     </div>
    </Drawer>
    <main

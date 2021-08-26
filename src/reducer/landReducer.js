@@ -22,7 +22,7 @@ import {
 export const landListReducer = (state = { landList: [] }, action) => {
  switch (action.type) {
   case LAND_LIST_REQ:
-   return { loading: true };
+   return { loading: true, landList: [] };
   case LAND_LIST_SUC:
    return { loading: false, landList: action.payload };
   case LAND_LIST_FAI:

@@ -90,25 +90,12 @@ export default function ShareLand() {
   );
  };
 
- console.log(shareObj);
  return (
   <>
    <h2>តារាងដី Sharing</h2>
    <Row>
     <AddSharing open={openAdd} setOpen={setOpenAdd} />
-    {/* <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
-            <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
-            <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}
-    <Col xs={6} md={16}>
-     <Button
-      // type="primary"
-      style={{ backgroundColor: '#FF5A87', color: '#FFF' }}
-      onClick={() => setOpenAdd(true)}
-     >
-      បញ្ចូលដីថ្មី
-      <PlusOutlined />
-     </Button>
-    </Col>
+
     <Col xs={18} md={8}>
      <Row>
       <Col xs={8}>
@@ -128,12 +115,6 @@ export default function ShareLand() {
         <Option value={false}>sharing</Option>
        </Select>
       </Col>
-      {/* <Col xs={8}>
-                            <Select placeholder="តាមខេត្ត" style={{ width:'100%'}} onChange={(e) => console.log(e.target.value)}>
-                                <Option value="សៀមរាប">សៀមរាប</Option>
-                                <Option value="ភ្នំពេញ">ភ្នំពេញ</Option>
-                            </Select>
-                        </Col> */}
      </Row>
     </Col>
     <Col xs={24} style={{ marginTop: 20 }}>

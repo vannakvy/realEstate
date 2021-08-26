@@ -19,6 +19,7 @@ import {
 } from '../actions/authAction';
 import EditOwner from '../component/owner/modal/editOwner';
 import AddUser from '../component/user/modal/addUser';
+import EditUser from '../component/user/modal/editUser';
 
 const { Option } = Select;
 
@@ -67,8 +68,13 @@ export default function Owner() {
   <>
    <h5>តារាងម្ចាស់ដី</h5>
    <Row>
-    <AddUser open={openAdd} setOpen={setOpenAdd} />
-    <EditOwner open={openEdit} setOpen={setOpenEdit} data={ownerEdit} />
+    <AddUser open={openAdd} setOpen={setOpenAdd} fromUser={true} />
+    <EditUser
+     open={openEdit}
+     setOpen={setOpenEdit}
+     data={ownerEdit}
+     fromUser={true}
+    />
 
     <Col xs={6} md={12}>
      <Button
@@ -91,6 +97,8 @@ export default function Owner() {
        setRoleUserID,
        limit,
        page,
+       setOpen: setOpenEdit,
+       setOwnerEdit,
       })}
       loading={loading}
       dataSource={userByRoles}

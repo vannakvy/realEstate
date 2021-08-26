@@ -65,11 +65,9 @@ const EditLand = () => {
   ) {
    setLandMap([landById]);
    setPosi([landById.coordinates[0].lat, landById.coordinates[0].lng]);
-   setZoom(18);
+   setZoom(19);
   }
  }, [landById]);
-
- console.log(coordinates);
 
  async function uploadImg(e, img) {
   e.preventDefault();
@@ -149,6 +147,18 @@ const EditLand = () => {
        </div>
        <form onSubmit={submitUpdate} className="">
         <div className="row p-3">
+         <h6 className="col-3 py-2 fw-bold">ក្បាលដី</h6>
+         <div className="col-9">
+          <input
+           onChange={onChange}
+           type="text"
+           value={land && land.idLand}
+           className="form-control"
+           name="idLand"
+           required
+           readOnly
+          />
+         </div>
          <h6 className="col-3 py-2 fw-bold">ម្ចាស់ដី</h6>
          <div className="col-9">
           <select
@@ -167,17 +177,7 @@ const EditLand = () => {
             ))}
           </select>
          </div>
-         <h6 className="col-3 py-2 fw-bold">ក្បាលដី</h6>
-         <div className="col-9">
-          <input
-           onChange={onChange}
-           type="text"
-           value={land && land.idLand}
-           className="form-control"
-           name="idLand"
-           required
-          />
-         </div>
+
          <h6 className="col-3 py-2 fw-bold">ស្ថានភាព</h6>
          <div className="col-9">
           <select

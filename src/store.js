@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  allActionListReducer,
  landOwnerByIdReducer,
+ lockAccReducer,
  userAccountByIdReducer,
  userAccountDeleteReducer,
  userAccountListReducer,
@@ -24,6 +25,7 @@ import { shareLandIdReducer, shareLandReducer } from './reducer/shareReducer';
 
 const reducer = combineReducers({
  // user
+ lockAcc: lockAccReducer,
  userLogin: userLoginReducer,
  userRegister: userRegisterReducer,
  userAccountList: userAccountListReducer,
@@ -46,11 +48,33 @@ const reducer = combineReducers({
  shareLandId: shareLandIdReducer,
 });
 
-const userInformationFromStorage = localStorage.getItem('Information')
- ? JSON.parse(localStorage.getItem('Information'))
- : null;
+function getWithExpiry(key) {
+ const itemStr = localStorage.getItem(key);
+ if (!itemStr) {
+  return null;
+ }
+ const item = JSON.parse(itemStr);
+ const now = new Date();
+
+ if (now.getTime() > item.expiry) {
+  localStorage.removeItem(key);
+  localStorage.removeItem('lockAcc');
+  return null;
+ }
+ return item.value;
+}
+
+const user = getWithExpiry('Informa');
+
+const userInformationFromStorage = user ? user : null;
+
+const lockAccFromStorage = localStorage.getItem('lockAcc')
+ ? JSON.parse(localStorage.getItem('lockAcc'))
+ : false;
+
 const initialState = {
  userLogin: { userInformation: userInformationFromStorage },
+ lockAcc: { lock: lockAccFromStorage },
 };
 const middleware = [thunk];
 const store = createStore(

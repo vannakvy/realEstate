@@ -9,6 +9,22 @@ import {
 } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
+import { makeStyles, Tooltip } from '@material-ui/core';
+
+const useStylesBootstrap = makeStyles((theme) => ({
+ arrow: {
+  color: theme.palette.common.black,
+ },
+ tooltip: {
+  backgroundColor: theme.palette.common.black,
+ },
+}));
+
+function BootstrapTooltip(props) {
+ const classes = useStylesBootstrap();
+
+ return <Tooltip arrow classes={classes} {...props}></Tooltip>;
+}
 
 export const landCol = ({
  handleDelete,
@@ -22,22 +38,14 @@ export const landCol = ({
  setOpenAdd,
  handleShare,
 }) => {
+ const gotoLand = (id) => {
+  const win = window.open(`/land/${id}`, '_blank');
+  win.focus();
+ };
  // let l = limit >= 20 ? limit/page : limit
  // let no = ((page-1) * l)
  let no = 100;
  var array = [
-  {
-   title: 'ID',
-   dataIndex: 'id',
-   key: 'id',
-   width: 50,
-   // render: (text, record) => (
-   //     <Space size="middle">
-   //         {no+=1}
-   //     </Space>
-   // ),
-  },
-
   {
    title: 'ក្បាល់ដី',
    dataIndex: 'idLand',
@@ -88,16 +96,18 @@ export const landCol = ({
    render: (text, record) => (
     <Space size="middle">
      {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-     <Link
-      to={'/ownerdetail/' + record?.owner?.ownerId + '?landId=' + record.id}
-      className="link"
-     >
-      <EyeOutlined />
-     </Link>
 
-     <Link to={'/land/' + record?.id + '/edit'} className="text-warning">
-      <EditOutlined />
-     </Link>
+     <BootstrapTooltip title="watch">
+      <div onClick={() => gotoLand(record?.id)} className="link text-info">
+       <EyeOutlined />
+      </div>
+     </BootstrapTooltip>
+
+     <BootstrapTooltip title="edit">
+      <Link to={'/land/' + record?.id + '/edit'} className="text-warning">
+       <EditOutlined />
+      </Link>
+     </BootstrapTooltip>
 
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
@@ -107,27 +117,29 @@ export const landCol = ({
       okText="ចង់"
       cancelText="មិនចង់"
      >
-      <span className="link" style={{ color: 'red' }}>
-       <DeleteOutlined />
-      </span>
+      <BootstrapTooltip title="delete">
+       <span className="link" style={{ color: 'red' }}>
+        <DeleteOutlined />
+       </span>
+      </BootstrapTooltip>
      </Popconfirm>
-     <span
-      className="btn_text"
-      onClick={() => {
-       handleShare(record.id);
-       setOpenAdd(true);
-      }}
-     >
-      <RotateRightOutlined />
-     </span>
+     <BootstrapTooltip title="share">
+      <span
+       className="btn_text"
+       onClick={() => {
+        handleShare(record.id);
+        setOpenAdd(true);
+       }}
+      >
+       <RotateRightOutlined />
+      </span>
+     </BootstrapTooltip>
     </Space>
    ),
   },
  ];
 
- let newArr = array.filter(
-  (key) => key.key !== 'address' && key.key !== 'owner'
- );
+ let newArr = array.filter((key) => key.key !== 'owner');
 
  if (landOwner === true) {
   return newArr;

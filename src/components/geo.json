@@ -43386,7 +43386,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Kratie",
-    "adm1_altnm": "Kratié, ក្រចេះ",
+    "adm1_altnm": "ក្រចេះ",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900422,
@@ -46347,7 +46347,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Mondul Kiri",
-    "adm1_altnm": "MondulKiri, មណ្ឌលគីរី",
+    "adm1_altnm": "មណ្ឌលគីរី",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900423,
@@ -48565,7 +48565,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Oddar Meanchey",
-    "adm1_altnm": "Otdar Meanchey, ឧត្តរមានជ័យ",
+    "adm1_altnm": "ឧត្តរមានជ័យ",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900424,
@@ -69627,7 +69627,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Ratanak Kiri",
-    "adm1_altnm": "Ratanakiri, រតនគីរី",
+    "adm1_altnm": "រតនគីរី",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900431,
@@ -74176,7 +74176,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Siemreap",
-    "adm1_altnm": "Siem Reap, សៀមរាប",
+    "adm1_altnm": "សៀមរាប",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900432,
@@ -80063,7 +80063,7 @@
    "geometry_name": "the_geom",
    "properties": {
     "adm1_name": "Takeo",
-    "adm1_altnm": "Takéo, តាកែវ",
+    "adm1_altnm": "តាកែវ",
     "iso3": "KHM",
     "disp_area": "NO",
     "adm1_id": 900435,

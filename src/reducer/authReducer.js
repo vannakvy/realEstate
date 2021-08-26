@@ -35,6 +35,9 @@ import {
  LANDOWNER_BY_ID_FAI,
  LANDOWNER_BY_ID_SUC,
  LANDOWNER_BY_ID_REQ,
+ LOCK_REQ,
+ LOCK_SUC,
+ LOCK_FAI,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -57,7 +60,7 @@ export const userRegisterReducer = (state = { userRegister: {} }, action) => {
   case USER_REGISTER_REQUEST:
    return { loading: true };
   case USER_REGISTER_SUCCESS:
-   return { loading: false, userRegister: action.payload };
+   return { loading: false, userRegister: action.payload, success: true };
   case USER_REGISTER_FAIL:
    return { loading: false, error: action.payload };
   default:
@@ -183,6 +186,19 @@ export const landOwnerByIdReducer = (state = { landOwnerById: {} }, action) => {
    return { loading: false, error: action.payload };
   case LANDOWNER_BY_ID_RES:
    return {};
+  default:
+   return state;
+ }
+};
+
+export const lockAccReducer = (state = { lock: true }, action) => {
+ switch (action.type) {
+  case LOCK_REQ:
+   return { loading: true, lock: true };
+  case LOCK_SUC:
+   return { loading: false, lock: action.payload, success: true };
+  case LOCK_FAI:
+   return { loading: false, error: action.payload, lock: true };
   default:
    return state;
  }

@@ -1,15 +1,10 @@
 import React from 'react';
 import { Space, Popconfirm, message } from 'antd';
-import {
- EditOutlined,
- DeleteOutlined,
- KeyOutlined,
- EyeOutlined,
- RotateRightOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined, CopyOutlined } from '@ant-design/icons';
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
+import TotipCom from '../../TotipCom';
 
 export const sharelandCol = ({
  handleDelete,
@@ -72,9 +67,11 @@ export const sharelandCol = ({
    render: (text, record) => (
     <Space size="middle">
      {/* <span className="link" onClick={() => handleAccountEdit(record)}><KeyOutlined /></span> */}
-     <Link className="link" to={`/shareland/${record.id}/view`}>
-      <EyeOutlined />
-     </Link>
+     <TotipCom title="watch">
+      <Link className="link" to={`/shareland/${record.id}/view`}>
+       <EyeOutlined />
+      </Link>
+     </TotipCom>
 
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
@@ -85,18 +82,23 @@ export const sharelandCol = ({
       cancelText="មិនចង់"
      >
       <span className="link" style={{ color: 'red' }}>
-       <DeleteOutlined />
+       <TotipCom title="delete">
+        <DeleteOutlined />
+       </TotipCom>
       </span>
      </Popconfirm>
-     <span
-      className="link"
-      onClick={() => {
-       copy('http://96.9.91.83:3000/shareland/' + record.id + '/view');
-       message.success('Link Copied!');
-      }}
-     >
-      <RotateRightOutlined />
-     </span>
+
+     <TotipCom title="copy">
+      <span
+       className="link text-info"
+       onClick={() => {
+        copy('http://96.9.91.83:3000/shareland/' + record.id + '/view');
+        message.success('Link Copied!');
+       }}
+      >
+       <CopyOutlined />
+      </span>
+     </TotipCom>
     </Space>
    ),
   },

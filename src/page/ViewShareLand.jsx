@@ -134,6 +134,8 @@ const ViewShareLand = () => {
       <div className={`${login ? 'container-fuild' : 'container-xl'}`}>
        {loading ? (
         <h5 className="text-center mt-5">loading...</h5>
+       ) : land.length === 0 ? (
+        <h5 className="text-center mt-5">ដីនេះត្រូវបានលុប</h5>
        ) : shareLandId && shareLandId.expireAt >= new Date().getTime() ? (
         <>
          <MapDrawShare
@@ -251,6 +253,8 @@ const ViewShareLand = () => {
    <div className={`${login ? 'container-fuild' : 'container-xl'}`}>
     {loading ? (
      <h5 className="text-center mt-5">loading...</h5>
+    ) : land.length === 0 ? (
+     <h5 className="text-center mt-5">ដីនេះត្រូវបានលុប</h5>
     ) : shareLandId && shareLandId.expireAt >= new Date().getTime() ? (
      <>
       <MapDrawShare landList={land} edit={false} pos={posi} zoom={zoom} />

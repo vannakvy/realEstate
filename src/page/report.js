@@ -14,7 +14,7 @@ export default function Report() {
 
  return (
   <div>
-   <div>
+   {/* <div>
     <Button onClick={() => setOpenModal(true)}>Print</Button>
     <br />
     <DatePickerTwo ranges={ranges} setRange={setRanges} />
@@ -31,7 +31,7 @@ export default function Report() {
     onCancel={() => setOpenModal(false)}
    >
     <PrintReport ref={componentRef} />
-   </Modal>
+   </Modal> */}
   </div>
  );
 }

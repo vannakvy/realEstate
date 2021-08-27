@@ -9,8 +9,11 @@ import EditUser from '../component/user/modal/editUser';
 // import EditAccount from '../component/user/modal/editAccount';
 import { fetctUser } from '../function/fetchData';
 import { deleteUserAccount, getUserAccount } from '../actions/authAction';
+import { userTypeCol } from '../component/usertype/tableColumn/userTypeColumn';
+import AddUserType from '../component/usertype/modal/addUserType';
+import EditUserType from '../component/usertype/modal/editUserType';
 
-export default function User() {
+export default function UserType() {
  const [userData, setUserData] = useState([]);
  const [page, setPage] = useState(1);
  const [limit, setLimit] = useState(2);
@@ -55,10 +58,10 @@ export default function User() {
 
  return (
   <>
-   <h5>តារាងអ្នកប្រើប្រាស់</h5>
+   <h5>តារាងប្រភេទអ្នកប្រើប្រាស់</h5>
    <Row>
-    <AddUser open={openAdd} setOpen={setOpenAdd} />
-    <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />
+    <AddUserType open={openAdd} setOpen={setOpenAdd} />
+    <EditUserType open={openEdit} setOpen={setOpenEdit} data={userEdit} />
     {/* <AddRole open={openRole} setOpen={setOpenRole} userID={roleUserID} dataRoles={dataRoles} />
             <EditAccount open={openEditAccount} setOpen={setOpenEditAccount} data={userEdit} /> */}
     <Col xs={8} md={18}>
@@ -67,7 +70,7 @@ export default function User() {
       style={{ backgroundColor: '#FF5A87', color: '#FFF' }}
       onClick={() => setOpenAdd(true)}
      >
-      បញ្ចូលអ្នកប្រើប្រាស់
+      បញ្ចូលប្រភេទអ្នកប្រើប្រាស់
       <PlusOutlined />
      </Button>
     </Col>
@@ -80,7 +83,7 @@ export default function User() {
     <Col xs={24} style={{ marginTop: 20 }}>
      <Table
       className="table-go-list"
-      columns={userCol({
+      columns={userTypeCol({
        handleDelete,
        handleUserEdit,
        handleAccountEdit,

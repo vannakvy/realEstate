@@ -28,6 +28,7 @@ import ViewShareLand from './page/ViewShareLand';
 import CreateLand from './page/CreateLand';
 import EditLand from './page/EditLand';
 import LockUI from './component/LockUI';
+import UserType from './page/userType';
 
 const { Footer, Content } = Layout;
 const Routes = () => {
@@ -51,6 +52,10 @@ const Routes = () => {
             <Route path="/login" render={() => <Redirect to="/" />} />
             <Route path="/user">
              <User />
+            </Route>
+
+            <Route path="/usertype">
+             <UserType />
             </Route>
 
             <Route path="/userdetail/:id">

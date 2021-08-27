@@ -91,11 +91,14 @@ export const MapDrawCreate = (props) => {
   const { layers } = e;
   const items = [];
 
-  layers.getLayers()[0]._latlngs[0].forEach((la) => {
-   items.push({ lat: la.lat, lng: la.lng });
-  });
+  if (layers.getLayers()[0]) {
+   const data = layers.getLayers()[0].editing.latlngs[0];
 
-  setCoordinates(items);
+   data[0].forEach((la) => {
+    items.push({ lat: la.lat, lng: la.lng });
+   });
+   setCoordinates(items);
+  }
  };
 
  const _onDeleted = (e) => {

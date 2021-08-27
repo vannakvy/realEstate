@@ -255,7 +255,8 @@ export default function DrawerLeft({ children }) {
     >
      <div className="d-flex justify-content-between w-100">
       <span>
-       <FiUsers /> <span className="ms-2 fw-bold">ការគ្រប់គ្រងបុគ្គលិក</span>
+       <FiUsers />{' '}
+       <span className="ms-2 fw-bold">ការគ្រប់គ្រងអ្នកប្រើប្រាស់</span>
       </span>
       <FiChevronDown />
      </div>
@@ -263,25 +264,18 @@ export default function DrawerLeft({ children }) {
     <div className="collapse" id="collapseExample3">
      <div className="w-100 d-flex flex-column">
       <NavLink
+       to="/usertype"
+       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
+       activeClassName="border-info bg_Nav_active"
+      >
+       <span className="ms-4 fw-bold">ប្រភេទអ្នកប្រើប្រាស់</span>
+      </NavLink>
+      <NavLink
        to="/user"
        className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
        activeClassName="border-info bg_Nav_active"
       >
        <span className="ms-4 fw-bold">អ្នកប្រើប្រាស់</span>
-      </NavLink>
-      <NavLink
-       to="/admin"
-       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-       activeClassName="border-info bg_Nav_active"
-      >
-       <span className="ms-4 fw-bold">អែតមីន</span>
-      </NavLink>
-      <NavLink
-       to="/landowner"
-       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-       activeClassName="border-info bg_Nav_active"
-      >
-       <span className="ms-4 fw-bold">ម្ចាស់ដី</span>
       </NavLink>
      </div>
     </div>

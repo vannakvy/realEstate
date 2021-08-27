@@ -35,6 +35,9 @@ import {
  LOCK_REQ,
  LOCK_SUC,
  LOCK_FAI,
+ USER_T_LIST_REQ,
+ USER_T_LIST_SUC,
+ USER_T_LIST_FAI,
 } from '../constants/auth';
 import { hashPassword, matchPassword } from '../firebase/authConfig';
 
@@ -369,3 +372,21 @@ export const getLandOwnerById = (id) => async (dispatch, getState) => {
   dispatch({ type: LANDOWNER_BY_ID_FAI, payload: error.message });
  }
 };
+
+export const getUserType = () => async (dispatch) => {
+ try {
+  dispatch({ type: USER_T_LIST_REQ });
+  let ref = db.collection('landOwner');
+  ref.onSnapshot((queryS) => {
+   const items = [];
+   queryS.forEach((doc) => {
+    items.push({ ...doc.data(), id: doc.id });
+   });
+   dispatch({ type: USER_T_LIST_SUC, payload: items });
+  });
+ } catch (error) {
+  dispatch({ type: USER_T_LIST_FAI, payload: error.message });
+ }
+};
+
+export const createUserType = () => async (dispatch) => {};

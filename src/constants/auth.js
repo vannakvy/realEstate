@@ -63,3 +63,19 @@ export const UPDATE_LAND = 'UPDATE_LAND';
 export const LOCK_REQ = 'LOCK_REQ';
 export const LOCK_SUC = 'LOCK_SUC';
 export const LOCK_FAI = 'LOCK_FAI';
+
+export const USER_T_LIST_REQ = 'USER_T_LIST_REQ ';
+export const USER_T_LIST_SUC = 'USER_T_LIST_SUC';
+export const USER_T_LIST_FAI = 'USER_T_LIST_FAI';
+
+export const USER_T_CREATE_REQ = 'USER_T_CREATE_REQ ';
+export const USER_T_CREATE_SUC = 'USER_T_CREATE_SUC';
+export const USER_T_CREATE_FAI = 'USER_T_CREATE_FAI';
+
+export const USER_T_DEL_REQ = 'USER_T_DEL_REQ ';
+export const USER_T_DEL_SUC = 'USER_T_DEL_SUC';
+export const USER_T_DEL_FAI = 'USER_T_DEL_FAI';
+
+export const USER_T_UPDATE_REQ = 'USER_T_UPDATE_REQ ';
+export const USER_T_UPDATE_SUC = 'USER_T_UPDATE_SUC';
+export const USER_T_UPDATE_FAI = 'USER_T_UPDATE_FAI';

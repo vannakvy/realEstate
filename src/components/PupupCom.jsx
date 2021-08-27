@@ -3,18 +3,6 @@ import React from 'react';
 const PupupCom = ({ land }) => {
  return (
   <div className="kh" style={{ width: '150px' }}>
-   <div className="py-1">
-    <img
-     style={{ width: '40px' }}
-     src={require('./assets/images/images.png')}
-     alt=""
-    />
-    <img
-     style={{ width: '40px' }}
-     src={require('./assets/images/images.png')}
-     alt=""
-    />
-   </div>
    <h6 className="text-center p-0 m-0">ក្បាលដីៈ{land.idLand}</h6>
    <p className="text-left">
     ទំហំៈ​​ {land.owner.size} <br />

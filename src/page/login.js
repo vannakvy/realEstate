@@ -71,7 +71,7 @@ export default function Login() {
       <input type="checkbox" className="form-check-input" />
       <label className="form-check-label">ចងចាំខ្ញុំ</label>
      </div> */}
-     <button type="submit" className="btn btn_color w-100 fw-bold mb-5">
+     <button type="submit" className="btn btn_color w-100 fw-bold my-3">
       <p className="m-0 p-0">{loading ? <Loader /> : 'ចូល'}</p>
      </button>
     </form>

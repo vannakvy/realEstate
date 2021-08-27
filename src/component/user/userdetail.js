@@ -29,8 +29,6 @@ const UserDetail = () => {
   }
  }, [dispatch, id, user]);
 
- console.log(user);
-
  return (
   <div>
    {user && <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />}

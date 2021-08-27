@@ -8,10 +8,16 @@ import EditUser from '../component/user/modal/editUser';
 // import AddRole from '../component/user/modal/addRole';
 // import EditAccount from '../component/user/modal/editAccount';
 import { fetctUser } from '../function/fetchData';
-import { deleteUserAccount, getUserAccount } from '../actions/authAction';
+import {
+ deleteUserAccount,
+ deleteUserType,
+ getUserAccount,
+ getUserType,
+} from '../actions/authAction';
 import { userTypeCol } from '../component/usertype/tableColumn/userTypeColumn';
 import AddUserType from '../component/usertype/modal/addUserType';
 import EditUserType from '../component/usertype/modal/editUserType';
+import Message from '../component/Message';
 
 export default function UserType() {
  const [userData, setUserData] = useState([]);
@@ -28,12 +34,10 @@ export default function UserType() {
  const [openEditAccount, setOpenEditAccount] = useState(false);
 
  const dispatch = useDispatch();
- const { userAccounts, loading: userListLoading } = useSelector(
-  (state) => state.userAccountList
- );
+ const { userTypes, loading, error } = useSelector((state) => state.userTypes);
 
  useEffect(() => {
-  dispatch(getUserAccount());
+  dispatch(getUserType());
  }, [dispatch]);
 
  const handleUserRole = (e) => {
@@ -52,9 +56,10 @@ export default function UserType() {
  };
 
  const handleDelete = (e) => {
-  console.log(e);
-  dispatch(deleteUserAccount(e));
+  dispatch(deleteUserType(e));
  };
+
+ console.log(userTypes);
 
  return (
   <>
@@ -94,9 +99,9 @@ export default function UserType() {
        setOpen: setOpenEdit,
        setUserEdit: setUserEdit,
       })}
-      loading={userListLoading}
-      dataSource={userAccounts}
-      rowKey={(record) => record.uid}
+      loading={loading}
+      dataSource={userTypes}
+      rowKey={(record) => record.id}
       pagination={true}
       //       pagination={{
       //        total: 30,

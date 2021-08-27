@@ -4,6 +4,7 @@ import { setEditUser } from '../../../function/set';
 import { useDispatch, useSelector } from 'react-redux';
 import {
  getUserAccount,
+ getUserType,
  login,
  signout,
  updateUserAccount,
@@ -28,6 +29,7 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
  const { success, loading, error } = useSelector(
   (state) => state.userAccountUpdate
  );
+ const { userTypes } = useSelector((state) => state.userTypes);
 
  useEffect(() => {
   setProgress(0);
@@ -37,7 +39,8 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
     name: data.imgUrl.name || '',
    });
   }
- }, [data]);
+  dispatch(getUserType());
+ }, [data, dispatch]);
 
  useEffect(() => {
   if (success) {
@@ -289,10 +292,12 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
         style={{ width: '100%' }}
         disabled={fromUser}
        >
-        <Option value="STAFF">STAFF</Option>
-        <Option value="LANDOWNER">LANDOWNER</Option>
-        <Option value="CUSTOMER">CUSTOMER</Option>
-        <Option value="ADMIN">ADMIN</Option>
+        {userTypes &&
+         userTypes.map((userT) => (
+          <Option key={userT.id} value={userT.name}>
+           {userT.name}
+          </Option>
+         ))}
        </Select>
       </Form.Item>
      </Col>

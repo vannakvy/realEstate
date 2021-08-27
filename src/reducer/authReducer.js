@@ -38,6 +38,12 @@ import {
  LOCK_REQ,
  LOCK_SUC,
  LOCK_FAI,
+ USER_T_LIST_REQ,
+ USER_T_LIST_SUC,
+ USER_T_LIST_FAI,
+ USER_T_CREATE_REQ,
+ USER_T_CREATE_SUC,
+ USER_T_CREATE_FAI,
 } from '../constants/auth';
 
 export const userLoginReducer = (state = { userInformation: {} }, action) => {
@@ -199,6 +205,32 @@ export const lockAccReducer = (state = { lock: true }, action) => {
    return { loading: false, lock: action.payload, success: true };
   case LOCK_FAI:
    return { loading: false, error: action.payload, lock: true };
+  default:
+   return state;
+ }
+};
+
+export const userTypesReducer = (state = { userTypes: [] }, action) => {
+ switch (action.type) {
+  case USER_T_LIST_REQ:
+   return { loading: true };
+  case USER_T_LIST_SUC:
+   return { loading: false, userTypes: action.payload };
+  case USER_T_LIST_FAI:
+   return { loading: false, error: action.payload };
+  default:
+   return state;
+ }
+};
+
+export const createUserTypesReducer = (state = { userType: {} }, action) => {
+ switch (action.type) {
+  case USER_T_CREATE_REQ:
+   return { loading: true };
+  case USER_T_CREATE_SUC:
+   return { loading: false, userType: action.payload, success: true };
+  case USER_T_CREATE_FAI:
+   return { loading: false, error: action.payload };
   default:
    return state;
  }

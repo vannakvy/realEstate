@@ -38,6 +38,15 @@ import {
  USER_T_LIST_REQ,
  USER_T_LIST_SUC,
  USER_T_LIST_FAI,
+ USER_T_CREATE_REQ,
+ USER_T_CREATE_SUC,
+ USER_T_CREATE_FAI,
+ USER_T_DEL_REQ,
+ USER_T_DEL_SUC,
+ USER_T_DEL_FAI,
+ USER_T_UPDATE_REQ,
+ USER_T_UPDATE_SUC,
+ USER_T_UPDATE_FAI,
 } from '../constants/auth';
 import { hashPassword, matchPassword } from '../firebase/authConfig';
 
@@ -376,11 +385,11 @@ export const getLandOwnerById = (id) => async (dispatch, getState) => {
 export const getUserType = () => async (dispatch) => {
  try {
   dispatch({ type: USER_T_LIST_REQ });
-  let ref = db.collection('landOwner');
+  let ref = db.collection('userType');
   ref.onSnapshot((queryS) => {
    const items = [];
    queryS.forEach((doc) => {
-    items.push({ ...doc.data(), id: doc.id });
+    items.push({ ...doc.data() });
    });
    dispatch({ type: USER_T_LIST_SUC, payload: items });
   });
@@ -389,4 +398,65 @@ export const getUserType = () => async (dispatch) => {
  }
 };
 
-export const createUserType = () => async (dispatch) => {};
+export const createUserType = (data) => async (dispatch, getState) => {
+ const {
+  userLogin: { userInformation },
+ } = getState();
+
+ try {
+  dispatch({ type: USER_T_CREATE_REQ });
+
+  const userTypeExists = await db.collection('userType').doc(data.name).get();
+  if (userTypeExists.data() && userTypeExists.data().name === data.name) {
+   dispatch({
+    type: USER_T_CREATE_FAI,
+    payload: 'ប្រភេទអ្នកប្រើប្រាស់មានរួចហើយ',
+   });
+  } else {
+   await db
+    .collection('userType')
+    .doc(data.name)
+    .set({
+     name: data.name,
+     id: data.name,
+     createBy: userInformation.uid,
+     createAt: new Date().getTime(),
+     pages: data.pages || [],
+    });
+
+   dispatch({ type: USER_T_CREATE_SUC, payload: {} });
+  }
+ } catch (error) {
+  console.log(error.message);
+  dispatch({ type: USER_T_CREATE_FAI, payload: error.message });
+ }
+};
+
+export const deleteUserType = (id) => async (dispatch, getState) => {
+ try {
+  dispatch({ type: USER_T_DEL_REQ });
+  await db.collection('userType').doc(id).delete();
+  dispatch({ type: USER_T_DEL_SUC });
+ } catch (error) {
+  dispatch({ type: USER_T_DEL_FAI, payload: error.message });
+ }
+};
+
+export const addUserTypePage = (data) => async (dispatch, getState) => {
+ const {
+  userLogin: { userInformation },
+ } = getState();
+
+ try {
+  dispatch({ type: USER_T_UPDATE_REQ });
+
+  await db.collection('userType').doc(data.name).update({
+   createBy: userInformation.uid,
+   pages: data,
+  });
+
+  dispatch({ type: USER_T_UPDATE_SUC });
+ } catch (error) {
+  dispatch({ type: USER_T_UPDATE_FAI, payload: error.message });
+ }
+};

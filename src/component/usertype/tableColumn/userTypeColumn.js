@@ -9,6 +9,9 @@ import {
 import { getRoles } from '../../../function/fn';
 import { Link } from 'react-router-dom';
 import TotipCom from '../../TotipCom';
+import dateFormat from 'dateformat';
+import { deleteUserType } from '../../../actions/authAction';
+import { useDispatch } from 'react-redux';
 
 export const userTypeCol = ({
  handleDelete,
@@ -24,12 +27,15 @@ export const userTypeCol = ({
  let l = limit >= 20 ? limit / page : limit;
  let no = (page - 1) * l;
 
+ let i = 1;
+
  var array = [
   {
    title: 'ល.រ',
    dataIndex: 'no',
    key: 'no',
-   width: 50,
+   width: 20,
+   render: (text, record) => i++,
   },
   {
    title: 'ប្រភេទ',
@@ -39,23 +45,35 @@ export const userTypeCol = ({
   },
   {
    title: 'បង្កើតថ្ងៃទី',
-   dataIndex: 'createdAt',
-   key: 'createdAt',
+   dataIndex: 'createAt',
+   key: 'createAt',
    width: 100,
+   render: (text, record) => (
+    <Space size="middle">
+     <span>{dateFormat(record?.createAt, 'ddd - mmm dS - yyyy')}</span>
+    </Space>
+   ),
   },
   {
    title: 'បង្កើតដោយ',
-   dataIndex: 'createdBy',
-   key: 'createdBy',
+   dataIndex: 'createBy',
+   key: 'createBy',
    width: 100,
   },
 
   {
-    title: 'Pages',
-    dataIndex: 'pages',
-    key: 'pages',
-    width: 100,
-   },
+   title: 'Pages',
+   dataIndex: 'pages',
+   key: 'pages',
+   width: 200,
+   render: (text, record) => (
+    <Space>
+     {record?.pages.map((p) => (
+      <p>{p} -</p>
+     ))}
+    </Space>
+   ),
+  },
   {
    key: 'action',
    dataIndex: 'action',
@@ -64,7 +82,7 @@ export const userTypeCol = ({
    align: 'center',
    render: (text, record) => (
     <Space size="middle">
-     <TotipCom title="watch">
+     {/* <TotipCom title="watch">
       <Link
        className="link text-info"
        to={
@@ -75,9 +93,9 @@ export const userTypeCol = ({
       >
        <EyeOutlined />
       </Link>
-     </TotipCom>
+     </TotipCom> */}
 
-     <TotipCom title="edit">
+     {/* <TotipCom title="edit">
       <span
        className="link text-warning"
        onClick={() => {
@@ -87,12 +105,12 @@ export const userTypeCol = ({
       >
        <EditOutlined />
       </span>
-     </TotipCom>
+     </TotipCom> */}
 
      <Popconfirm
       title="តើអ្នកពិតចង់លុបមែនឬទេ?"
       onConfirm={() => {
-       handleDelete(record.uid);
+       handleDelete(record?.id);
       }}
       okText="ចង់"
       cancelText="មិនចង់"

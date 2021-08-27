@@ -218,33 +218,15 @@ export default function DrawerLeft({ children }) {
     >
      <FiUser /> <span className="ms-2 fw-bold">ម្ចាស់ដី</span>
     </NavLink>
-    <a
-     role="button"
-     aria-expanded="false"
-     data-bs-toggle="collapse"
-     aria-controls="collapseExample2"
-     href="#collapseExample2"
+
+    <NavLink
+     to="/reportdaily"
      className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
+     activeClassName="border-info bg_Nav_active"
     >
-     <div className="d-flex justify-content-between w-100">
-      <span>
-       <HiOutlineDocumentReport />{' '}
-       <span className="ms-2 fw-bold">របាយការណ៍</span>
-      </span>
-      <FiChevronDown />
-     </div>
-    </a>
-    <div className="collapse" id="collapseExample2">
-     <div className="w-100 d-flex flex-column">
-      <NavLink
-       to="/reportdaily"
-       className="​nav-link text-dark border-start borderNotActive border-4 ps-3"
-       activeClassName="border-info bg_Nav_active"
-      >
-       <span className="ms-4 fw-bold">របាយការណ៍ប្រចាំថ្ងៃ</span>
-      </NavLink>
-     </div>
-    </div>
+     <HiOutlineDocumentReport /> <span className="ms-2 fw-bold">របាយការណ៍</span>
+    </NavLink>
+
     <a
      role="button"
      aria-expanded="false"

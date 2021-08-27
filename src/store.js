@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
  allActionListReducer,
+ createUserTypesReducer,
  landOwnerByIdReducer,
  lockAccReducer,
  userAccountByIdReducer,
@@ -13,6 +14,7 @@ import {
  userCreateActionReducer,
  userLoginReducer,
  userRegisterReducer,
+ userTypesReducer,
 } from './reducer/authReducer';
 import {
  createLandReducer,
@@ -34,6 +36,8 @@ const reducer = combineReducers({
  userAccountUpdate: userAccountUpdateReducer,
  userCreateAction: userCreateActionReducer,
  allActionList: allActionListReducer,
+ userTypes: userTypesReducer,
+ createUserType: createUserTypesReducer,
  //  landOwner
  userByRole: userByRoleReducer,
  landOwnerById: landOwnerByIdReducer,

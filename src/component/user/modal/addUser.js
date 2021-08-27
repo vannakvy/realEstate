@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Row, Col, Button, Select, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { signUp } from '../../../actions/authAction';
+import { getUserType, signUp } from '../../../actions/authAction';
 import profile from '../../../asset/profile.png';
 import Message from '../../Message';
 import { storageRef } from '../../../firebase/db';
@@ -18,6 +18,7 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
  let [form] = Form.useForm();
 
  const { success, loading, error } = useSelector((state) => state.userRegister);
+ const { userTypes } = useSelector((state) => state.userTypes);
 
  useEffect(() => {
   if (success) {
@@ -25,6 +26,9 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
    form.resetFields();
   }
  }, [success]);
+ useEffect(() => {
+  dispatch(getUserType());
+ }, [dispatch]);
 
  const onFinish = (values) => {
   dispatch(signUp({ ...values, imgUrl: image }));
@@ -230,10 +234,12 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
         style={{ width: '100%' }}
         disabled={fromUser}
        >
-        <Option value="STAFF">STAFF</Option>
-        <Option value="LANDOWNER">LANDOWNER</Option>
-        <Option value="CUSTOMER">CUSTOMER</Option>
-        <Option value="ADMIN">ADMIN</Option>
+        {userTypes &&
+         userTypes.map((userT) => (
+          <Option key={userT.id} value={userT.name}>
+           {userT.name}
+          </Option>
+         ))}
        </Select>
       </Form.Item>
      </Col>

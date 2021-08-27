@@ -177,28 +177,36 @@ export const updateLand = (land) => async (dispatch, getState) => {
  try {
   dispatch({ type: LAND_UPDATE_REQ });
 
-  await db
-   .collection('landList')
-   .doc(land.id)
-   .update({
-    idLand: land.idLand,
-    landType: land.landType,
-    owner: {
-     ownerId: land.ownerId,
-     size: land.size,
-    },
-    add: {
-     pro: land.pro,
-     dis: land.dis,
-     com: land.com,
-     vil: land.vil,
-    },
-    coordinates: land.coordinates,
-    img: land.img,
+  if (land.coordinates !== [] && land.coordinates.length !== 0) {
+   await db
+    .collection('landList')
+    .doc(land.id)
+    .update({
+     idLand: land.idLand,
+     landType: land.landType,
+     owner: {
+      ownerId: land.ownerId,
+      size: land.size,
+     },
+     add: {
+      pro: land.pro,
+      dis: land.dis,
+      com: land.com,
+      vil: land.vil,
+     },
+     coordinates: land.coordinates,
+     img: land.img,
+    });
+   console.log(land.coordinates);
+   dispatch({ type: LAND_UPDATE_SUC });
+   message.success('កែប្រែទិន្នន័យបានជោគជ័យ');
+  } else {
+   message.error('សូមគូសផ្លង់នៅលើ Map បញ្ជាក់េពីទីតាំងដី');
+   dispatch({
+    type: LAND_UPDATE_FAI,
+    payload: 'សូមគូសផ្លង់នៅលើ Map បញ្ជាក់េពីទីតាំងដី',
    });
-
-  dispatch({ type: LAND_UPDATE_SUC });
-  message.success('កែប្រែទិន្នន័យបានជោគជ័យ');
+  }
  } catch (error) {
   message.error(error.message);
   dispatch({ type: LAND_UPDATE_FAI, payload: error.message });

@@ -6,12 +6,9 @@ import {
  KeyOutlined,
  EyeOutlined,
 } from '@ant-design/icons';
-import { getRoles } from '../../../function/fn';
-import { Link } from 'react-router-dom';
+
 import TotipCom from '../../TotipCom';
 import dateFormat from 'dateformat';
-import { deleteUserType } from '../../../actions/authAction';
-import { useDispatch } from 'react-redux';
 
 export const userTypeCol = ({
  handleDelete,
@@ -49,7 +46,7 @@ export const userTypeCol = ({
    key: 'createAt',
    width: 100,
    render: (text, record) => (
-    <Space size="middle">
+    <Space size="small">
      <span>{dateFormat(record?.createAt, 'ddd - mmm dS - yyyy')}</span>
     </Space>
    ),
@@ -67,9 +64,9 @@ export const userTypeCol = ({
    key: 'pages',
    width: 200,
    render: (text, record) => (
-    <Space>
+    <Space size="small">
      {record?.pages.map((p) => (
-      <p>{p} -</p>
+      <p className="p-0 m-0">{p} -</p>
      ))}
     </Space>
    ),
@@ -81,7 +78,7 @@ export const userTypeCol = ({
    width: 50,
    align: 'center',
    render: (text, record) => (
-    <Space size="middle">
+    <Space size="small">
      {/* <TotipCom title="watch">
       <Link
        className="link text-info"

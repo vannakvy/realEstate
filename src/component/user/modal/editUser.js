@@ -50,6 +50,7 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
  }, [success]);
 
  const onFinish = (values) => {
+  console.log(values);
   dispatch(updateUserAccount({ ...values, imgUrl: image }));
  };
 
@@ -89,7 +90,7 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
 
  return (
   <Modal
-   title="កែប្រេអ្នកប្រើប្រាស់"
+   title={fromUser ? 'កែប្រែម្ចាស់ដី' : 'កែប្រែអ្នកប្រើប្រាស់'}
    visible={open}
    onOk={() => setOpen(false)}
    onCancel={() => setOpen(false)}
@@ -102,6 +103,10 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
      {
       name: ['name'],
       value: data.name,
+     },
+     {
+      name: ['nameID'],
+      value: data.nameID,
      },
      {
       name: ['gender'],
@@ -192,12 +197,20 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
        </Message>
       )}
      </Col>
-     <Col xs={24}>
+     <Col md={{ span: 11 }}>
       <Form.Item
        name="name"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
-       <Input disabled placeholder="ឈ្មោះសម្គាល់" />
+       <Input disabled placeholder="ឈ្មោះពេញ" />
+      </Form.Item>
+     </Col>
+     <Col xs={24} md={{ span: 11, offset: 2 }}>
+      <Form.Item
+       name="nameID"
+       rules={[{ required: true, message: 'Field is required!' }]}
+      >
+       <Input placeholder="លេខអត្តសញ្ញាប័ត្រ" />
       </Form.Item>
      </Col>
      <Col xs={24} md={{ span: 11 }}>
@@ -282,8 +295,10 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
      <Col xs={24}>
       <h6 className="text-center fw-bold">ការកំណត់</h6>
      </Col>
+
      <Col xs={24}>
       <Form.Item
+       hidden={fromUser}
        name="role"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
@@ -301,6 +316,7 @@ export default function EditUser({ open, setOpen, data, fromUser = false }) {
        </Select>
       </Form.Item>
      </Col>
+
      <Col xs={24}>
       <Form.Item
        name="password"

@@ -126,21 +126,23 @@ const EditLand = () => {
    <NavLink className="text-primary" to="/">
     <IoHome style={{ marginTop: -5 }} /> / ទំព័រដើម
    </NavLink>
-   <div className="mt-2 w-100">
-    <MapDrawCreate
-     pos={posi}
-     zoom={zoom}
-     landList={landMap}
-     setCoordinates={setCoordinates}
-    />
-    <br />
-    {error && (
-     <Message variant="danger">
-      <div className="fw-bold text-center w-100">{error}</div>
-     </Message>
-    )}
-    <div className="row w-100">
-     <div className="col-md-6">
+   <div className="mt-2 w-100 row">
+    <div className="col-lg-8">
+     <MapDrawCreate
+      pos={posi}
+      zoom={zoom}
+      landList={landMap}
+      setCoordinates={setCoordinates}
+     />
+    </div>
+
+    <div className="col-lg-4">
+     <div className="">
+      {error && (
+       <Message variant="danger">
+        <div className="fw-bold text-center w-100">{error}</div>
+       </Message>
+      )}
       <div className="bg-light rounded overflow-hidden shadow-sm">
        <div className="bg-dark text-light text-center p-2 fs-6 fw-bold">
         ព័ត៌មានបន្ថែម
@@ -261,14 +263,15 @@ const EditLand = () => {
        </form>
       </div>
      </div>
-     <div className="col-md-6">
-      <ViewImg
-       setImageLand={setImageLand}
-       uploadImg={uploadImg}
-       imageLand={imageLand}
-       progress={progress}
-      />
-     </div>
+    </div>
+
+    <div className="mt-2">
+     <ViewImg
+      setImageLand={setImageLand}
+      uploadImg={uploadImg}
+      imageLand={imageLand}
+      progress={progress}
+     />
     </div>
    </div>
   </div>

@@ -71,7 +71,7 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
 
  return (
   <Modal
-   title="បញ្ចូលអ្នកប្រើប្រាស់ថ្មី"
+   title={fromUser ? 'បញ្ចូលម្ចាស់ដីថ្មី' : 'បញ្ចូលអ្នកប្រើប្រាស់ថ្មី'}
    visible={open}
    onOk={() => setOpen(false)}
    onCancel={() => setOpen(false)}
@@ -134,12 +134,20 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
        </Message>
       )}
      </Col>
-     <Col xs={24}>
+     <Col xs={24} md={{ span: 11 }}>
       <Form.Item
        name="name"
        rules={[{ required: true, message: 'Field is required!' }]}
       >
-       <Input prefix={<UserOutlined />} placeholder="ឈ្មោះសម្គាល់" />
+       <Input prefix={<UserOutlined />} placeholder="ឈ្មោះពេញ" />
+      </Form.Item>
+     </Col>
+     <Col xs={24} md={{ span: 11, offset: 2 }}>
+      <Form.Item
+       name="nameID"
+       rules={[{ required: true, message: 'Field is required!' }]}
+      >
+       <Input placeholder="លេខអត្តសញ្ញាប័ត្រ" />
       </Form.Item>
      </Col>
      <Col xs={24} md={{ span: 11 }}>
@@ -224,9 +232,11 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
      <Col xs={24}>
       <h6 className="text-center fw-bold">ការកំណត់</h6>
      </Col>
+
      <Col xs={24} md={{ span: 11 }}>
       <Form.Item
        name="role"
+       hidden={fromUser}
        rules={[{ required: true, message: 'Field is required!' }]}
       >
        <Select
@@ -243,7 +253,11 @@ export default function AddUser({ open, setOpen, fromUser = false }) {
        </Select>
       </Form.Item>
      </Col>
-     <Col xs={24} md={{ span: 11, offset: 2 }}>
+
+     <Col
+      xs={24}
+      md={{ span: fromUser ? 24 : 11, offset: fromUser ? null : 1 }}
+     >
       <Form.Item
        name="password"
        rules={[{ required: true, message: 'Field is required!' }]}

@@ -141,6 +141,7 @@ export const signUp = (data) => async (dispatch, getState) => {
     .set({
      role: data.role,
      name: data.name || '',
+     nameID: data.nameID || '',
      password: pass,
      imgUrl: data.imgUrl || {},
      gender: data.gender || '',
@@ -232,6 +233,7 @@ export const updateUserAccount = (data) => async (dispatch, getState) => {
     .collection('account')
     .doc(data.name)
     .update({
+     nameID: data.nameID || '',
      role: data.role,
      imgUrl: data.imgUrl || {},
      gender: data.gender || '',

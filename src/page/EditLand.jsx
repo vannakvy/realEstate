@@ -262,16 +262,16 @@ const EditLand = () => {
         </div>
        </form>
       </div>
-     </div>
-    </div>
 
-    <div className="mt-2">
-     <ViewImg
-      setImageLand={setImageLand}
-      uploadImg={uploadImg}
-      imageLand={imageLand}
-      progress={progress}
-     />
+      <div className="mt-2">
+       <ViewImg
+        setImageLand={setImageLand}
+        uploadImg={uploadImg}
+        imageLand={imageLand}
+        progress={progress}
+       />
+      </div>
+     </div>
     </div>
    </div>
   </div>

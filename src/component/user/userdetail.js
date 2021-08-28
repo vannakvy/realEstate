@@ -32,7 +32,7 @@ const UserDetail = () => {
  return (
   <div>
    {user && <EditUser open={openEdit} setOpen={setOpenEdit} data={userEdit} />}
-   <div className="container bg-light p-4">
+   <div className="container bg-light p-4 shadow-sm">
     <h6 className="fw-bold text-center">ព័ត៌មានគណនីបុគ្គលិក</h6>
     <Divider />
     <div className="text-center">

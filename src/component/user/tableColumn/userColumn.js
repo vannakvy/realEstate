@@ -59,14 +59,7 @@ export const userCol = ({
    render: (text, record) => (
     <Space size="middle">
      <TotipCom title="watch">
-      <Link
-       className="link text-info"
-       to={
-        record?.role === 'LANDOWNER'
-         ? '/ownerdetail/' + record?.id
-         : '/userdetail/' + record.id
-       }
-      >
+      <Link className="link text-info" to={'/userdetail/' + record.id}>
        <EyeOutlined />
       </Link>
      </TotipCom>

@@ -47,6 +47,9 @@ import {
  USER_T_UPDATE_REQ,
  USER_T_UPDATE_SUC,
  USER_T_UPDATE_FAI,
+ USER_T_BY_ID_REQ,
+ USER_T_BY_ID_SUC,
+ USER_T_BY_ID_FAI,
 } from '../constants/auth';
 import { hashPassword, matchPassword } from '../firebase/authConfig';
 
@@ -458,5 +461,20 @@ export const addUserTypePage = (data) => async (dispatch, getState) => {
   dispatch({ type: USER_T_UPDATE_SUC });
  } catch (error) {
   dispatch({ type: USER_T_UPDATE_FAI, payload: error.message });
+ }
+};
+
+export const getUserTypeById = (id) => async (dispatch) => {
+ try {
+  dispatch({ type: USER_T_BY_ID_REQ });
+  let ref = db.collection('userType').doc(id);
+  ref.onSnapshot((queryS) => {
+   dispatch({
+    type: USER_T_BY_ID_SUC,
+    payload: { ...queryS.data() },
+   });
+  });
+ } catch (error) {
+  dispatch({ type: USER_T_BY_ID_FAI, payload: error.message });
  }
 };
